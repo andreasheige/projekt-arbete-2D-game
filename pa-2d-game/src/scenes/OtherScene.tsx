@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Collider from '../@core/Collider';
 import GameObject from '../@core/GameObject';
 import Interactable from '../@core/Interactable';
@@ -6,20 +6,29 @@ import ScenePortal from '../@core/ScenePortal';
 import Sprite from '../@core/Sprite';
 import TileMap, { TileMapResolver } from '../@core/TileMap';
 import { mapDataString } from '../@core/utils/mapUtils';
+import CoffeeMachine from '../entities/CoffeeMachine';
 import Player from '../entities/Player';
 import spriteData from '../spriteData';
 
 const mapData = mapDataString(`
-# # # # # #
-# · · · · #
-· · · · · #
-# · · · · #
-# # # # # #
+# # # # # # # # # #
+# · · · · · · · · #
+· · · · # # · · · #
+# · · · · · · · · #
+# · · · C C · · · #
+# · · · · · · · · #
+# # # # # # # # # #
 `);
 
 const resolveMapTile: TileMapResolver = (type, x, y) => {
     const key = `${x}-${y}`;
     const position = { x, y };
+
+    const floor = (
+        <GameObject key={key} {...position} layer="ground">
+            <Sprite {...spriteData.objects} state="floor" />
+        </GameObject>
+    );
 
     switch (type) {
         case '·':
@@ -34,6 +43,13 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
                     <Collider />
                     <Sprite {...spriteData.objects} state="wall" />
                 </GameObject>
+            );
+        case 'C':
+            return (
+                <Fragment key={key}>
+                    {floor}
+                    <CoffeeMachine {...position} />
+                </Fragment>
             );
         default:
             return null;
