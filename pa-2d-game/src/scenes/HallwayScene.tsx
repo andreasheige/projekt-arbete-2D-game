@@ -93,7 +93,7 @@ export default function HallwayScene() {
                     target="livingroom/start"
                 />
             </GameObject>
-            <Player x={9} y={0} />
+            <Player x={9} y={0} spotlight />
         </>
     );
 }
