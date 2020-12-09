@@ -15,13 +15,13 @@ import spriteData from '../spriteData';
 
 const mapData = mapDataString(`
 # # # # # # # # # # # # # # # # #
-# · W T # T · · W T · W · · · T #
-# · · · · · · · · · · · · · · o ·
-# o · · # · · · # # # # · · # # #
-# # # # # · · · # W o W · · T W #
-# C C C # · · · T · · · · · · · #
-# o · · · · · · · · · · · · · o #
-# # # # # # # # # # # # # # # # #
+# · · · · · · · · · · · · · · · #
+# · · · · · · · · · · · · · · · #
+# · · · · · · · · · · · · · · · #
+# · · · · · · · · · · · · · · · ·
+# · · · · · · · · · · · · · · · #
+# · · · · · · · · · · · · · · · #
+# # # # # # # # # # # # · # # # #
 `);
 
 const resolveMapTile: TileMapResolver = (type, x, y) => {
@@ -77,17 +77,30 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
     }
 };
 
-export default function OfficeScene() {
+export default function StudySceen() {
     return (
         <>
             <GameObject name="map">
                 <ambientLight />
                 <TileMap data={mapData} resolver={resolveMapTile} definesMapSize />
             </GameObject>
-            <GameObject x={16} y={5}>
+            <GameObject x={12} y={0}>
                 <Collider />
                 <Interactable />
-                <ScenePortal name="exit" enterDirection={[-1, 0]} target="other/start" />
+                <ScenePortal
+                    name="entrance"
+                    enterDirection={[0, -1]}
+                    target="livingroom/exit"
+                />
+            </GameObject>
+            <GameObject x={16} y={3}>
+                <Collider />
+                <Interactable />
+                <ScenePortal
+                    name="exit"
+                    enterDirection={[1, 0]}
+                    target="kitchen/entrance"
+                />
             </GameObject>
             <Player x={6} y={3} />
         </>

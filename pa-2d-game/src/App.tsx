@@ -5,8 +5,10 @@ import Game from './@core/Game';
 import Scene from './@core/Scene';
 import SceneManager from './@core/SceneManager';
 import useWindowSize from './@core/useWindowSize';
-import OfficeScene from './scenes/OfficeScene';
-import OtherScene from './scenes/OtherScene';
+import HallwayScene from './scenes/HallwayScene';
+import LivingroomSceen from './scenes/LivingroomSceen';
+import StudyScene from './scenes/StudyScene';
+import KitchenScene from './scenes/KitchenScene';
 import soundData from './soundData';
 import spriteData from './spriteData';
 import globalStyles from './styles/global';
@@ -36,12 +38,18 @@ export default function App() {
             <div css={styles.root(width, height)}>
                 <Game cameraZoom={80}>
                     <AssetLoader urls={urls} placeholder="Loading assets ...">
-                        <SceneManager defaultScene="office">
-                            <Scene id="office">
-                                <OfficeScene />
+                        <SceneManager defaultScene="hallway">
+                            <Scene id="hallway">
+                                <HallwayScene />
                             </Scene>
-                            <Scene id="other">
-                                <OtherScene />
+                            <Scene id="livingroom">
+                                <LivingroomSceen />
+                            </Scene>
+                            <Scene id="study">
+                                <StudyScene />
+                            </Scene>
+                            <Scene id="kitchen">
+                                <KitchenScene />
                             </Scene>
                         </SceneManager>
                     </AssetLoader>
