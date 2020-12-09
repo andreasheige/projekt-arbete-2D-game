@@ -26,7 +26,7 @@ export interface GraphicProps {
 }
 
 // create geometry once and reuse
-const geometry = new THREE.PlaneBufferGeometry(1, 1);
+const geometry = new THREE.PlaneBufferGeometry(1, 1, 4, 4);
 
 export default memo(
     /* eslint-disable react/prop-types */

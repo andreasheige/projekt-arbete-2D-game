@@ -81,7 +81,7 @@ export default function HallwayScene() {
     return (
         <>
             <GameObject name="map">
-                <ambientLight />
+                {/* <ambientLight /> */}
                 <TileMap data={mapData} resolver={resolveMapTile} definesMapSize />
             </GameObject>
             <GameObject x={0} y={4}>
