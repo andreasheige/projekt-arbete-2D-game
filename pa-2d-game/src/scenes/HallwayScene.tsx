@@ -30,7 +30,7 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
 
     const floor = (
         <GameObject key={key} {...position} layer="ground">
-            <Sprite {...spriteData.objects} state="floor" />
+            <Sprite {...spriteData.objects} state="floor1" />
         </GameObject>
     );
 
@@ -48,7 +48,7 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
             return (
                 <GameObject key={key} {...position} layer="wall">
                     <Collider />
-                    <Sprite {...spriteData.objects} state="wall" />
+                    <Sprite {...spriteData.objects} state="wall1" />
                 </GameObject>
             );
         case 'W':
