@@ -81,7 +81,7 @@ export default function HallwayScene() {
     return (
         <>
             <GameObject name="map">
-                <ambientLight />
+                {/* <ambientLight /> */}
                 <TileMap data={mapData} resolver={resolveMapTile} definesMapSize />
             </GameObject>
             <GameObject x={0} y={4}>
@@ -93,7 +93,7 @@ export default function HallwayScene() {
                     target="livingroom/start"
                 />
             </GameObject>
-            <Player x={9} y={0} />
+            <Player x={9} y={0} spotlight />
         </>
     );
 }
