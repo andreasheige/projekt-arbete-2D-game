@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import Collider from '../@core/Collider';
 import GameObject from '../@core/GameObject';
 import Interactable from '../@core/Interactable';
@@ -10,9 +10,11 @@ import CoffeeMachine from '../entities/CoffeeMachine';
 import PizzaPickup from '../entities/PizzaPickup';
 import Plant from '../entities/Plant';
 import Rubbish from '../entities/Rubbish';
+import PowerButton from '../entities/PowerButton';
 import Player from '../entities/Player';
 import Workstation from '../entities/Workstation';
 import spriteData from '../spriteData';
+import GameContext from '../@core/Game';
 
 const floorChar = '·';
 const rubbishChar = 'r';
@@ -21,10 +23,10 @@ const mapData = insertRandomMarks(
     mapDataString(`
 # # # # # # # # # # # # # # # # #
 # · * * * · · · · · · · · · · · #
-# · * · * * · · · · · · · · · · #
+# · * · * * · · · * · · · · · · #
 * * * · · * · * * * * * * * * · #
 # · · · · * · * · · · · · · * · #
-# · · · · * * * · * * * * * * · #
+# · · · · * * * · p * * * * * · #
 # · · · · · · · · * · · · · · · #
 # # # # # # # # # * # # # # # # #
 `),
@@ -53,6 +55,13 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
                 <Fragment key={key}>
                     {floor}
                     <Rubbish {...position} />
+                </Fragment>
+            );
+        case 'p':
+            return (
+                <Fragment key={key}>
+                    {floor}
+                    <PowerButton {...position} />
                 </Fragment>
             );
         case 'o':
@@ -96,10 +105,12 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
 };
 
 export default function HallwayScene() {
+    // console.log(GameContext);
+    // const { publish, subscribe } = useContext(GameContext);
     return (
         <>
             <GameObject name="map">
-                {/* <ambientLight /> */}
+                <ambientLight intensity={0.7} />
                 <TileMap data={mapData} resolver={resolveMapTile} definesMapSize />
             </GameObject>
             <GameObject x={0} y={4}>

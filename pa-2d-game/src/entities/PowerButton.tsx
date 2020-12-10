@@ -10,19 +10,26 @@ function TriggerScript() {
         if (other.name === 'player') {
             // TODO: signal score loss
             // eslint-disable-next-line no-console
-            console.log('rubish collision');
+            console.log('redbutton collision', other);
+
+            other.subscribe('buttonclick', () => {
+                console.log('sssss');
+            });
         }
     });
 
     return null;
 }
 
-export default function Rubbish(props: GameObjectProps) {
-    const name = `rubbish-${props.x}-${props.y}`; // fallback name required for persisted flag
+export default function PowerButton(props: GameObjectProps) {
     return (
-        <GameObject name={name} persisted {...props}>
-            <Sprite {...spriteData.objects} state="plant" />
+        <GameObject layer="obstacle" {...props}>
             <Collider isTrigger />
+            <Sprite
+                {...spriteData.objects}
+                state="redbutton"
+                offset={{ x: 0, y: 0.25 }}
+            />
             <TriggerScript />
         </GameObject>
     );
