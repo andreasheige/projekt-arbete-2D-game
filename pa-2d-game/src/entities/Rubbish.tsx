@@ -10,7 +10,7 @@ function TriggerScript() {
         if (other.name === 'player') {
             // TODO: signal score loss
             // eslint-disable-next-line no-console
-            // console.log('rubish collision');
+            console.log('rubish collision');
         }
     });
 

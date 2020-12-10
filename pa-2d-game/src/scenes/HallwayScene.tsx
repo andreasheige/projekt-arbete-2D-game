@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useContext } from 'react';
 import Collider from '../@core/Collider';
 import GameObject from '../@core/GameObject';
 import Interactable from '../@core/Interactable';
@@ -10,9 +10,14 @@ import CoffeeMachine from '../entities/CoffeeMachine';
 import PizzaPickup from '../entities/PizzaPickup';
 import Plant from '../entities/Plant';
 import Rubbish from '../entities/Rubbish';
+import PowerButton from '../entities/PowerButton';
 import Player from '../entities/Player';
 import Workstation from '../entities/Workstation';
 import spriteData from '../spriteData';
+import { GameContext } from '../@core/Game';
+import useGameEvent from '../@core/useGameEvent';
+import { POWERBUTTON_ACTIVATION_EVENT } from '../constants/events';
+import { LIGHT_ACTIVE_ROOM1 } from '../constants/gameStates';
 
 const floorChar = '·';
 const rubbishChar = 'r';
@@ -20,8 +25,8 @@ const chanceOrRubbish = 0.5;
 const mapData = insertRandomMarks(
     mapDataString(`
 # # # # # # # # # # # # # # # # #
-# · * * * · · · · · · · · · · · #
-# · * · * * · · · · · · · · · · #
+# · * * * · · · · p · · · · · · #
+# · * · * * · · · * · · · · · · #
 * * * · · * · * * * * * * * * · #
 # · · · · * · * · · · · · · * · #
 # · · · · * * * · * * * * * * · #
@@ -53,6 +58,13 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
                 <Fragment key={key}>
                     {floor}
                     <Rubbish {...position} />
+                </Fragment>
+            );
+        case 'p':
+            return (
+                <Fragment key={key}>
+                    {floor}
+                    <PowerButton {...position} />
                 </Fragment>
             );
         case 'o':
@@ -96,10 +108,22 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
 };
 
 export default function HallwayScene() {
+    const { getGameState } = useContext(GameContext);
+    const isLightActive = getGameState(LIGHT_ACTIVE_ROOM1);
+    const [isSpotlightActive, setSpotlightActive] = useState(!isLightActive);
+
+    useGameEvent(
+        POWERBUTTON_ACTIVATION_EVENT,
+        () => {
+            setSpotlightActive(false);
+        },
+        [setSpotlightActive]
+    );
+
     return (
         <>
             <GameObject name="map">
-                {/* <ambientLight /> */}
+                {isLightActive && <ambientLight />}
                 <TileMap data={mapData} resolver={resolveMapTile} definesMapSize />
             </GameObject>
             <GameObject x={0} y={4}>
@@ -111,7 +135,7 @@ export default function HallwayScene() {
                     target="livingroom/start"
                 />
             </GameObject>
-            <Player x={9} y={0} spotlight />
+            <Player x={9} y={0} spotlight={isSpotlightActive} />
         </>
     );
 }
