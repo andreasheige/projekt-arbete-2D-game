@@ -31,6 +31,8 @@ function TriggerScript() {
 }
 
 export default function PowerButton(props: GameObjectProps) {
+    const { getGameState } = useContext(GameContext);
+    const isLightActive = getGameState(LIGHT_ACTIVE_ROOM1);
     return (
         <GameObject layer="obstacle" {...props}>
             <Collider isTrigger />
@@ -39,7 +41,7 @@ export default function PowerButton(props: GameObjectProps) {
                 state="redbutton"
                 offset={{ x: 0, y: 0.25 }}
             />
-            <TriggerScript />
+            {!isLightActive && <TriggerScript />}
         </GameObject>
     );
 }
