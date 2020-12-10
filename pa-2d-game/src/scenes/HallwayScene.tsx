@@ -5,24 +5,33 @@ import Interactable from '../@core/Interactable';
 import ScenePortal from '../@core/ScenePortal';
 import Sprite from '../@core/Sprite';
 import TileMap, { TileMapResolver } from '../@core/TileMap';
-import { mapDataString } from '../@core/utils/mapUtils';
+import { mapDataString, insertRandomMarks } from '../@core/utils/mapUtils';
 import CoffeeMachine from '../entities/CoffeeMachine';
 import PizzaPickup from '../entities/PizzaPickup';
 import Plant from '../entities/Plant';
+import Rubbish from '../entities/Rubbish';
 import Player from '../entities/Player';
 import Workstation from '../entities/Workstation';
 import spriteData from '../spriteData';
 
-const mapData = mapDataString(`
+const floorChar = '·';
+const rubbishChar = 'r';
+const chanceOrRubbish = 0.5;
+const mapData = insertRandomMarks(
+    mapDataString(`
 # # # # # # # # # # # # # # # # #
-# · · · · · · · · · · · · · · · #
-# · · · · · · · · · · · · · · · #
-· · · · · · · · · · · · · · · · #
-# · · · · · · · · · · · · · · · #
-# · · · · · · · · · · · · · · · #
-# · · · · · · · · · · · · · · · #
-# # # # # # # # # · # # # # # # #
-`);
+# · * * * · · · · · · · · · · · #
+# · * · * * · · · · · · · · · · #
+* * * · · * · * * * * * * * * · #
+# · · · · * · * · · · · · · * · #
+# · · · · * * * · * * * * * * · #
+# · · · · · · · · * · · · · · · #
+# # # # # # # # # * # # # # # # #
+`),
+    floorChar,
+    chanceOrRubbish,
+    rubbishChar
+);
 
 const resolveMapTile: TileMapResolver = (type, x, y) => {
     const key = `${x}-${y}`;
@@ -37,6 +46,15 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
     switch (type) {
         case '·':
             return floor;
+        case '*':
+            return floor;
+        case 'r':
+            return (
+                <Fragment key={key}>
+                    {floor}
+                    <Rubbish {...position} />
+                </Fragment>
+            );
         case 'o':
             return (
                 <Fragment key={key}>
