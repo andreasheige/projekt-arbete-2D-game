@@ -61,6 +61,30 @@ export function mapDataString(str: string): TileMapData {
     return data;
 }
 
+/**
+ * Will random replace characters in a map
+ * @param data map to be changed
+ * @param posMask character marked for change
+ * @param dencity chance of change: 0 to 1
+ * @param replacement character to replace posMask
+ */
+export function insertRandomMarks(
+    data: TileMapData,
+    posMask: string,
+    dencity: number,
+    replacement: string
+): TileMapData {
+    data.forEach(row => {
+        row.forEach((tile, idx) => {
+            if (tile === posMask) {
+                const char = Math.random() < dencity ? replacement : tile;
+                row[idx] = char;
+            }
+        });
+    });
+    return data;
+}
+
 export function injectMapData(
     source: TileMapData,
     data: TileMapData,
