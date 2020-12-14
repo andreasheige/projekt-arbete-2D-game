@@ -131,11 +131,13 @@ export default function HallwayScene() {
             <GameObject x={0} y={4}>
                 <Collider />
                 <Interactable />
-                <ScenePortal
-                    name="exit"
-                    enterDirection={[1, 0]}
-                    target="livingroom/start"
-                />
+                {isLightActiveAndDoorOpened && (
+                    <ScenePortal
+                        name="exit"
+                        enterDirection={[1, 0]}
+                        target="livingroom/start"
+                    />
+                )}
             </GameObject>
             <Player x={9} y={0} spotlight={isSpotlightActive} />
         </>
