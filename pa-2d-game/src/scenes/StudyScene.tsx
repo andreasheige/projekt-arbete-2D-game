@@ -12,6 +12,7 @@ import Plant from '../entities/Plant';
 import Player from '../entities/Player';
 import Workstation from '../entities/Workstation';
 import spriteData from '../spriteData';
+import MovableRubbish from '../entities/MovableRubbish';
 
 const mapData = mapDataString(`
 # # # # # # # # # # # # # # # # #
@@ -102,6 +103,8 @@ export default function StudySceen() {
                     target="kitchen/entrance"
                 />
             </GameObject>
+            <MovableRubbish x={8} y={3} />
+            <MovableRubbish x={9} y={3} />
             <Player x={6} y={3} />
         </>
     );
