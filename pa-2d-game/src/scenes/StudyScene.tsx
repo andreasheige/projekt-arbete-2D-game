@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import Collider from '../@core/Collider';
 import GameObject from '../@core/GameObject';
 import Interactable from '../@core/Interactable';
@@ -14,6 +14,11 @@ import Key from '../entities/Key';
 import Workstation from '../entities/Workstation';
 import spriteData from '../spriteData';
 import MovableRubbish from '../entities/MovableRubbish';
+import GatewayBlock from '../entities/GatewayBlock';
+import useGame from '../@core/useGame';
+import useGameEvent from '../@core/useGameEvent';
+import { OPEN_DOOR } from '../constants/events';
+import { KEY_TO_STUDY_FOUND } from '../constants/gameStates';
 
 const floorChar = '·';
 const rubbishChar = 'r';
@@ -97,8 +102,19 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
 };
 
 export default function StudySceen() {
+    const { getGameState } = useGame();
+    const isKeyFound = getGameState(KEY_TO_STUDY_FOUND);
+    const [isKeyDoorOpen, setKeyDoorOpen] = useState(isKeyFound);
+    useGameEvent(
+        OPEN_DOOR,
+        () => {
+            setKeyDoorOpen(true);
+        },
+        [setKeyDoorOpen]
+    );
+
     return (
-        <>
+        <Fragment>
             <GameObject name="map">
                 <ambientLight />
                 <TileMap data={mapData} resolver={resolveMapTile} definesMapSize />
@@ -112,19 +128,21 @@ export default function StudySceen() {
                     target="livingroom/exit"
                 />
             </GameObject>
+            {!isKeyDoorOpen && <GatewayBlock x={16} y={3} />}
             <GameObject x={16} y={3}>
                 <Collider />
                 <Interactable />
-                <ScenePortal
-                    name="exit"
-                    enterDirection={[1, 0]}
-                    target="kitchen/entrance"
-                />
+                {isKeyDoorOpen && (
+                    <ScenePortal
+                        name="exit"
+                        enterDirection={[1, 0]}
+                        target="kitchen/entrance"
+                    />
+                )}
             </GameObject>
             <Key x={12} y={3} />
-            {/* <MovableRubbish x={7} y={3} /> */}
             <MovableRubbish x={12} y={3} />
-            <Player x={6} y={3} />
-        </>
+            <Player x={12} y={0} />
+        </Fragment>
     );
 }

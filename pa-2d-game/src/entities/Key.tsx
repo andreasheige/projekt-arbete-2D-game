@@ -10,15 +10,21 @@ import spriteData from '../spriteData';
 import useGame from '../@core/useGame';
 import { KEY_TO_STUDY_FOUND } from '../constants/gameStates';
 import useGameLoop from '../@core/useGameLoop';
+import { OPEN_DOOR } from '../constants/events';
 
 function DisableOnTriggerScript({ onStepOnkey }) {
     const { getRef, getComponent } = useGameObject();
+    const { publish } = useGame();
     const playSfx = useSound(soundData.eating);
     const { setGameState } = useGame();
+    async function sendOpenDoorNotification() {
+        await publish(OPEN_DOOR, {});
+    }
     useGameObjectEvent<TriggerEvent>('trigger', other => {
         if (other.name === 'player') {
             playSfx();
             setGameState(KEY_TO_STUDY_FOUND, true);
+            sendOpenDoorNotification();
             getComponent<SpriteRef>('Sprite').setOpacity(1.0);
             onStepOnkey(getRef());
         }
