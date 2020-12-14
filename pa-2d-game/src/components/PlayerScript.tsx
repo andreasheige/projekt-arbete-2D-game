@@ -11,6 +11,8 @@ import usePointer from '../@core/usePointer';
 import usePointerClick from '../@core/usePointerClick';
 import tileUtils from '../@core/utils/tileUtils';
 import PlayerPathOverlay from './PlayerPathOverlay';
+import useGame from '../@core/useGame';
+import { PLAYER_POS, PREV_PLAYER_POS } from '../constants/gameStates';
 
 export default function PlayerScript() {
     const { getComponent, transform } = useGameObject();
@@ -18,6 +20,7 @@ export default function PlayerScript() {
     const findPath = usePathfinding();
     const [path, setPath] = useState<Position[]>([]);
     const [pathOverlayEnabled, setPathOverlayEnabled] = useState(true);
+    const { setGameState, getGameState } = useGame();
 
     // key controls
     const leftKey = useKeyPress(['ArrowLeft', 'a']);
@@ -77,6 +80,11 @@ export default function PlayerScript() {
 
         const [nextPosition] = path;
 
+        // Each time the player is about to move, the previus positon should be stored
+        const prevPos = getGameState(PLAYER_POS);
+        setGameState(PREV_PLAYER_POS, prevPos);
+        setGameState(PLAYER_POS, nextPosition);
+
         (async () => {
             const anyAction =
                 (await getComponent<MoveableRef>('Moveable')?.move(nextPosition)) ||
@@ -90,7 +98,7 @@ export default function PlayerScript() {
                 setPath(current => current.slice(1));
             }
         })();
-    }, [path, getComponent]);
+    }, [path, getComponent, getGameState, setGameState]);
 
     return (
         <PlayerPathOverlay
