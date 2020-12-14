@@ -11,14 +11,15 @@ import PizzaPickup from '../entities/PizzaPickup';
 import Plant from '../entities/Plant';
 import Player from '../entities/Player';
 import Workstation from '../entities/Workstation';
+import Refrigerator from '../entities/Refrigerator';
 import spriteData from '../spriteData';
 
 const mapData = mapDataString(`
 # # # # # # # # # # # # # # # # #
+# · · · · · · · · · · · · · R R #
 # · · · · · · · · · · · · · · · #
-# · · · · · · · · · · · · · · · #
-# · · · · · · · · · · · · · · · #
-· · · · · · · · · · · · · · · · #
+# · · · · · · · · · · · · # # # #
+· · · · · · · · · · · · · C # # #
 # · · · · · · · · · · · · · · · #
 # · · · · · · · · · · · · · · · #
 # # # # # # # # # # # # # # # # #
@@ -70,6 +71,13 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
                 <Fragment key={key}>
                     {floor}
                     <Plant {...position} />
+                </Fragment>
+            );
+        case 'R':
+            return (
+                <Fragment key={key}>
+                    {floor}
+                    <Refrigerator {...position} />
                 </Fragment>
             );
         default:
