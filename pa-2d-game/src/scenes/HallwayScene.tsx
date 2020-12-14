@@ -13,6 +13,7 @@ import Rubbish from '../entities/Rubbish';
 import PowerButton from '../entities/PowerButton';
 import Player from '../entities/Player';
 import Workstation from '../entities/Workstation';
+import GatewayBlock from '../entities/GatewayBlock';
 import spriteData from '../spriteData';
 import { GameContext } from '../@core/Game';
 import useGameEvent from '../@core/useGameEvent';
@@ -109,8 +110,8 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
 
 export default function HallwayScene() {
     const { getGameState } = useContext(GameContext);
-    const isLightActive = getGameState(LIGHT_ACTIVE_ROOM1);
-    const [isSpotlightActive, setSpotlightActive] = useState(!isLightActive);
+    const isLightActiveAndDoorOpened = getGameState(LIGHT_ACTIVE_ROOM1); // inital state is false
+    const [isSpotlightActive, setSpotlightActive] = useState(!isLightActiveAndDoorOpened);
 
     useGameEvent(
         POWERBUTTON_ACTIVATION_EVENT,
@@ -123,9 +124,10 @@ export default function HallwayScene() {
     return (
         <>
             <GameObject name="map">
-                {isLightActive && <ambientLight />}
+                {isLightActiveAndDoorOpened && <ambientLight />}
                 <TileMap data={mapData} resolver={resolveMapTile} definesMapSize />
             </GameObject>
+            {!isLightActiveAndDoorOpened && <GatewayBlock x={0} y={4} direction="left" />}
             <GameObject x={0} y={4}>
                 <Collider />
                 <Interactable />
