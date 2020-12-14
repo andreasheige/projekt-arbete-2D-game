@@ -31,7 +31,7 @@ const spriteData: { [index: string]: SpriteProps } = {
         },
     },
     objects: {
-        src: './assets/objects.png',
+        src: './assets/objects1.png',
         frameWidth: 20,
         frameHeight: 20,
         sheet: {
@@ -51,6 +51,7 @@ const spriteData: { [index: string]: SpriteProps } = {
             redbutton: [[5, 1]],
             refrigerator: [[6, 1]],
             plant: [[0, 2]],
+            ghost: [[3, 3]],
         },
     },
     footstep: {
