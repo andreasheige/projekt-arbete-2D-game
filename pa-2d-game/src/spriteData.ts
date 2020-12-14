@@ -31,7 +31,7 @@ const spriteData: { [index: string]: SpriteProps } = {
         },
     },
     objects: {
-        src: './assets/objects1.png',
+        src: './assets/objects.png',
         frameWidth: 20,
         frameHeight: 20,
         sheet: {
