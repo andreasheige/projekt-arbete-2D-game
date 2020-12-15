@@ -1,8 +1,7 @@
 import React, { CSSProperties, useContext } from 'react';
-import { ScoreContext } from './ScoreContext';
+import { ScoreContext } from '../@core/useScore';
 
 export default function ScreenScore() {
-    console.log('render');
     const { score } = useContext(ScoreContext);
     const myStyles: CSSProperties = {
         zIndex: 1000,

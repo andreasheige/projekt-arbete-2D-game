@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 
 interface ScoreContextValue {
     score: number;
-    changeScore: (level: number) => void;
+    changeScore: (level: number) => number;
 }
 
 export const ScoreContext = React.createContext<ScoreContextValue>(null);
@@ -12,11 +12,12 @@ interface Props {
 }
 
 export const ScoreProvider = ({ children }: Props) => {
-    const [score, setScore] = useState(100);
+    const [score, setScore] = useState(0);
 
     function changeScore(scoreDiff: number) {
-        console.log('changeScore new', scoreDiff);
-        setScore(score + scoreDiff);
+        const nextScore = score + scoreDiff;
+        setScore(nextScore);
+        return nextScore;
     }
 
     const contextValue: ScoreContextValue = {
@@ -29,6 +30,6 @@ export const ScoreProvider = ({ children }: Props) => {
     );
 };
 
-export function useScore() {
+export default function useScore() {
     return useContext(ScoreContext) as ScoreContextValue;
 }

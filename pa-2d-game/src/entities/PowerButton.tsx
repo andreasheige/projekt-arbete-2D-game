@@ -10,6 +10,7 @@ import { LIGHT_ACTIVE_ROOM1 } from '../constants/gameStates';
 import { GameContext } from '../@core/Game';
 import { useSound } from '../@core/Sound';
 import soundData from '../soundData';
+import { TURNING_ON_LIGHT } from '../constants/points';
 
 function TriggerScript() {
     const { publish } = useGame();
@@ -17,6 +18,7 @@ function TriggerScript() {
     const playSfx = useSound(soundData.eating);
     async function sendPowerbuttonNotification() {
         await publish(POWERBUTTON_ACTIVATION_EVENT, {});
+        await publish('CHANGE_SCORE', TURNING_ON_LIGHT);
     }
 
     useGameObjectEvent<TriggerEvent>('trigger', other => {

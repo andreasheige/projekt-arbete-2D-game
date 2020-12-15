@@ -12,7 +12,7 @@ import KitchenScene from './scenes/KitchenScene';
 import soundData from './soundData';
 import spriteData from './spriteData';
 import globalStyles from './styles/global';
-import { ScoreProvider } from './components/ScoreContext';
+import { ScoreProvider } from './@core/useScore';
 import ScreenScore from './components/ScreenScore';
 
 const styles = {
