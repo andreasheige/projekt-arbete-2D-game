@@ -12,6 +12,8 @@ import KitchenScene from './scenes/KitchenScene';
 import soundData from './soundData';
 import spriteData from './spriteData';
 import globalStyles from './styles/global';
+import { ScoreProvider } from './@core/useScore';
+import ScreenScore from './components/ScreenScore';
 
 const styles = {
     root: (width: number, height: number) => css`
@@ -36,24 +38,27 @@ export default function App() {
         <>
             <Global styles={globalStyles} />
             <div css={styles.root(width, height)}>
-                <Game cameraZoom={80}>
-                    <AssetLoader urls={urls} placeholder="Loading assets ...">
-                        <SceneManager defaultScene="hallway">
-                            <Scene id="hallway">
-                                <HallwayScene />
-                            </Scene>
-                            <Scene id="livingroom">
-                                <LivingroomSceen />
-                            </Scene>
-                            <Scene id="study">
-                                <StudyScene />
-                            </Scene>
-                            <Scene id="kitchen">
-                                <KitchenScene />
-                            </Scene>
-                        </SceneManager>
-                    </AssetLoader>
-                </Game>
+                <ScoreProvider>
+                    <Game cameraZoom={80}>
+                        <AssetLoader urls={urls} placeholder="Loading assets ...">
+                            <SceneManager defaultScene="hallway">
+                                <Scene id="hallway">
+                                    <HallwayScene />
+                                </Scene>
+                                <Scene id="livingroom">
+                                    <LivingroomSceen />
+                                </Scene>
+                                <Scene id="study">
+                                    <StudyScene />
+                                </Scene>
+                                <Scene id="kitchen">
+                                    <KitchenScene />
+                                </Scene>
+                            </SceneManager>
+                        </AssetLoader>
+                    </Game>
+                    <ScreenScore />
+                </ScoreProvider>
             </div>
         </>
     );

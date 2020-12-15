@@ -5,14 +5,21 @@ import Sprite from '../@core/Sprite';
 import useGameObjectEvent from '../@core/useGameObjectEvent';
 import spriteData from '../spriteData';
 import useGameLoop from '../@core/useGameLoop';
+import useGame from '../@core/useGame';
+import { HITTING_RUBBLE } from '../constants/points';
 
 function TriggerScript({ onHit }) {
+    const { publish } = useGame();
+
+    async function sendChangeScoreNotification() {
+        await publish('CHANGE_SCORE', HITTING_RUBBLE);
+    }
+
     useGameObjectEvent<TriggerEvent>('trigger', other => {
         if (other.name === 'player') {
             // TODO: signal score loss
-            // eslint-disable-next-line no-console
-            console.log('rubish collision');
             onHit();
+            sendChangeScoreNotification();
         }
     });
 

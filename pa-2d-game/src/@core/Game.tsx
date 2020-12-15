@@ -4,6 +4,7 @@ import { Canvas } from 'react-three-fiber';
 import { GameObjectLayer, GameObjectRef } from './GameObject';
 import { SceneExitEvent } from './Scene';
 import createPubSub, { PubSub } from './utils/createPubSub';
+import useScore from './useScore';
 
 export type GameObjectRegistry<T = GameObjectRef> = Map<symbol | string, T>;
 
@@ -22,6 +23,8 @@ export interface GameContextValue extends GameObjectRegistryUtils, PubSub {
         movementDuration: number;
         cameraZoom: number;
     };
+    score: number;
+    changeScore: (diff: number) => number;
     paused: boolean;
     setPaused: Dispatch<SetStateAction<boolean>>;
     mapSize: [number, number];
@@ -50,6 +53,7 @@ export default function Game({
     cameraZoom = 64,
     children,
 }: Props) {
+    const { changeScore, score } = useScore();
     const [paused, setPaused] = useState(false);
     const [mapSize, setMapSize] = useState<[number, number]>(() => [1, 1]);
     const [registryById] = useState<GameObjectRegistry>(() => new Map());
@@ -81,6 +85,12 @@ export default function Game({
             registryByLayer.clear();
         });
     }, [pubSub, registryById, registryByLayer, registryByName, registryByXY]);
+
+    useEffect(() => {
+        return pubSub.subscribe('CHANGE_SCORE', diff => {
+            changeScore(diff);
+        });
+    }, [pubSub, score, changeScore]);
 
     const registryUtils = useMemo<GameObjectRegistryUtils>(
         () => ({
@@ -135,6 +145,8 @@ export default function Game({
             movementDuration,
             cameraZoom,
         },
+        changeScore,
+        score,
         paused,
         setPaused,
         mapSize,
