@@ -5,14 +5,17 @@ import Sprite from '../@core/Sprite';
 import useGameObjectEvent from '../@core/useGameObjectEvent';
 import spriteData from '../spriteData';
 import useGameLoop from '../@core/useGameLoop';
+import useGame from '../@core/useGame';
 
 function TriggerScript({ onHit }) {
+    const { changeScore } = useGame();
     useGameObjectEvent<TriggerEvent>('trigger', other => {
         if (other.name === 'player') {
             // TODO: signal score loss
             // eslint-disable-next-line no-console
             console.log('rubish collision');
             onHit();
+            changeScore(-13);
         }
     });
 
