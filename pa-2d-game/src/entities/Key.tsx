@@ -10,7 +10,8 @@ import spriteData from '../spriteData';
 import useGame from '../@core/useGame';
 import { KEY_TO_STUDY_FOUND } from '../constants/gameStates';
 import useGameLoop from '../@core/useGameLoop';
-import { OPEN_DOOR } from '../constants/events';
+import { OPEN_DOOR, CHANGE_SCORE } from '../constants/events';
+import { FINDING_KEY_IN_STUDY_SCENE } from '../constants/points';
 
 function DisableOnTriggerScript({ onStepOnkey }) {
     const { getRef, getComponent } = useGameObject();
@@ -19,6 +20,7 @@ function DisableOnTriggerScript({ onStepOnkey }) {
     const { setGameState } = useGame();
     async function sendOpenDoorNotification() {
         await publish(OPEN_DOOR, {});
+        await publish(CHANGE_SCORE, FINDING_KEY_IN_STUDY_SCENE);
     }
     useGameObjectEvent<TriggerEvent>('trigger', other => {
         if (other.name === 'player') {
