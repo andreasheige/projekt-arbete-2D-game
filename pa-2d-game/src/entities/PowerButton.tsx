@@ -5,7 +5,7 @@ import Sprite from '../@core/Sprite';
 import useGameObjectEvent from '../@core/useGameObjectEvent';
 import spriteData from '../spriteData';
 import useGame from '../@core/useGame';
-import { POWERBUTTON_ACTIVATION_EVENT } from '../constants/events';
+import { POWERBUTTON_ACTIVATION_EVENT, CHANGE_SCORE } from '../constants/events';
 import { LIGHT_ACTIVE_ROOM1 } from '../constants/gameStates';
 import { GameContext } from '../@core/Game';
 import { useSound } from '../@core/Sound';
@@ -18,7 +18,7 @@ function TriggerScript() {
     const playSfx = useSound(soundData.eating);
     async function sendPowerbuttonNotification() {
         await publish(POWERBUTTON_ACTIVATION_EVENT, {});
-        await publish('CHANGE_SCORE', TURNING_ON_LIGHT);
+        await publish(CHANGE_SCORE, TURNING_ON_LIGHT);
     }
 
     useGameObjectEvent<TriggerEvent>('trigger', other => {
