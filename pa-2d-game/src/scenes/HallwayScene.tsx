@@ -19,6 +19,7 @@ import { GameContext } from '../@core/Game';
 import useGameEvent from '../@core/useGameEvent';
 import { POWERBUTTON_ACTIVATION_EVENT } from '../constants/events';
 import { LIGHT_ACTIVE_ROOM1 } from '../constants/gameStates';
+import { spritePosToFloor4x4 } from '../@core/utils/tileLoadingUtils';
 
 const floorChar = '·';
 const rubbishChar = 'r';
@@ -45,7 +46,7 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
 
     const floor = (
         <GameObject key={key} {...position} layer="ground">
-            <Sprite {...spriteData.objects} state="floor1" />
+            <Sprite {...spriteData.moreFloor} state={spritePosToFloor4x4(x, y)} />
         </GameObject>
     );
 
