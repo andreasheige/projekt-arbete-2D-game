@@ -13,11 +13,12 @@ import Player from '../entities/Player';
 import Workstation from '../entities/Workstation';
 import Ghost from '../entities/Ghost';
 import spriteData from '../spriteData';
+import Rat from '../entities/Rat';
 
 const mapData = mapDataString(`
 # # # # # # # # # # # # · # # # #
 # · · · · · · · · · · · · · · · #
-# · · · · · · · · · · · · · · · #
+# · · · · · · · R · · · · · · · #
 # · · · G · · · · · · · · · · · #
 # · · · · · · · · · · · · · · · ·
 # · · · · · · · · · · · · · · · #
@@ -78,6 +79,13 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
                 <Fragment key={key}>
                     {floor}
                     <Ghost {...position} />
+                </Fragment>
+            );
+        case 'R':
+            return (
+                <Fragment key={key}>
+                    {floor}
+                    <Rat {...position} />
                 </Fragment>
             );
         default:

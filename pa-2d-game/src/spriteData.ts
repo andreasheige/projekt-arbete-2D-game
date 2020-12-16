@@ -65,6 +65,21 @@ const spriteData: { [index: string]: SpriteProps } = {
         opacity: 0.75,
         frameTime: 150,
     },
+    rat: {
+        src: './assets/bouncing_rat.png',
+        frameWidth: 27.5,
+        frameHeight: 20,
+        sheet: {
+            rat: [
+                // [0, 0],
+                // [1, 0],
+                [0, 1],
+                [1, 1],
+                [0, 2],
+                [1, 2],
+            ],
+        },
+    },
 };
 
 export default spriteData;
