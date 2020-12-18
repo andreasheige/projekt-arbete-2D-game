@@ -6,3 +6,6 @@ package/
 /.eslintrc*
 /.prettierrc*
 /tsconfig.json
+.DS_Store
+.history/
+.vscode

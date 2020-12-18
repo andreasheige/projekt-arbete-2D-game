@@ -11,13 +11,15 @@ import PizzaPickup from '../entities/PizzaPickup';
 import Plant from '../entities/Plant';
 import Player from '../entities/Player';
 import Workstation from '../entities/Workstation';
+import Ghost from '../entities/Ghost';
 import spriteData from '../spriteData';
+import Rat from '../entities/Rat';
 
 const mapData = mapDataString(`
 # # # # # # # # # # # # · # # # #
 # · · · · · · · · · · · · · · · #
-# · · · · · · · · · · · · · · · #
-# · · · · · · · · · · · · · · · #
+# · · · · · · · R · · · · · · · #
+# · · · G · · · · · · · · · · · #
 # · · · · · · · · · · · · · · · ·
 # · · · · · · · · · · · · · · · #
 # · · · · · · · · · · · · · · · #
@@ -30,7 +32,7 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
 
     const floor = (
         <GameObject key={key} {...position} layer="ground">
-            <Sprite {...spriteData.objects} state="floor" />
+            <Sprite {...spriteData.objects} state="floor2" />
         </GameObject>
     );
 
@@ -48,7 +50,7 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
             return (
                 <GameObject key={key} {...position} layer="wall">
                     <Collider />
-                    <Sprite {...spriteData.objects} state="wall" />
+                    <Sprite {...spriteData.objects} state="wall2" />
                 </GameObject>
             );
         case 'W':
@@ -70,6 +72,20 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
                 <Fragment key={key}>
                     {floor}
                     <Plant {...position} />
+                </Fragment>
+            );
+        case 'G':
+            return (
+                <Fragment key={key}>
+                    {floor}
+                    <Ghost {...position} />
+                </Fragment>
+            );
+        case 'R':
+            return (
+                <Fragment key={key}>
+                    {floor}
+                    <Rat {...position} />
                 </Fragment>
             );
         default:
