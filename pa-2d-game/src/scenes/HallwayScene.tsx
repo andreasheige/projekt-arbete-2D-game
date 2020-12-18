@@ -20,6 +20,7 @@ import useGameEvent from '../@core/useGameEvent';
 import { POWERBUTTON_ACTIVATION_EVENT } from '../constants/events';
 import { LIGHT_ACTIVE_ROOM1 } from '../constants/gameStates';
 import { spritePosToFloor4x4 } from '../@core/utils/tileLoadingUtils';
+import Mal from '../entities/Mal';
 
 const floorChar = '·';
 const rubbishChar = 'r';
@@ -32,7 +33,7 @@ const mapData = insertRandomMarks(
 * * * · · * · * * * * * * * * · #
 # · · · · * · * · · · · · · * · #
 # · · · · * * * · * * * * * * · #
-# · · · · · · · · * · · · · · · #
+# · · · · · · · · * * · · · · · #
 # # # # # # # # # * # # # # # # #
 `),
     floorChar,
@@ -140,6 +141,7 @@ export default function HallwayScene() {
                     />
                 )}
             </GameObject>
+            <Mal x={10} y={1} />
             <Player x={9} y={0} spotlight={isSpotlightActive} />
         </>
     );
