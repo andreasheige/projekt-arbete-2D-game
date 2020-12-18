@@ -5,7 +5,11 @@ import Interactable from '../@core/Interactable';
 import ScenePortal from '../@core/ScenePortal';
 import Sprite from '../@core/Sprite';
 import TileMap, { TileMapResolver } from '../@core/TileMap';
-import { mapDataString, insertRandomMarks } from '../@core/utils/mapUtils';
+import {
+    mapDataString,
+    insertRandomMarks,
+    insertNRandomMarks,
+} from '../@core/utils/mapUtils';
 import CoffeeMachine from '../entities/CoffeeMachine';
 import PizzaPickup from '../entities/PizzaPickup';
 import Plant from '../entities/Plant';
@@ -40,6 +44,7 @@ const mapData = insertRandomMarks(
     chanceOrRubbish,
     rubbishChar
 );
+insertNRandomMarks(mapData, '*', 3, 'm');
 
 const resolveMapTile: TileMapResolver = (type, x, y) => {
     const key = `${x}-${y}`;
@@ -61,6 +66,13 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
                 <Fragment key={key}>
                     {floor}
                     <Rubbish {...position} />
+                </Fragment>
+            );
+        case 'm':
+            return (
+                <Fragment key={key}>
+                    {floor}
+                    <Mal {...position} />
                 </Fragment>
             );
         case 'p':
@@ -141,7 +153,6 @@ export default function HallwayScene() {
                     />
                 )}
             </GameObject>
-            <Mal x={10} y={1} />
             <Player x={9} y={0} spotlight={isSpotlightActive} />
         </>
     );

@@ -85,6 +85,29 @@ export function insertRandomMarks(
     return data;
 }
 
+export function insertNRandomMarks(
+    data: TileMapData,
+    posMask: string,
+    nItems: number,
+    replacement: string
+): TileMapData {
+    let nItemsLeft = nItems;
+    while (nItemsLeft !== 0) {
+        // NOTE: this code is a bit inefficient, but its only run once
+        /* eslint-disable */
+        data.forEach(row => {
+            row.forEach((tile, idx) => {
+                if (tile === posMask && Math.random() < 0.01) {
+                    row[idx] = replacement;
+                    nItemsLeft -= 1;
+                }
+            });
+        });
+        /* eslint-enable */
+    }
+    return data;
+}
+
 export function injectMapData(
     source: TileMapData,
     data: TileMapData,
