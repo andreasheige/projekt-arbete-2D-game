@@ -89,6 +89,19 @@ const spriteData: { [index: string]: SpriteProps } = {
         opacity: 0.75,
         frameTime: 150,
     },
+    mal: {
+        src: './assets/butterfly sheet.png',
+        frameWidth: 63,
+        frameHeight: 59,
+        sheet: {
+            default: [
+                [0, 0],
+                [6, 0],
+            ],
+        },
+        opacity: 1,
+        frameTime: 110,
+    },
     rat: {
         src: './assets/bouncing_rat.png',
         frameWidth: 27.5,

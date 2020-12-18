@@ -5,7 +5,11 @@ import Interactable from '../@core/Interactable';
 import ScenePortal from '../@core/ScenePortal';
 import Sprite from '../@core/Sprite';
 import TileMap, { TileMapResolver } from '../@core/TileMap';
-import { mapDataString, insertRandomMarks } from '../@core/utils/mapUtils';
+import {
+    mapDataString,
+    insertRandomMarks,
+    insertNRandomMarks,
+} from '../@core/utils/mapUtils';
 import CoffeeMachine from '../entities/CoffeeMachine';
 import PizzaPickup from '../entities/PizzaPickup';
 import Plant from '../entities/Plant';
@@ -20,6 +24,7 @@ import useGameEvent from '../@core/useGameEvent';
 import { POWERBUTTON_ACTIVATION_EVENT } from '../constants/events';
 import { LIGHT_ACTIVE_ROOM1 } from '../constants/gameStates';
 import { spritePosToFloor4x4 } from '../@core/utils/tileLoadingUtils';
+import Mal from '../entities/Mal';
 
 const floorChar = '·';
 const rubbishChar = 'r';
@@ -32,13 +37,14 @@ const mapData = insertRandomMarks(
 * * * · · * · * * * * * * * * · #
 # · · · · * · * · · · · · · * · #
 # · · · · * * * · * * * * * * · #
-# · · · · · · · · * · · · · · · #
+# · · · · · · · · * * · · · · · #
 # # # # # # # # # * # # # # # # #
 `),
     floorChar,
     chanceOrRubbish,
     rubbishChar
 );
+insertNRandomMarks(mapData, '*', 3, 'm');
 
 const resolveMapTile: TileMapResolver = (type, x, y) => {
     const key = `${x}-${y}`;
@@ -60,6 +66,13 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
                 <Fragment key={key}>
                     {floor}
                     <Rubbish {...position} />
+                </Fragment>
+            );
+        case 'm':
+            return (
+                <Fragment key={key}>
+                    {floor}
+                    <Mal {...position} />
                 </Fragment>
             );
         case 'p':
