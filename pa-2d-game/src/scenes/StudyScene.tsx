@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import Collider from '../@core/Collider';
-import GameObject from '../@core/GameObject';
+import GameObject, { Position } from '../@core/GameObject';
 import Interactable from '../@core/Interactable';
 import ScenePortal from '../@core/ScenePortal';
 import Sprite from '../@core/Sprite';
@@ -19,6 +19,7 @@ import useGame from '../@core/useGame';
 import useGameEvent from '../@core/useGameEvent';
 import { OPEN_DOOR } from '../constants/events';
 import { KEY_TO_STUDY_FOUND } from '../constants/gameStates';
+import ArrowClue from '../entities/ArrowClue';
 
 const floorChar = '·';
 const rubbishChar = 'r';
@@ -101,6 +102,14 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
     }
 };
 
+// temp solution, should be generatde
+const clues: Array<Position> = [
+    { x: 12, y: 1 },
+    { x: 9, y: 2 },
+    { x: 12, y: 5 },
+    { x: 12, y: 3 },
+];
+
 export default function StudySceen() {
     const { getGameState } = useGame();
     const isKeyFound = getGameState(KEY_TO_STUDY_FOUND);
@@ -142,6 +151,11 @@ export default function StudySceen() {
             </GameObject>
             <Key x={12} y={3} />
             <MovableRubbish x={12} y={3} />
+            <ArrowClue {...clues[0]} dest={clues[1]} />
+            <MovableRubbish {...clues[1]} />
+            <ArrowClue {...clues[1]} dest={clues[2]} />
+            <MovableRubbish {...clues[2]} />
+            <ArrowClue {...clues[2]} dest={clues[3]} />
             <Player x={12} y={0} />
         </Fragment>
     );

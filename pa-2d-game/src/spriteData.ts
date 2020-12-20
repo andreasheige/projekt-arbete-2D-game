@@ -78,6 +78,11 @@ const spriteData: { [index: string]: SpriteProps } = {
             floor33: [[3, 0]], // 1, 4
         },
     },
+    arrowClue: {
+        frameWidth: 338,
+        frameHeight: 256,
+        src: './assets/arrow.png',
+    },
     footstep: {
         src: './assets/footstep.png',
         sheet: {
