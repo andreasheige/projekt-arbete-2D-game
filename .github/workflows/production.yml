@@ -26,9 +26,6 @@ jobs:
       - name: Productin Build
         run: |
           yarn build
-      - name: Unit test
-        run: |
-          yarn test
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
         with: 
