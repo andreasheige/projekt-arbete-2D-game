@@ -54,6 +54,30 @@ const spriteData: { [index: string]: SpriteProps } = {
             ghost: [[3, 3]],
         },
     },
+    moreFloor: {
+        src: './assets/Chew Magna Fortress, UDK - Page 9 - lighter.png',
+        // src: './assets/testmap.png',
+        frameWidth: 128,
+        frameHeight: 128,
+        sheet: {
+            floor00: [[0, 3]],
+            floor01: [[1, 3]],
+            floor02: [[2, 3]],
+            floor03: [[3, 3]],
+            floor10: [[0, 2]],
+            floor11: [[1, 2]],
+            floor12: [[2, 2]],
+            floor13: [[3, 2]],
+            floor20: [[0, 1]],
+            floor21: [[1, 1]],
+            floor22: [[2, 1]],
+            floor23: [[3, 1]],
+            floor30: [[0, 0]],
+            floor31: [[1, 0]],
+            floor32: [[2, 0]],
+            floor33: [[3, 0]], // 1, 4
+        },
+    },
     footstep: {
         src: './assets/footstep.png',
         sheet: {
@@ -64,6 +88,19 @@ const spriteData: { [index: string]: SpriteProps } = {
         },
         opacity: 0.75,
         frameTime: 150,
+    },
+    mal: {
+        src: './assets/butterfly sheet.png',
+        frameWidth: 63,
+        frameHeight: 59,
+        sheet: {
+            default: [
+                [0, 0],
+                [6, 0],
+            ],
+        },
+        opacity: 1,
+        frameTime: 110,
     },
     rat: {
         src: './assets/bouncing_rat.png',

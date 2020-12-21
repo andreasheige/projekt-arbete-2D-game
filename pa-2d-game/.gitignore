@@ -1,8 +1,10 @@
 node_modules/
-build/
 package/
 # generated files by confy
 /babel.config.js
 /.eslintrc*
 /.prettierrc*
 /tsconfig.json
+.DS_Store
+.history/
+.vscode
