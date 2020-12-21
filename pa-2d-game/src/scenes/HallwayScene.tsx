@@ -25,6 +25,7 @@ import { POWERBUTTON_ACTIVATION_EVENT } from '../constants/events';
 import { LIGHT_ACTIVE_ROOM1 } from '../constants/gameStates';
 import { spritePosToFloor4x4 } from '../@core/utils/tileLoadingUtils';
 import Mal from '../entities/Mal';
+import IntoText from '../components/IntoText';
 
 const floorChar = '·';
 const rubbishChar = 'r';
@@ -122,10 +123,13 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
     }
 };
 
+const startPos = { x: 9, y: 0 };
+
 export default function HallwayScene() {
     const { getGameState } = useContext(GameContext);
     const isLightActiveAndDoorOpened = getGameState(LIGHT_ACTIVE_ROOM1); // inital state is false
     const [isSpotlightActive, setSpotlightActive] = useState(!isLightActiveAndDoorOpened);
+    const [displayIntroText, setDisplayIntroText] = useState(true);
 
     useGameEvent(
         POWERBUTTON_ACTIVATION_EVENT,
@@ -153,7 +157,17 @@ export default function HallwayScene() {
                     />
                 )}
             </GameObject>
-            <Player x={9} y={0} spotlight={isSpotlightActive} />
+            <Player {...startPos} spotlight={isSpotlightActive} />
+            <IntoText setDisplayIntroText={setDisplayIntroText} startPos={startPos}>
+                {displayIntroText && (
+                    <div>
+                        <p>Ett mörkt stökigt rum...</p>
+                        <p>Undvik att trampa på skräpet.</p>
+                        <p>Tänd ljuset genom att gå på ljusknappen.</p>
+                        <p>Att fånga malarna i rummet ger extra poäng.</p>
+                    </div>
+                )}
+            </IntoText>
         </>
     );
 }
