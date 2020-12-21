@@ -83,6 +83,11 @@ const spriteData: { [index: string]: SpriteProps } = {
         frameHeight: 256,
         src: './assets/arrow.png',
     },
+    cleaningBucket: {
+        frameWidth: 256,
+        frameHeight: 256,
+        src: './assets/bucket256.png',
+    },
     footstep: {
         src: './assets/footstep.png',
         sheet: {

@@ -6,18 +6,26 @@ import spriteData from '../spriteData';
 import useGameObject from '../@core/useGameObject';
 import useGameObjectEvent from '../@core/useGameObjectEvent';
 import { calcAngle } from '../@core/utils/rotation';
+import useGame from '../@core/useGame';
 
 interface ArrowClueProps extends GameObjectProps {
     dest: Position;
+    order: number;
 }
 
-function DirectArrayScript({ dest, setAngle, setTigged }) {
+function DirectArrayScript({ dest, setAngle, setTigged, clueOrder }) {
     const { transform } = useGameObject();
+    const { setGameState, getGameState } = useGame();
 
     useGameObjectEvent<TriggerEvent>('trigger', other => {
-        if (other.name === 'player') {
+        /* eslint-disable */
+        const triggedClueOrder = getGameState('TRIEGGED_CLUE_ORDER');
+        const expectedOrderNb = triggedClueOrder ? triggedClueOrder + 1 : 1;
+        /* eslint-enable */
+        if (other.name === 'player' && clueOrder === expectedOrderNb) {
             setAngle(calcAngle(transform.x, transform.y, dest.x, dest.y));
             setTigged(true);
+            setGameState('TRIEGGED_CLUE_ORDER', expectedOrderNb);
         }
     });
     return null;
@@ -42,6 +50,7 @@ export default function ArrowClue(props: ArrowClueProps) {
                 dest={props.dest}
                 setAngle={setAngle}
                 setTigged={setTigged}
+                clueOrder={props.order}
             />
         </GameObject>
     );

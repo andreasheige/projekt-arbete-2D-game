@@ -1,5 +1,5 @@
 import React from 'react';
-import Collider, { TriggerEvent } from '../@core/Collider';
+import Collider, { CollisionEvent } from '../@core/Collider';
 import GameObject, { GameObjectProps } from '../@core/GameObject';
 import Sprite from '../@core/Sprite';
 import spriteData from '../spriteData';
@@ -11,24 +11,24 @@ import useGame from '../@core/useGame';
 import { PREV_PLAYER_POS, PLAYER_POS } from '../constants/gameStates';
 
 function TriggerScript() {
-    const { getComponent } = useGameObject();
-    const { getGameState, findGameObjectsByXY } = useGame();
+    const { getComponent, getRef } = useGameObject();
+    const { getGameState, setGameState, findGameObjectsByXY } = useGame();
 
     function tileIsFree(pos) {
         const destPosObject = findGameObjectsByXY(pos.x, pos.y);
-        // assuming the tile only contains ground object
-        return destPosObject.length === 1;
+        return destPosObject.find(i => i.layer === 'obstacle') === undefined;
     }
 
-    useGameObjectEvent<TriggerEvent>('trigger', other => {
-        if (other.name === 'player') {
-            const prevPos = getGameState(PREV_PLAYER_POS);
-            const pos = getGameState(PLAYER_POS);
-            const diff = { x: pos.x - prevPos.x, y: pos.y - prevPos.y };
-            const dest = { x: pos.x + diff.x, y: pos.y + diff.y };
-            if (tileIsFree(dest)) {
-                getComponent<MoveableRef>('Moveable').move(dest);
-            }
+    useGameObjectEvent<CollisionEvent>('collision', () => {
+        const prevPos = getGameState(PREV_PLAYER_POS);
+        const pos = getGameState(PLAYER_POS);
+        const diff = { x: pos.x - prevPos.x, y: pos.y - prevPos.y };
+        const dest = { x: pos.x + diff.x, y: pos.y + diff.y };
+        if (tileIsFree(dest)) {
+            getComponent<MoveableRef>('Moveable').move(dest);
+        } else if (getGameState('CLEANING_EQUIPPED')) {
+            getRef().setDisabled(true);
+            setGameState('CLEANING_EQUIPPED', false);
         }
     });
 
@@ -40,7 +40,7 @@ export default function MovableRubbish(props: GameObjectProps) {
         <GameObject layer="obstacle" {...props}>
             <Moveable />
             <Interactable />
-            <Collider isTrigger />
+            <Collider />
             <Sprite {...spriteData.objects} state="plant" offset={{ x: 0, y: 0.25 }} />
             <TriggerScript />
         </GameObject>
