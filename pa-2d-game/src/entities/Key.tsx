@@ -15,7 +15,7 @@ import { FINDING_KEY_IN_STUDY_SCENE } from '../constants/points';
 
 function DisableOnTriggerScript({ onStepOnkey }) {
     const { getRef, getComponent } = useGameObject();
-    const { publish } = useGame();
+    const { publish, getGameState } = useGame();
     const playSfx = useSound(soundData.eating);
     const { setGameState } = useGame();
     async function sendOpenDoorNotification() {
@@ -23,7 +23,8 @@ function DisableOnTriggerScript({ onStepOnkey }) {
         await publish(CHANGE_SCORE, FINDING_KEY_IN_STUDY_SCENE);
     }
     useGameObjectEvent<TriggerEvent>('trigger', other => {
-        if (other.name === 'player') {
+        const triggedClueOrder = getGameState('TRIEGGED_CLUE_ORDER');
+        if (other.name === 'player' && triggedClueOrder === 3) {
             playSfx();
             setGameState(KEY_TO_STUDY_FOUND, true);
             sendOpenDoorNotification();
