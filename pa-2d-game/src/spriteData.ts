@@ -112,6 +112,19 @@ const spriteData: { [index: string]: SpriteProps } = {
         opacity: 1,
         frameTime: 110,
     },
+    bat: {
+        src: './assets/bat.png',
+        frameWidth: 16,
+        frameHeight: 16,
+        sheet: {
+            default: [
+                [0, 0],
+                [2, 0],
+            ],
+        },
+        opacity: 1,
+        frameTime: 110,
+    },
     rat: {
         src: './assets/bouncing_rat.png',
         frameWidth: 27.5,
