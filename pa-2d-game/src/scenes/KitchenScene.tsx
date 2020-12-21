@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import Bat from '../entities/Bat';
 import Collider from '../@core/Collider';
 import GameObject from '../@core/GameObject';
 import Interactable from '../@core/Interactable';
@@ -18,7 +19,7 @@ const mapData = mapDataString(`
 # # # # # # # # # # # # # # # # #
 # · · · · · · · · · · · · · R R #
 # · · · · · · · · · · · · · · · #
-# · · · · · · · · · · · · # # # #
+# · · · · · · B · · · · · # # # #
 · · · · · · · · · · · · · C # # #
 # · · · · · · · · · · · · · · · #
 # · · · · · · · · · · · · · · · #
@@ -78,6 +79,13 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
                 <Fragment key={key}>
                     {floor}
                     <Refrigerator {...position} />
+                </Fragment>
+            );
+        case 'B':
+            return (
+                <Fragment key={key}>
+                    {floor}
+                    <Bat {...position} />
                 </Fragment>
             );
         default:
