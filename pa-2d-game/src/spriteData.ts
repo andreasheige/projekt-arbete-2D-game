@@ -51,7 +51,7 @@ const spriteData: { [index: string]: SpriteProps } = {
             redbutton: [[5, 1]],
             refrigerator: [[6, 1]],
             plant: [[0, 2]],
-            // ghost: [[3, 3]],
+            ghost: [[3, 3]],
         },
     },
     moreFloor: {
@@ -101,21 +101,6 @@ const spriteData: { [index: string]: SpriteProps } = {
         },
         opacity: 1,
         frameTime: 110,
-    },
-    ghost: {
-        src: './assets/animated_ghost.png',
-        frameWidth: 60,
-        frameHeight: 60,
-        sheet: {
-            rat: [
-                // [0, 0],
-                // [1, 0],
-                [0, 1],
-                [1, 1],
-                [0, 2],
-                [1, 2],
-            ],
-        },
     },
     rat: {
         src: './assets/bouncing_rat.png',
