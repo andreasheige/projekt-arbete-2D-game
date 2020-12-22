@@ -145,19 +145,19 @@ const spriteData: { [index: string]: SpriteProps } = {
         frameWidth: 16,
         frameHeight: 16,
         sheet: {
-            food01: [[1, 10]], // bread
-            food02: [[5, 6]], // butter
-            food03: [[5, 1]], // tomato
-            food04: [[5, 7]], // chese
-            food05: [[4, 7]], // bacon
-            food06: [[4, 9]], // sausage
-            food07: [[5, 10]], // egg
-            food08: [[2, 2]], // onion
-            food09: [[3, 0]], // apple
-            food10: [[3, 4]], // banana
-            food11: [[3, 7]], // watermelon
-            food12: [[7, 4]], // candy
-            food13: [[2, 6]], // cucumber
+            bread: [[10, 1]],
+            butter: [[6, 5]],
+            tomato: [[1, 5]],
+            cheese: [[7, 5]],
+            bacon: [[7, 4]],
+            sausage: [[9, 4]],
+            egg: [[10, 5]],
+            onion: [[2, 2]],
+            apple: [[0, 3]],
+            banana: [[4, 3]],
+            watermelon: [[7, 3]],
+            candy: [[4, 7]],
+            cucumber: [[6, 2]],
         },
     },
 };
