@@ -1,5 +1,4 @@
 import React from 'react';
-import * as THREE from 'three';
 import Collider, { TriggerEvent } from '../@core/Collider';
 import GameObject, { GameObjectProps } from '../@core/GameObject';
 import Sprite from '../@core/Sprite';
@@ -34,13 +33,11 @@ function TriggerScript() {
 }
 
 export default function Bat(props: GameObjectProps) {
-    const lightTarget = new THREE.Mesh();
     return (
         <GameObject layer="obstacle" {...props}>
             <Collider isTrigger />
             <Moveable />
             <Sprite {...spriteData.bat} offset={{ x: 0, y: 0 }} basic />
-            <primitive object={lightTarget} position={[0, 0, 1.5]} />
             <RunningAwayScript reactionSpeed={500} />
             <TriggerScript />
         </GameObject>
