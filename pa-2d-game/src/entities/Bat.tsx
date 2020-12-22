@@ -41,14 +41,7 @@ export default function Bat(props: GameObjectProps) {
             <Moveable />
             <Sprite {...spriteData.bat} offset={{ x: 0, y: 0 }} basic />
             <primitive object={lightTarget} position={[0, 0, 1.5]} />
-            <spotLight
-                position={[0, 0, 4.5]}
-                angle={0.25}
-                penumbra={1}
-                target={lightTarget}
-                intensity={0.2}
-            />
-            <RunningAwayScript reactionSpeed={1000} />
+            <RunningAwayScript reactionSpeed={500} />
             <TriggerScript />
         </GameObject>
     );
