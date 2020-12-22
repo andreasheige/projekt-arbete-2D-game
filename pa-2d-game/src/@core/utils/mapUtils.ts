@@ -92,7 +92,7 @@ export function insertNRandomMarks(
     replacement: string
 ): TileMapData {
     let nItemsLeft = nItems;
-    while (nItemsLeft !== 0) {
+    while (nItemsLeft < 1) {
         // NOTE: this code is a bit inefficient, but its only run once
         /* eslint-disable */
         data.forEach(row => {
