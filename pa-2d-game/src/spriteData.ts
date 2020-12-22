@@ -140,6 +140,26 @@ const spriteData: { [index: string]: SpriteProps } = {
             ],
         },
     },
+    food: {
+        src: './assets/Food.png',
+        frameWidth: 16,
+        frameHeight: 16,
+        sheet: {
+            food01: [[1, 10]], // bread
+            food02: [[5, 6]], // butter
+            food03: [[5, 1]], // tomato
+            food04: [[5, 7]], // chese
+            food05: [[4, 7]], // bacon
+            food06: [[4, 9]], // sausage
+            food07: [[5, 10]], // egg
+            food08: [[2, 2]], // onion
+            food09: [[3, 0]], // apple
+            food10: [[3, 4]], // banana
+            food11: [[3, 7]], // watermelon
+            food12: [[7, 4]], // candy
+            food13: [[2, 6]], // cucumber
+        },
+    },
 };
 
 export default spriteData;
