@@ -5,6 +5,8 @@ import Sprite from '../@core/Sprite';
 import spriteData from '../spriteData';
 import useGameObjectEvent from '../@core/useGameObjectEvent';
 import useGame from '../@core/useGame';
+import ScoreScript from '../components/ScoreScript';
+import { USE_CLEANING_COST } from '../constants/points';
 
 function TriggerScript() {
     const { publish, setGameState } = useGame();
@@ -26,6 +28,7 @@ export default function CleaningBucket(props: GameObjectProps) {
             <Collider isTrigger />
             <Sprite {...spriteData.cleaningBucket} offset={{ x: 0, y: 0.0 }} />
             <TriggerScript />
+            <ScoreScript scoreChange={USE_CLEANING_COST} />
         </GameObject>
     );
 }

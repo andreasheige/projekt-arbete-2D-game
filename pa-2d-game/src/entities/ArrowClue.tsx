@@ -7,6 +7,8 @@ import useGameObject from '../@core/useGameObject';
 import useGameObjectEvent from '../@core/useGameObjectEvent';
 import { calcAngle } from '../@core/utils/rotation';
 import useGame from '../@core/useGame';
+import ScoreScript from '../components/ScoreScript';
+import { ARROW_CLUE_REWARD } from '../constants/points';
 
 interface ArrowClueProps extends GameObjectProps {
     dest: Position;
@@ -52,6 +54,7 @@ export default function ArrowClue(props: ArrowClueProps) {
                 setTigged={setTigged}
                 clueOrder={props.order}
             />
+            <ScoreScript scoreChange={ARROW_CLUE_REWARD} once />
         </GameObject>
     );
 }
