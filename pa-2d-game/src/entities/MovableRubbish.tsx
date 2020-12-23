@@ -9,10 +9,14 @@ import useGameObjectEvent from '../@core/useGameObjectEvent';
 import useGameObject from '../@core/useGameObject';
 import useGame from '../@core/useGame';
 import { PREV_PLAYER_POS, PLAYER_POS } from '../constants/gameStates';
+import soundData from '../soundData';
+import { useSound } from '../@core/Sound';
 
 function TriggerScript() {
     const { getComponent, getRef } = useGameObject();
     const { getGameState, setGameState, findGameObjectsByXY } = useGame();
+    const playPush = useSound(soundData.push);
+    const playEat = useSound(soundData.eating);
 
     function tileIsFree(pos) {
         const destPosObject = findGameObjectsByXY(pos.x, pos.y);
@@ -23,12 +27,14 @@ function TriggerScript() {
         const prevPos = getGameState(PREV_PLAYER_POS);
         const pos = getGameState(PLAYER_POS);
         const diff = { x: pos.x - prevPos.x, y: pos.y - prevPos.y };
-        const dest = { x: pos.x + diff.x, y: pos.y + diff.y };
+        const dest = { x: Math.abs(pos.x + diff.x), y: Math.abs(pos.y + diff.y) };
         if (tileIsFree(dest)) {
+            playPush();
             getComponent<MoveableRef>('Moveable').move(dest);
         } else if (getGameState('CLEANING_EQUIPPED')) {
             getRef().setDisabled(true);
             setGameState('CLEANING_EQUIPPED', false);
+            playEat();
         }
     });
 

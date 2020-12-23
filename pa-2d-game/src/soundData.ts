@@ -13,6 +13,18 @@ const soundData: { [index: string]: SoundProps } = {
         src: './assets/sfx/footstep.wav',
         volume: 0.75,
     },
+    splash: {
+        src: './assets/sfx/splash.mp3',
+        volume: 0.75,
+    },
+    push: {
+        src: './assets/sfx/Box Push.mp3',
+        volume: 0.75,
+    },
+    keys: {
+        src: './assets/sfx/Keys Jingle.mp3',
+        volume: 0.75,
+    },
 };
 
 export default soundData;

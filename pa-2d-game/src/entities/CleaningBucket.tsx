@@ -7,9 +7,12 @@ import useGameObjectEvent from '../@core/useGameObjectEvent';
 import useGame from '../@core/useGame';
 import ScoreScript from '../components/ScoreScript';
 import { USE_CLEANING_COST } from '../constants/points';
+import { useSound } from '../@core/Sound';
+import soundData from '../soundData';
 
 function TriggerScript() {
     const { publish, setGameState } = useGame();
+    const playSfx = useSound(soundData.splash);
     async function sendNotification() {
         await publish('CLEANING_EQUIPPED', {});
     }
@@ -17,6 +20,7 @@ function TriggerScript() {
         if (other.name === 'player') {
             sendNotification();
             setGameState('CLEANING_EQUIPPED', true);
+            playSfx();
         }
     });
     return null;

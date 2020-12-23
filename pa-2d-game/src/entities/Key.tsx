@@ -16,7 +16,7 @@ import { FINDING_KEY_IN_STUDY_SCENE } from '../constants/points';
 function DisableOnTriggerScript({ onStepOnkey }) {
     const { getRef, getComponent } = useGameObject();
     const { publish, getGameState } = useGame();
-    const playSfx = useSound(soundData.eating);
+    const playSfx = useSound(soundData.keys);
     const { setGameState } = useGame();
     async function sendOpenDoorNotification() {
         await publish(OPEN_DOOR, {});
