@@ -27,7 +27,7 @@ function TriggerScript() {
         const prevPos = getGameState(PREV_PLAYER_POS);
         const pos = getGameState(PLAYER_POS);
         const diff = { x: pos.x - prevPos.x, y: pos.y - prevPos.y };
-        const dest = { x: Math.abs(pos.x + diff.x), y: Math.abs(pos.y + diff.y) };
+        const dest = { x: pos.x + diff.x, y: pos.y + diff.y };
         if (tileIsFree(dest)) {
             playPush();
             getComponent<MoveableRef>('Moveable').move(dest);
