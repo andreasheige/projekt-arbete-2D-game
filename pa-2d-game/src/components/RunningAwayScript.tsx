@@ -8,7 +8,7 @@ import tileUtils from '../@core/utils/tileUtils';
 import { MoveableRef } from '../@core/Moveable';
 import { PLAYER_POS } from '../constants/gameStates';
 
-export default function RunningAwayScript({ reactionSpeed }) {
+export default function RunningAwayScript({ reactionSpeed, isEaten }) {
     const { getComponent, transform } = useGameObject();
     const { setGameState, getGameState, findGameObjectsByXY } = useGame();
     const [path, setPath] = useState<Position[]>([]);
@@ -27,7 +27,6 @@ export default function RunningAwayScript({ reactionSpeed }) {
      */
     function selectBestEscapeOption(pos: Position, playerPos: Position) {
         const possibleMoves = [];
-        // debugger;
         for (let y = 0; y < 3; y++) {
             for (let x = 0; x < 3; x++) {
                 if (x === 1 && y === 1) continue; // no movement
@@ -51,6 +50,7 @@ export default function RunningAwayScript({ reactionSpeed }) {
     }
 
     useGameLoop(() => {
+        if (isEaten) return;
         const now = new Date().getTime();
         if (now - lastActTime < reactionSpeed) return;
 

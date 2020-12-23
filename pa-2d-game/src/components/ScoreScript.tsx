@@ -40,9 +40,10 @@ export default function ScoreScript(props: IntoTextProps) {
         if (!isActive) return;
         if (time0.current === 0) time0.current = time;
         if (childRef.current.position) {
-            const diff = (time - time0.current) * 0.002;
-            childRef.current.position.set(0, diff, 0);
-            if (diff > 2) {
+            const diffY = (time - time0.current) * 0.002;
+            const diffX = 0.1 * Math.sin((time - time0.current) * 0.01);
+            childRef.current.position.set(diffX, diffY, 0);
+            if (diffY > 2) {
                 setActive(false);
                 time0.current = 0;
             }
