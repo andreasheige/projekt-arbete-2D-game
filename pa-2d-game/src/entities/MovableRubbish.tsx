@@ -8,7 +8,7 @@ import Moveable, { MoveableRef } from '../@core/Moveable';
 import useGameObjectEvent from '../@core/useGameObjectEvent';
 import useGameObject from '../@core/useGameObject';
 import useGame from '../@core/useGame';
-import { PREV_PLAYER_POS, PLAYER_POS } from '../constants/gameStates';
+import { PLAYER_POS } from '../constants/gameStates';
 import soundData from '../soundData';
 import { useSound } from '../@core/Sound';
 
@@ -24,13 +24,14 @@ function TriggerScript() {
     }
 
     useGameObjectEvent<CollisionEvent>('collision', () => {
-        const prevPos = getGameState(PREV_PLAYER_POS);
+        const attemPos = getGameState('ATTEMP_MOVE_POS');
         const pos = getGameState(PLAYER_POS);
-        const diff = { x: pos.x - prevPos.x, y: pos.y - prevPos.y };
-        const dest = { x: pos.x + diff.x, y: pos.y + diff.y };
-        if (tileIsFree(dest)) {
+        const diff = { x: attemPos.x - pos.x, y: attemPos.y - pos.y };
+        const destPos = { x: attemPos.x + diff.x, y: attemPos.y + diff.y };
+
+        if (tileIsFree(destPos)) {
             playPush();
-            getComponent<MoveableRef>('Moveable').move(dest);
+            getComponent<MoveableRef>('Moveable').move(destPos);
         } else if (getGameState('CLEANING_EQUIPPED')) {
             getRef().setDisabled(true);
             setGameState('CLEANING_EQUIPPED', false);
