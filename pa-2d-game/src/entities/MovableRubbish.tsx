@@ -20,7 +20,10 @@ function TriggerScript() {
 
     function tileIsFree(pos) {
         const destPosObject = findGameObjectsByXY(pos.x, pos.y);
-        return destPosObject.find(i => i.layer === 'obstacle') === undefined;
+        return (
+            destPosObject.find(i => i.layer === 'obstacle' || i.layer === 'wall') ===
+            undefined
+        );
     }
 
     useGameObjectEvent<CollisionEvent>('collision', () => {
