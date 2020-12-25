@@ -13,7 +13,6 @@ import {
 } from '../@core/utils/mapUtils';
 import CoffeeMachine from '../entities/CoffeeMachine';
 import PizzaPickup from '../entities/PizzaPickup';
-import Plant from '../entities/Plant';
 import Player from '../entities/Player';
 import Refrigerator from '../entities/Refrigerator';
 import Apple from '../entities/food/apple';
@@ -74,13 +73,6 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
                 <Fragment key={key}>
                     {floor}
                     <CoffeeMachine {...position} />
-                </Fragment>
-            );
-        case 'T':
-            return (
-                <Fragment key={key}>
-                    {floor}
-                    <Plant {...position} />
                 </Fragment>
             );
         case 'R':
