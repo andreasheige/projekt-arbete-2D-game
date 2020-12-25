@@ -7,6 +7,7 @@ import useGame from '../@core/useGame';
 
 interface IntoTextProps extends HTMLProps {
     scoreChange: number;
+    once?: boolean;
 }
 
 export default function ScoreScript(props: IntoTextProps) {
@@ -14,6 +15,7 @@ export default function ScoreScript(props: IntoTextProps) {
     const [isActive, setActive] = useState(false);
     const [textColor, setTextColor] = useState('green');
     const time0 = useRef(0);
+    const hasBeenTriggedBefore = useRef(false);
     const childRef = useRef<THREE.Group>();
     const { publish } = useGame();
 
@@ -29,6 +31,8 @@ export default function ScoreScript(props: IntoTextProps) {
     }, []);
 
     useGameObjectEvent<TriggerEvent>('trigger', other => {
+        if (props.once && hasBeenTriggedBefore.current) return;
+        hasBeenTriggedBefore.current = true;
         if (other.name === 'player') {
             props.scoreChange < 0 ? setTextColor('red') : setTextColor('green');
             setActive(true);

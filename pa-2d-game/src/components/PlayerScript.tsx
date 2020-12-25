@@ -13,6 +13,7 @@ import tileUtils from '../@core/utils/tileUtils';
 import PlayerPathOverlay from './PlayerPathOverlay';
 import useGame from '../@core/useGame';
 import { PLAYER_POS, PREV_PLAYER_POS } from '../constants/gameStates';
+import useGameObjectEvent from '../@core/useGameObjectEvent';
 
 export default function PlayerScript() {
     const { getComponent, transform } = useGameObject();
@@ -27,6 +28,29 @@ export default function PlayerScript() {
     const rightKey = useKeyPress(['ArrowRight', 'd']);
     const upKey = useKeyPress(['ArrowUp', 'w']);
     const downKey = useKeyPress(['ArrowDown', 's']);
+
+    // did-change-position
+    useGameObjectEvent(
+        'attempt-move',
+        p => {
+            const prevPos = getGameState(PLAYER_POS);
+            if (prevPos && p.x === prevPos.x && p.y === prevPos.y) {
+                return;
+            }
+            setGameState('ATTEMP_MOVE_POS', p);
+        },
+        []
+    );
+
+    useGameObjectEvent(
+        'did-change-position',
+        p => {
+            const prevPos = getGameState(PLAYER_POS);
+            setGameState(PREV_PLAYER_POS, prevPos);
+            setGameState(PLAYER_POS, p);
+        },
+        []
+    );
 
     useGameLoop(() => {
         const direction = {
@@ -81,9 +105,10 @@ export default function PlayerScript() {
         const [nextPosition] = path;
 
         // Each time the player is about to move, the previus positon should be stored
-        const prevPos = getGameState(PLAYER_POS);
-        setGameState(PREV_PLAYER_POS, prevPos);
-        setGameState(PLAYER_POS, nextPosition);
+        // const prevPos = getGameState(PLAYER_POS);
+        // setGameState(PREV_PLAYER_POS, prevPos);
+        // setGameState(PLAYER_POS, nextPosition);
+        // console.log(nextPosition, prevPos);
 
         (async () => {
             const anyAction =

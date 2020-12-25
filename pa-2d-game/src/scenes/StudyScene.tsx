@@ -21,6 +21,7 @@ import { OPEN_DOOR } from '../constants/events';
 import { KEY_TO_STUDY_FOUND } from '../constants/gameStates';
 import ArrowClue from '../entities/ArrowClue';
 import CleaningBucket from '../entities/CleaningBucket';
+// import IntoText from '../components/IntoText';
 
 const floorChar = '·';
 const rubbishChar = 'r';
@@ -33,7 +34,7 @@ const mapData = insertRandomMarks(
 # · · · · · · · · · · · * · · · #
 # · · · · · · · · · · * * * · * *
 # · · · · · · · · · · · * · · · #
-# · · · · · · · · · · · * * · · #
+# · · · · · · · · · * * * * · · #
 # # # # # # # # # # # # * # # # #
 `),
     floorChar,
@@ -111,10 +112,13 @@ const clues: Array<Position> = [
     { x: 12, y: 3 },
 ];
 
+const startPos = { x: 12, y: 0 };
+
 export default function StudySceen() {
     const { getGameState } = useGame();
     const isKeyFound = getGameState(KEY_TO_STUDY_FOUND);
     const [isKeyDoorOpen, setKeyDoorOpen] = useState(isKeyFound);
+    // const [displayIntroText, setDisplayIntroText] = useState(true);
     useGameEvent(
         OPEN_DOOR,
         () => {
@@ -157,8 +161,18 @@ export default function StudySceen() {
             <ArrowClue {...clues[1]} dest={clues[2]} order={2} />
             <MovableRubbish {...clues[2]} />
             <ArrowClue {...clues[2]} dest={clues[3]} order={3} />
-            <Player x={12} y={0} />
+            <Player {...startPos} />
             <CleaningBucket x={13} y={1} />
+            {/* <IntoText setDisplayIntroText={setDisplayIntroText} startPos={startPos}>
+                {displayIntroText && (
+                    <div>
+                        <p>Stökigt rum...</p>
+                        <p>Hitta 3 ledtrådar.</p>
+                        <p>Säda om du behöver komma fram.</p>
+                    </div>
+                )}
+            </IntoText> */}
+            <MovableRubbish x={11} y={1} />
         </Fragment>
     );
 }
