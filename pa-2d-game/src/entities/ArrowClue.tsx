@@ -13,6 +13,8 @@ import useGameEvent from '../@core/useGameEvent';
 import { TRIEGGED_CLUE_ORDER } from '../constants/gameStates';
 import { REVEAL_SPOT } from '../constants/events';
 import useGameLoop from '../@core/useGameLoop';
+import soundData from '../soundData';
+import { useSound } from '../@core/Sound';
 
 interface ArrowClueProps extends GameObjectProps {
     dest: Position;
@@ -22,6 +24,7 @@ interface ArrowClueProps extends GameObjectProps {
 function DirectArrayScript({ dest, setAngle, setTigged, clueOrder }) {
     const { transform } = useGameObject();
     const { setGameState, getGameState, findGameObjectsByXY, publish } = useGame();
+    const playBlipp = useSound(soundData.blipp);
 
     // Will trigger arrow 2-3 in corrected order after spot has been revealed
     useGameEvent(
@@ -54,12 +57,17 @@ function DirectArrayScript({ dest, setAngle, setTigged, clueOrder }) {
             setTigged(true);
             setGameState(TRIEGGED_CLUE_ORDER, expectedOrderNb);
             publish('ACTIVATE_CLUE', clueOrder);
+            playBlipp();
         }
     });
     return null;
 }
 
-function ActiveArrowScript({ children }) {
+interface Props {
+    children: React.ReactNode;
+}
+
+function ActiveArrowScript({ children }: Props) {
     const childRef = useRef<THREE.Group>();
     useGameLoop(t => {
         const bounce = 0.1 * Math.sin(0.01 * t);

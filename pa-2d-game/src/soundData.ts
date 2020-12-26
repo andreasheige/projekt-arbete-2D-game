@@ -25,6 +25,10 @@ const soundData: { [index: string]: SoundProps } = {
         src: './assets/sfx/Keys Jingle.mp3',
         volume: 0.75,
     },
+    blipp: {
+        src: './assets/sfx/blipp.mp3',
+        volume: 0.35,
+    },
 };
 
 export default soundData;

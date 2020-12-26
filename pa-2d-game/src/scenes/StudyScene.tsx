@@ -25,16 +25,16 @@ import CleaningBucket from '../entities/CleaningBucket';
 
 const floorChar = '·';
 const rubbishChar = 'r';
-const chanceOrRubbish = 0.0; // 0.5
+const chanceOrRubbish = 0.5;
 const mapData = insertRandomMarks(
     mapDataString(`
 # # # # # # # # # # # # # # # # #
 # · · · · · · · · · · · · · · · #
-# · · · · · · · · · · · · · · · #
+# · · · · · · · · · · · * · · · #
 # · · · · · · · · · · · * · · · #
 # · · · · · · · · · · * * * · * *
-# · · · · · · · · · · · * · · · #
-# · · · · · · · · · * * * * · · #
+# · · · · · · · · * · · * · · · #
+# · · · · · · · · · · * * * · · #
 # # # # # # # # # # # # * # # # #
 `),
     floorChar,

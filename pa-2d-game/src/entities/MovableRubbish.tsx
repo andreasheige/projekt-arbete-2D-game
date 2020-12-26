@@ -32,11 +32,12 @@ function TriggerScript() {
         const pos = getGameState(PLAYER_POS);
         const diff = { x: attemPos.x - pos.x, y: attemPos.y - pos.y };
         const destPos = { x: attemPos.x + diff.x, y: attemPos.y + diff.y };
-        publish(REVEAL_SPOT, attemPos);
         if (tileIsFree(destPos)) {
+            publish(REVEAL_SPOT, attemPos);
             playPush();
             getComponent<MoveableRef>('Moveable').move(destPos);
         } else if (getGameState('CLEANING_EQUIPPED')) {
+            publish(REVEAL_SPOT, attemPos);
             getRef().setDisabled(true);
             setGameState('CLEANING_EQUIPPED', false);
             playEat();
