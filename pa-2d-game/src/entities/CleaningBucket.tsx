@@ -10,8 +10,7 @@ import { USE_CLEANING_COST } from '../constants/points';
 import { useSound } from '../@core/Sound';
 import soundData from '../soundData';
 import useGameEvent from '../@core/useGameEvent';
-
-const CLEANING_EQUIPPED = 'CLEANING_EQUIPPED';
+import { CLEANING_EQUIPPED } from '../constants/gameStates';
 
 function TriggerScript({ setPickedUp }) {
     const { publish, setGameState, getGameState } = useGame();
@@ -20,9 +19,9 @@ function TriggerScript({ setPickedUp }) {
         await publish('CLEANING_EQUIPPED', {});
     }
     useGameObjectEvent<TriggerEvent>('trigger', other => {
-        if (other.name === 'player' && !getGameState('CLEANING_EQUIPPED')) {
+        if (other.name === 'player' && !getGameState(CLEANING_EQUIPPED)) {
             sendNotification();
-            setGameState('CLEANING_EQUIPPED', true);
+            setGameState(CLEANING_EQUIPPED, true);
             playSfx();
             setPickedUp(true);
         }
@@ -30,7 +29,7 @@ function TriggerScript({ setPickedUp }) {
     useGameEvent(
         'USE_BUCKET',
         () => {
-            setGameState('CLEANING_EQUIPPED', false);
+            setGameState(CLEANING_EQUIPPED, false);
             setPickedUp(false);
         },
         [setPickedUp]
