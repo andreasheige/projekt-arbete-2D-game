@@ -8,6 +8,7 @@ import useGame from '../@core/useGame';
 interface IntoTextProps extends HTMLProps {
     scoreChange: number;
     once?: boolean;
+    ignoreKey?: string; // do not work
 }
 
 export default function ScoreScript(props: IntoTextProps) {
@@ -30,15 +31,20 @@ export default function ScoreScript(props: IntoTextProps) {
         }
     }, []);
 
-    useGameObjectEvent<TriggerEvent>('trigger', other => {
-        if (props.once && hasBeenTriggedBefore.current) return;
-        hasBeenTriggedBefore.current = true;
-        if (other.name === 'player') {
-            props.scoreChange < 0 ? setTextColor('red') : setTextColor('green');
-            setActive(true);
-            sendChangeScoreNotification();
-        }
-    });
+    // note: this method seem to get cashed with initial props
+    useGameObjectEvent<TriggerEvent>(
+        'trigger',
+        other => {
+            if (props.once && hasBeenTriggedBefore.current) return;
+            hasBeenTriggedBefore.current = true;
+            if (other.name === 'player') {
+                props.scoreChange < 0 ? setTextColor('red') : setTextColor('green');
+                setActive(true);
+                sendChangeScoreNotification();
+            }
+        },
+        [props]
+    );
 
     useGameLoop(time => {
         if (!isActive) return;

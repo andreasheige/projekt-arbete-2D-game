@@ -114,7 +114,7 @@ export default function ArrowClue(props: ArrowClueProps) {
                 setTigged={setTigged}
                 clueOrder={props.order}
             />
-            {isTigged && <ScoreScript scoreChange={ARROW_CLUE_REWARD} once />}
+            {isCurrentClue && <ScoreScript scoreChange={ARROW_CLUE_REWARD} once />}
         </GameObject>
     );
 }

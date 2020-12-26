@@ -38,6 +38,7 @@ function TriggerScript() {
             getComponent<MoveableRef>('Moveable').move(destPos);
         } else if (getGameState('CLEANING_EQUIPPED')) {
             publish(REVEAL_SPOT, attemPos);
+            publish('USE_BUCKET');
             getRef().setDisabled(true);
             setGameState('CLEANING_EQUIPPED', false);
             playEat();
