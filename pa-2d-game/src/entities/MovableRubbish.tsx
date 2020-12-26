@@ -8,13 +8,14 @@ import Moveable, { MoveableRef } from '../@core/Moveable';
 import useGameObjectEvent from '../@core/useGameObjectEvent';
 import useGameObject from '../@core/useGameObject';
 import useGame from '../@core/useGame';
-import { PLAYER_POS } from '../constants/gameStates';
+import { PLAYER_POS, ATTEMP_MOVE_POS } from '../constants/gameStates';
 import soundData from '../soundData';
 import { useSound } from '../@core/Sound';
+import { REVEAL_SPOT } from '../constants/events';
 
 function TriggerScript() {
     const { getComponent, getRef } = useGameObject();
-    const { getGameState, setGameState, findGameObjectsByXY } = useGame();
+    const { getGameState, setGameState, findGameObjectsByXY, publish } = useGame();
     const playPush = useSound(soundData.push);
     const playEat = useSound(soundData.eating);
 
@@ -27,11 +28,11 @@ function TriggerScript() {
     }
 
     useGameObjectEvent<CollisionEvent>('collision', () => {
-        const attemPos = getGameState('ATTEMP_MOVE_POS');
+        const attemPos = getGameState(ATTEMP_MOVE_POS);
         const pos = getGameState(PLAYER_POS);
         const diff = { x: attemPos.x - pos.x, y: attemPos.y - pos.y };
         const destPos = { x: attemPos.x + diff.x, y: attemPos.y + diff.y };
-
+        publish(REVEAL_SPOT, attemPos);
         if (tileIsFree(destPos)) {
             playPush();
             getComponent<MoveableRef>('Moveable').move(destPos);
