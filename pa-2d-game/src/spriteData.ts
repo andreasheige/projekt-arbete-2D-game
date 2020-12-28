@@ -112,6 +112,19 @@ const spriteData: { [index: string]: SpriteProps } = {
         opacity: 1,
         frameTime: 110,
     },
+    bat: {
+        src: './assets/bat.png',
+        frameWidth: 16,
+        frameHeight: 16,
+        sheet: {
+            default: [
+                [0, 0],
+                [2, 0],
+            ],
+        },
+        opacity: 1,
+        frameTime: 110,
+    },
     rat: {
         src: './assets/bouncing_rat.png',
         frameWidth: 27.5,
@@ -125,6 +138,26 @@ const spriteData: { [index: string]: SpriteProps } = {
                 [0, 2],
                 [1, 2],
             ],
+        },
+    },
+    food: {
+        src: './assets/Food.png',
+        frameWidth: 16,
+        frameHeight: 16,
+        sheet: {
+            bread: [[10, 1]],
+            butter: [[6, 5]],
+            tomato: [[1, 5]],
+            cheese: [[7, 5]],
+            bacon: [[7, 4]],
+            sausage: [[9, 4]],
+            egg: [[10, 5]],
+            onion: [[2, 2]],
+            apple: [[0, 3]],
+            banana: [[4, 3]],
+            watermelon: [[7, 3]],
+            candy: [[4, 7]],
+            cucumber: [[6, 2]],
         },
     },
 };
