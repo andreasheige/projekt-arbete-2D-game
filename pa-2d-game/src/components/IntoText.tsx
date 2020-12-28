@@ -30,10 +30,10 @@ export default function IntoText(props: IntoTextProps) {
     });
 
     const style: CSSProperties = {
-        zIndex: 1000,
+        zIndex: 0,
         position: 'fixed',
-        right: 100,
-        left: 100,
+        bottom: 100,
+        left: props.startPos.x * 30, // guessing
         fontSize: 50,
         color: '#7FFFD4',
     };
