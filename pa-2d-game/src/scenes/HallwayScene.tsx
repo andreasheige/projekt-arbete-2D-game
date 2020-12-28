@@ -26,21 +26,13 @@ import { LIGHT_ACTIVE_ROOM1 } from '../constants/gameStates';
 import { spritePosToFloor4x4 } from '../@core/utils/tileLoadingUtils';
 import Mal from '../entities/Mal';
 import IntoText from '../components/IntoText';
+import getRoomData from './sceen_data/hallwayData';
 
 const floorChar = '·';
 const rubbishChar = 'r';
 const chanceOrRubbish = 0.5;
 const mapData = insertRandomMarks(
-    mapDataString(`
-# # # # # # # # # # # # # # # # #
-# · * * * · · · · p · · · · · · #
-# · * · * * · · · * · · · · · · #
-* * * · · * · * * * * * * * * · #
-# · · · · * · * · · · · · · * · #
-# · · · · * * * · * * * * * * · #
-# · · · · · · · · * * · · · · · #
-# # # # # # # # # * # # # # # # #
-`),
+    mapDataString(getRoomData()),
     floorChar,
     chanceOrRubbish,
     rubbishChar
