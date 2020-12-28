@@ -8,7 +8,7 @@ import useGameObjectEvent from '../@core/useGameObjectEvent';
 import soundData from '../soundData';
 import spriteData from '../spriteData';
 import useGame from '../@core/useGame';
-import { KEY_TO_STUDY_FOUND } from '../constants/gameStates';
+import { KEY_TO_STUDY_FOUND, TRIEGGED_CLUE_ORDER } from '../constants/gameStates';
 import useGameLoop from '../@core/useGameLoop';
 import { OPEN_DOOR, CHANGE_SCORE } from '../constants/events';
 import { FINDING_KEY_IN_STUDY_SCENE } from '../constants/points';
@@ -21,12 +21,14 @@ function DisableOnTriggerScript({ onStepOnkey }) {
     async function sendOpenDoorNotification() {
         await publish(OPEN_DOOR, {});
         await publish(CHANGE_SCORE, FINDING_KEY_IN_STUDY_SCENE);
+        await publish('ACTIVATE_CLUE', 10); // 10 to make sure no clue has this
     }
     useGameObjectEvent<TriggerEvent>('trigger', other => {
         const triggedClueOrder = getGameState('TRIEGGED_CLUE_ORDER');
         if (other.name === 'player' && triggedClueOrder === 3) {
             playSfx();
             setGameState(KEY_TO_STUDY_FOUND, true);
+            setGameState(TRIEGGED_CLUE_ORDER, 10);
             sendOpenDoorNotification();
             getComponent<SpriteRef>('Sprite').setOpacity(1.0);
             onStepOnkey(getRef());

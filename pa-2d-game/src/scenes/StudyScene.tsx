@@ -30,11 +30,11 @@ const mapData = insertRandomMarks(
     mapDataString(`
 # # # # # # # # # # # # # # # # #
 # · · · · · · · · · · · · · · · #
-# · · · · · · · · · · · · · · · #
+# · · · · · · · · · · · * · · · #
 # · · · · · · · · · · · * · · · #
 # · · · · · · · · · · * * * · * *
-# · · · · · · · · · · · * · · · #
-# · · · · · · · · · * * * * · · #
+# · · · · · · · · * · · * · · · #
+# · · · · · · · · · · * * * · · #
 # # # # # # # # # # # # * # # # #
 `),
     floorChar,
@@ -172,7 +172,7 @@ export default function StudySceen() {
                     </div>
                 )}
             </IntoText> */}
-            <MovableRubbish x={11} y={1} />
+            {/* <MovableRubbish x={11} y={1} /> */}
         </Fragment>
     );
 }
