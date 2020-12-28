@@ -158,16 +158,16 @@ export default function HallwayScene() {
                 )}
             </GameObject>
             <Player {...startPos} spotlight={isSpotlightActive} />
-            <IntoText setDisplayIntroText={setDisplayIntroText} startPos={startPos}>
-                {displayIntroText && (
+            {displayIntroText && (
+                <IntoText setDisplayIntroText={setDisplayIntroText} startPos={startPos}>
                     <div>
                         <p>Ett mörkt stökigt rum...</p>
                         <p>Undvik att trampa på skräpet.</p>
                         <p>Tänd ljuset genom att gå på ljusknappen.</p>
                         <p>Att fånga malarna i rummet ger extra poäng.</p>
                     </div>
-                )}
-            </IntoText>
+                </IntoText>
+            )}
         </>
     );
 }

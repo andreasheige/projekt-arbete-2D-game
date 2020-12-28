@@ -163,16 +163,15 @@ export default function StudySceen() {
             <ArrowClue {...clues[2]} dest={clues[3]} order={3} />
             <Player {...startPos} />
             <CleaningBucket x={13} y={1} />
-            <IntoText setDisplayIntroText={setDisplayIntroText} startPos={startPos}>
-                {displayIntroText && (
+            {displayIntroText && (
+                <IntoText setDisplayIntroText={setDisplayIntroText} startPos={startPos}>
                     <div>
                         <p>Stökigt rum...</p>
                         <p>Hitta 3 ledtrådar leder till nyckel.</p>
                         <p>Säda om du behöver komma fram.</p>
                     </div>
-                )}
-            </IntoText>
-            {/* <MovableRubbish x={11} y={1} /> */}
+                </IntoText>
+            )}
         </Fragment>
     );
 }

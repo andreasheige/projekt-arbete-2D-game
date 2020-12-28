@@ -11,14 +11,18 @@ interface IntoTextProps extends HTMLProps {
 
 export default function IntoText(props: IntoTextProps) {
     const node = useRef<HTMLDivElement>();
-    const { getGameState } = useGame();
+    const { getGameState, setGameState } = useGame();
 
     useEffect(() => {
         if (node.current?.parentElement) {
             node.current.parentElement.style.pointerEvents = 'none';
             node.current.parentElement.style.whiteSpace = 'nowrap';
         }
-    }, []);
+        // Making sure player starts at start position,
+        // since position is used in gameloop
+        const playerStartPos = { x: props.startPos.x, y: props.startPos.y };
+        setGameState(PLAYER_POS, playerStartPos);
+    }, [setGameState, props.startPos]);
 
     useGameLoop(() => {
         const playerPos = getGameState(PLAYER_POS);
@@ -30,7 +34,7 @@ export default function IntoText(props: IntoTextProps) {
     });
 
     const style: CSSProperties = {
-        zIndex: 0,
+        zIndex: 1000,
         position: 'fixed',
         bottom: 100,
         left: props.startPos.x * 30, // guessing
