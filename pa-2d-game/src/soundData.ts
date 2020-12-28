@@ -32,7 +32,7 @@ const soundData: { [index: string]: SoundProps } = {
     wingflapp: {
         src: './assets/sfx/wingflap.wav',
         volume: 0.75,
-    }
+    },
 };
 
 export default soundData;
