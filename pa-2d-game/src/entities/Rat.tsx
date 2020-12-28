@@ -89,7 +89,7 @@ function TriggerScript() {
 
 export default function Rat(props: GameObjectProps) {
     return (
-        <GameObject layer="obstacle" {...props}>
+        <GameObject layer="character" {...props}>
             <Collider isTrigger />
             <Moveable />
             <RatMoveScript>
