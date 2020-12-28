@@ -29,6 +29,10 @@ const soundData: { [index: string]: SoundProps } = {
         src: './assets/sfx/blipp.mp3',
         volume: 0.35,
     },
+    wingflapp: {
+        src: './assets/sfx/wingflap.wav',
+        volume: 0.75,
+    }
 };
 
 export default soundData;
