@@ -6,11 +6,7 @@ import Interactable from '../@core/Interactable';
 import ScenePortal from '../@core/ScenePortal';
 import Sprite from '../@core/Sprite';
 import TileMap, { TileMapResolver } from '../@core/TileMap';
-import {
-    mapDataString,
-    insertRandomMarks,
-    insertNRandomMarks,
-} from '../@core/utils/mapUtils';
+import { mapDataString } from '../@core/utils/mapUtils';
 import CoffeeMachine from '../entities/CoffeeMachine';
 import PizzaPickup from '../entities/PizzaPickup';
 import Player from '../entities/Player';
@@ -32,12 +28,12 @@ import spriteData from '../spriteData';
 
 const mapData = mapDataString(`
 # # # # # # # # # # # # # # # # #
-# i · · · · · l · · · · · · C C #
+# i · · · · · l · # · · · · C C #
 # · · a · B · · · e  f· · · · · #
-# · · · · · · · · · · · · # # # #
-· · · · · b · c · · · · · · # # #
+# · · · · · · # · · · · · # · · #
+· · · # · b · c · · · · · · · · #
 # · · · · · · d · · g · · · · m #
-# j · k · · · · · · · · h · · · #
+# j · k · · # · · · · · h · · · #
 # # # # # # # # # # # # # # # # #
 `);
 
