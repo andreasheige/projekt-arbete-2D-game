@@ -17,7 +17,7 @@ function TriggerScript() {
     const playSfx = useSound(soundData.eating);
 
     async function sendChangeScoreNotification() {
-        await publish('CHANGE_SCORE', 10);
+        await publish('CHANGE_SCORE', 15);
     }
 
     useGameObjectEvent<TriggerEvent>('trigger', other => {
