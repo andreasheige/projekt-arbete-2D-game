@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import Bat from '../entities/Bat';
 import Collider from '../@core/Collider';
 import GameObject from '../@core/GameObject';
@@ -25,6 +25,7 @@ import Sausage from '../entities/food/sausage';
 import Tomato from '../entities/food/tomato';
 import Watermelon from '../entities/food/watermelon';
 import spriteData from '../spriteData';
+import IntoText from '../components/IntoText';
 
 const mapData = mapDataString(`
 # # # # # # # # # # # # # # # # #
@@ -181,7 +182,10 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
     }
 };
 
+const startPos = { x: 6, y: 3 };
+
 export default function KitchenScene() {
+    const [displayIntroText, setDisplayIntroText] = useState(true);
     return (
         <>
             <GameObject name="map">
@@ -193,10 +197,20 @@ export default function KitchenScene() {
                 <Interactable />
                 <ScenePortal
                     name="entrance"
-                    enterDirection={[0, 1]}
+                    enterDirection={[0, -1]}
                     target="study/exit"
                 />
             </GameObject>
+            {displayIntroText && (
+                <IntoText setDisplayIntroText={setDisplayIntroText} startPos={startPos}>
+                    <div>
+                        <p>Du entrar nu Köket...</p>
+                        <p>Fånga in fladdermusen.</p>
+                        <p>Välj rätt mat.</p>
+                        <p>Så din kompis Grannen blir nöjd...</p>
+                    </div>
+                </IntoText>
+            )}
             <Player x={6} y={3} />
         </>
     );
