@@ -32,10 +32,10 @@ import spriteData from '../spriteData';
 
 const mapData = mapDataString(`
 # # # # # # # # # # # # # # # # #
-# i · · · · · l · · · · · · R R #
+# i · · · · · l · · · · · · C C #
 # · · a · B · · · e  f· · · · · #
 # · · · · · · · · · · · · # # # #
-· · · · · b · c · · · · · C # # #
+· · · · · b · c · · · · · · # # #
 # · · · · · · d · · g · · · · m #
 # j · k · · · · · · · · h · · · #
 # # # # # # # # # # # # # # # # #
