@@ -17,7 +17,6 @@ import soundData from '../soundData';
 function RatScript() {
     const { getComponent, transform } = useGameObject();
     const [lastActTime, setLastActTime] = useState(new Date().getTime());
-    const previousPos = useRef({});
     const previousDirection = useRef(0);
 
     let RatX = 0;
@@ -27,9 +26,9 @@ function RatScript() {
         let RatMove = Math.floor(Math.random() * Math.floor(6));
         const now = new Date().getTime();
     
-        if (now - lastActTime < 250) return;
+        if (now - lastActTime < 100) return;
 
-        if(RatMove > 3) RatMove = previousDirection.current;
+        if (RatMove > 3) RatMove = previousDirection.current;
 
         switch (RatMove) {
             case 0:
@@ -54,14 +53,6 @@ function RatScript() {
         };
 
         previousDirection.current = RatMove;
-
-        // const currentPosition = {
-        //     x: transform.x,
-        //     y: transform.y,
-        // };
-
-        // previousPos.current = currentPosition;
-
 
         const nextPosition = tileUtils(transform).add(direction);
 
@@ -104,6 +95,7 @@ export default function Rat(props: GameObjectProps) {
             <CharacterScript>
                 <Sprite {...spriteData.rat} state="rat" />
             </CharacterScript>
+            <TriggerScript />
             <RatScript />
         </GameObject>
     );
