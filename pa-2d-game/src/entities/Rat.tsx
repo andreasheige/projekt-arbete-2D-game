@@ -9,7 +9,7 @@ import useGameObject from '../@core/useGameObject';
 import useGameObjectEvent from '../@core/useGameObjectEvent';
 import Moveable, { MoveableRef } from '../@core/Moveable';
 import useGameLoop from '../@core/useGameLoop';
-import CharacterScript from '../components/CharacterScript';
+import RatMoveScript from '../components/RatMoveScript';
 import { useSound } from '../@core/Sound';
 import soundData from '../soundData';
 
@@ -92,9 +92,9 @@ export default function Rat(props: GameObjectProps) {
         <GameObject layer="obstacle" {...props}>
             <Collider isTrigger />
             <Moveable />
-            <CharacterScript>
+            <RatMoveScript>
                 <Sprite {...spriteData.rat} state="rat" />
-            </CharacterScript>
+            </RatMoveScript>
             <TriggerScript />
             <RatScript />
         </GameObject>
