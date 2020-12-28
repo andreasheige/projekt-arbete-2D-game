@@ -13,9 +13,14 @@ function DisableOnTriggerScript() {
     const { publish } = useGame();
     const { getRef } = useGameObject();
     const playSfx = useSound(soundData.eating);
+    const randomPoints = [-3, -1, 1, 3, 5];
+
+    const randomPoint = randomPoints
+        .sort(() => Math.random() - Math.random())
+        .find(() => true);
 
     async function sendChangeScoreNotification() {
-        await publish('CHANGE_SCORE', 10);
+        await publish('CHANGE_SCORE', randomPoint);
     }
 
     useGameObjectEvent<TriggerEvent>('trigger', other => {
