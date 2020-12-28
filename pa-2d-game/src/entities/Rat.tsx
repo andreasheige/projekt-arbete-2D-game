@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import tileUtils from '../@core/utils/tileUtils';
 import Collider, { TriggerEvent } from '../@core/Collider';
 import GameObject, { GameObjectProps } from '../@core/GameObject';
@@ -10,7 +10,6 @@ import useGameObjectEvent from '../@core/useGameObjectEvent';
 import Moveable, { MoveableRef } from '../@core/Moveable';
 import useGameLoop from '../@core/useGameLoop';
 import CharacterScript from '../components/CharacterScript';
-import RunningAwayScript from '../components/RunningAwayScript';
 import { useSound } from '../@core/Sound';
 import soundData from '../soundData';
 
@@ -18,14 +17,19 @@ import soundData from '../soundData';
 function RatScript() {
     const { getComponent, transform } = useGameObject();
     const [lastActTime, setLastActTime] = useState(new Date().getTime());
+    const previousPos = useRef({});
+    const previousDirection = useRef(0);
 
     let RatX = 0;
     let RatY = 0;
 
     useGameLoop(() => {
-        const RatMove = Math.floor(Math.random() * Math.floor(4));
+        let RatMove = Math.floor(Math.random() * Math.floor(6));
         const now = new Date().getTime();
-        if (now - lastActTime < 500) return;
+    
+        if (now - lastActTime < 250) return;
+
+        if(RatMove > 3) RatMove = previousDirection.current;
 
         switch (RatMove) {
             case 0:
@@ -48,6 +52,16 @@ function RatScript() {
             x: RatX,
             y: RatY,
         };
+
+        previousDirection.current = RatMove;
+
+        // const currentPosition = {
+        //     x: transform.x,
+        //     y: transform.y,
+        // };
+
+        // previousPos.current = currentPosition;
+
 
         const nextPosition = tileUtils(transform).add(direction);
 
@@ -90,8 +104,7 @@ export default function Rat(props: GameObjectProps) {
             <CharacterScript>
                 <Sprite {...spriteData.rat} state="rat" />
             </CharacterScript>
-            <RunningAwayScript reactionSpeed={500} />
-            <TriggerScript />
+            <RatScript />
         </GameObject>
     );
 }
