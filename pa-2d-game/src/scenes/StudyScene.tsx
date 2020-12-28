@@ -21,7 +21,7 @@ import { OPEN_DOOR } from '../constants/events';
 import { KEY_TO_STUDY_FOUND } from '../constants/gameStates';
 import ArrowClue from '../entities/ArrowClue';
 import CleaningBucket from '../entities/CleaningBucket';
-// import IntoText from '../components/IntoText';
+import IntoText from '../components/IntoText';
 
 const floorChar = '·';
 const rubbishChar = 'r';
@@ -118,7 +118,7 @@ export default function StudySceen() {
     const { getGameState } = useGame();
     const isKeyFound = getGameState(KEY_TO_STUDY_FOUND);
     const [isKeyDoorOpen, setKeyDoorOpen] = useState(isKeyFound);
-    // const [displayIntroText, setDisplayIntroText] = useState(true);
+    const [displayIntroText, setDisplayIntroText] = useState(true);
     useGameEvent(
         OPEN_DOOR,
         () => {
@@ -163,16 +163,15 @@ export default function StudySceen() {
             <ArrowClue {...clues[2]} dest={clues[3]} order={3} />
             <Player {...startPos} />
             <CleaningBucket x={13} y={1} />
-            {/* <IntoText setDisplayIntroText={setDisplayIntroText} startPos={startPos}>
-                {displayIntroText && (
+            {displayIntroText && (
+                <IntoText setDisplayIntroText={setDisplayIntroText} startPos={startPos}>
                     <div>
                         <p>Stökigt rum...</p>
-                        <p>Hitta 3 ledtrådar.</p>
+                        <p>Hitta 3 ledtrådar leder till nyckel.</p>
                         <p>Säda om du behöver komma fram.</p>
                     </div>
-                )}
-            </IntoText> */}
-            {/* <MovableRubbish x={11} y={1} /> */}
+                </IntoText>
+            )}
         </Fragment>
     );
 }
