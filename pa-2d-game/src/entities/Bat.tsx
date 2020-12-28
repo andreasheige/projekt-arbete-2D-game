@@ -38,7 +38,7 @@ export default function Bat(props: GameObjectProps) {
             <Collider isTrigger />
             <Moveable />
             <Sprite {...spriteData.bat} offset={{ x: 0, y: 0 }} basic />
-            <RunningAwayScript reactionSpeed={500} />
+            <RunningAwayScript reactionSpeed={500} isEaten={false} />
             <TriggerScript />
         </GameObject>
     );
