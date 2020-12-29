@@ -29,6 +29,7 @@ import IntoText from '../components/IntoText';
 import Friend from '../entities/Friend';
 import useGameEvent from '../@core/useGameEvent';
 import useGame from '../@core/useGame';
+import GatewayBlock from '../entities/GatewayBlock';
 
 const mapData = mapDataString(`
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # · # #
@@ -230,6 +231,7 @@ export default function KitchenScene() {
     const [foodState, dispatch] = useReducer(kitchenReducer, currFoodConfig);
     const selectedFoods = plotFood(4, 8, foodState);
     const allGoodFoodGone = foodState.length === 0;
+    const [isGateOpen, setIsGateOpen] = useState(false);
 
     useGameEvent(
         'TALKED_TO_FRIEND',
@@ -257,6 +259,14 @@ export default function KitchenScene() {
         'EAT_FOOD',
         params => {
             handleEatFood(params.foodType);
+        },
+        []
+    );
+
+    useGameEvent(
+        'BAT_DIED',
+        () => {
+            setIsGateOpen(true);
         },
         []
     );
@@ -289,6 +299,7 @@ export default function KitchenScene() {
             <Player x={6} y={3} />
             {!allGoodFoodGone && <Friend x={4} y={3} />}
             {selectedFoods}
+            {!isGateOpen && <GatewayBlock x={18} y={1} />}
         </>
     );
 }
