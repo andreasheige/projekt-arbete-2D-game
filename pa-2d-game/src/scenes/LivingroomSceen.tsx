@@ -14,6 +14,7 @@ import Workstation from '../entities/Workstation';
 import Ghost from '../entities/Ghost';
 import spriteData from '../spriteData';
 import Rat from '../entities/Rat';
+import RatFollowing from '../entities/RatFollowing';
 
 const mapData = mapDataString(`
 # # # # # # # # # # # # · # # # #
@@ -119,6 +120,7 @@ export default function LivingroomSceen() {
                 />
             </GameObject>
             <Player x={6} y={3} />
+            <RatFollowing x={3} y={2} />
         </>
     );
 }
