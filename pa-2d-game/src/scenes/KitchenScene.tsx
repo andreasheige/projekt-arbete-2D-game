@@ -34,7 +34,7 @@ import GatewayBlock from '../entities/GatewayBlock';
 const mapData = mapDataString(`
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # · # #
 # · · · · · · · · # · · · · C C # # # · · · # · · · # · · · # · · · #
-# · · · · B · · · · · · · · · · # # # · # · # · # · # · # · # # # # #
+# · · · · B · · · · · · · · · · # # # · # · # · # · # · # · # # · # #
 # · · · · · · # · · · · · # · · · · # · # · # · # · # · # · # · · · #
 · · · # · · · · · · · · · · · · # · # · # · # · # · # · # · # · · · #
 # · · · · · · · · · · · · · · · # · # · # · # · # · # · # · # · · · #
@@ -45,7 +45,7 @@ const mapData = mapDataString(`
 const mapData2 = mapDataString(`
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # · # #
 # · · · e · · · f # · · · · C C # # # · · · # · · · # · · · # · · · #
-# · a · · B · · · · · · k · · · # # # · # · # · # · # · # · # # # # #
+# · a · · B · · · · · · k · · · # # # · # · # · # · # · # · # # · # #
 # · · · · · · # · g · · · # · · · · # · # · # · # · # · # · # · · · #
 · · · # · · · · · · · · · · l · # · # · # · # · # · # · # · # · · · #
 # · b · · · c · · · · h · · · · # · # · # · # · # · # · # · # · · · #
@@ -229,7 +229,7 @@ export default function KitchenScene() {
     const [curMap, setCurMap] = useState(mapData);
     const [displayIntroText, setDisplayIntroText] = useState(true);
     const [foodState, dispatch] = useReducer(kitchenReducer, currFoodConfig);
-    const selectedFoods = plotFood(4, 8, foodState);
+    const selectedFoods = plotFood(4, 8, foodState); // move to 31,6 ?
     const allGoodFoodGone = foodState.length === 0;
     const [isGateOpen, setIsGateOpen] = useState(false);
 
@@ -300,6 +300,7 @@ export default function KitchenScene() {
             {!allGoodFoodGone && <Friend x={4} y={3} />}
             {selectedFoods}
             {!isGateOpen && <GatewayBlock x={18} y={1} />}
+            {!allGoodFoodGone && <GatewayBlock x={32} y={5} />}
         </>
     );
 }
