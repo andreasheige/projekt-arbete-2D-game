@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useMemo, useRef } from 'react';
+import React, { Fragment, useState, useReducer } from 'react';
 import Bat from '../entities/Bat';
 import Collider from '../@core/Collider';
 import GameObject from '../@core/GameObject';
@@ -205,7 +205,6 @@ const foodConfigurations = [
 
 function getRandomFoodConfiguration(): Array<string> {
     const foodIdx = Math.floor(Math.random() * foodConfigurations.length);
-    console.log('AAAA');
     return foodConfigurations[foodIdx];
 }
 
@@ -215,12 +214,22 @@ function plotFood(x0: number, y0: number, foodArray: Array<string>) {
 
 const currFoodConfig = [...getRandomFoodConfiguration()];
 
+function kitchenReducer(state: Array<string>, action) {
+    switch (action.type) {
+        case 'eat_good_food':
+            return state.filter(f => f !== action.foodType);
+        default:
+            throw new Error();
+    }
+}
+
 export default function KitchenScene() {
     const { publish } = useGame();
     const [curMap, setCurMap] = useState(mapData);
     const [displayIntroText, setDisplayIntroText] = useState(true);
-    const [currConfig, setCurrConfig] = useState(() => currFoodConfig);
-    const selectedFoods = plotFood(4, 8, currConfig);
+    const [foodState, dispatch] = useReducer(kitchenReducer, currFoodConfig);
+    const selectedFoods = plotFood(4, 8, foodState);
+    const allGoodFoodGone = foodState.length === 0;
 
     useGameEvent(
         'TALKED_TO_FRIEND',
@@ -235,15 +244,10 @@ export default function KitchenScene() {
     }
 
     function handleEatFood(foodType: string) {
-        const foodWasCorrect = currConfig.find(f => f === foodType);
+        const foodWasCorrect = foodState.find(f => f === foodType);
         if (foodWasCorrect) {
-            const goodFoodLeft = currConfig.filter(f => f !== foodType);
-            console.log('foodconfig', currConfig, goodFoodLeft);
-            setCurrConfig(() => goodFoodLeft);
+            dispatch({ type: 'eat_good_food', foodType });
             sendChangeScore(20);
-            if (goodFoodLeft.length === 0) {
-                // console.log('room is finished');
-            }
         } else {
             sendChangeScore(-10);
         }
@@ -283,7 +287,7 @@ export default function KitchenScene() {
                 </IntoText>
             )}
             <Player x={6} y={3} />
-            <Friend x={4} y={3} />
+            {!allGoodFoodGone && <Friend x={4} y={3} />}
             {selectedFoods}
         </>
     );
