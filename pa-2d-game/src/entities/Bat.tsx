@@ -18,6 +18,7 @@ function TriggerScript() {
 
     async function sendChangeScoreNotification() {
         await publish('CHANGE_SCORE', 15);
+        await publish('BAT_DIED');
     }
 
     useGameObjectEvent<TriggerEvent>('trigger', other => {

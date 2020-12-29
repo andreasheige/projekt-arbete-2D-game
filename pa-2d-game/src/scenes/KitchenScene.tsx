@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useReducer } from 'react';
 import Bat from '../entities/Bat';
 import Collider from '../@core/Collider';
 import GameObject from '../@core/GameObject';
@@ -26,15 +26,30 @@ import Tomato from '../entities/food/tomato';
 import Watermelon from '../entities/food/watermelon';
 import spriteData from '../spriteData';
 import IntoText from '../components/IntoText';
+import Friend from '../entities/Friend';
+import useGameEvent from '../@core/useGameEvent';
+import useGame from '../@core/useGame';
+import GatewayBlock from '../entities/GatewayBlock';
 
 const mapData = mapDataString(`
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # · # #
-# i · · · · · l · # · · · · C C # # # · · · # · · · # · · · # · · · #
-# · · a · B · · · e  f· · · · · # # # · # · # · # · # · # · # # # # #
+# · · · · · · · · # · · · · C C # # # · · · # · · · # · · · # · · · #
+# · · · · B · · · · · · · · · · # # # · # · # · # · # · # · # # · # #
 # · · · · · · # · · · · · # · · · · # · # · # · # · # · # · # · · · #
-· · · # · b · c · · · · · · · · # · # · # · # · # · # · # · # · · · #
-# · · · · · · d · · g · · · · m # · # · # · # · # · # · # · # · · · #
-# j · k · · # · · · · · h · · · # · · · # · · · # · · · # · · · · · #
+· · · # · · · · · · · · · · · · # · # · # · # · # · # · # · # · · · #
+# · · · · · · · · · · · · · · · # · # · # · # · # · # · # · # · · · #
+# · · · · · # · · · · · · · · · # · · · # · · · # · · · # · · · · · #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+`);
+
+const mapData2 = mapDataString(`
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # · # #
+# · · · e · · · f # · · · · C C # # # · · · # · · · # · · · # · · · #
+# · a · · B · · · · · · k · · · # # # · # · # · # · # · # · # # · # #
+# · · · · · · # · g · · · # · · · · # · # · # · # · # · # · # · · · #
+· · · # · · · · · · · · · · l · # · # · # · # · # · # · # · # · · · #
+# · b · · · c · · · · h · · · · # · # · # · # · # · # · # · # · · · #
+# · · · d · # · i · · · j · m · # · · · # · · · # · · · # · · · · · #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 `);
 
@@ -184,13 +199,83 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
 
 const startPos = { x: 6, y: 3 };
 
+const foodConfigurations = [
+    ['a', 'g', 'j'],
+    ['b', 'h', 'd'],
+];
+
+function getRandomFoodConfiguration(): Array<string> {
+    const foodIdx = Math.floor(Math.random() * foodConfigurations.length);
+    return foodConfigurations[foodIdx];
+}
+
+function plotFood(x0: number, y0: number, foodArray: Array<string>) {
+    return foodArray.map((food, inx: number) => resolveMapTile(food, x0 + inx, y0));
+}
+
+const currFoodConfig = [...getRandomFoodConfiguration()];
+
+function kitchenReducer(state: Array<string>, action) {
+    switch (action.type) {
+        case 'eat_good_food':
+            return state.filter(f => f !== action.foodType);
+        default:
+            throw new Error();
+    }
+}
+
 export default function KitchenScene() {
+    const { publish } = useGame();
+    const [curMap, setCurMap] = useState(mapData);
     const [displayIntroText, setDisplayIntroText] = useState(true);
+    const [foodState, dispatch] = useReducer(kitchenReducer, currFoodConfig);
+    const selectedFoods = plotFood(4, 8, foodState); // move to 31,6 ?
+    const allGoodFoodGone = foodState.length === 0;
+    const [isGateOpen, setIsGateOpen] = useState(false);
+
+    useGameEvent(
+        'TALKED_TO_FRIEND',
+        () => {
+            setCurMap(mapData2); // make more variations
+        },
+        []
+    );
+
+    async function sendChangeScore(points: number) {
+        await publish('CHANGE_SCORE', points);
+    }
+
+    function handleEatFood(foodType: string) {
+        const foodWasCorrect = foodState.find(f => f === foodType);
+        if (foodWasCorrect) {
+            dispatch({ type: 'eat_good_food', foodType });
+            sendChangeScore(20);
+        } else {
+            sendChangeScore(-10);
+        }
+    }
+
+    useGameEvent(
+        'EAT_FOOD',
+        params => {
+            handleEatFood(params.foodType);
+        },
+        []
+    );
+
+    useGameEvent(
+        'BAT_DIED',
+        () => {
+            setIsGateOpen(true);
+        },
+        []
+    );
+
     return (
         <>
             <GameObject name="map">
                 <ambientLight />
-                <TileMap data={mapData} resolver={resolveMapTile} definesMapSize />
+                <TileMap data={curMap} resolver={resolveMapTile} definesMapSize />
             </GameObject>
             <GameObject x={0} y={3}>
                 <Collider />
@@ -212,6 +297,10 @@ export default function KitchenScene() {
                 </IntoText>
             )}
             <Player x={6} y={3} />
+            {!allGoodFoodGone && <Friend x={4} y={3} />}
+            {selectedFoods}
+            {!isGateOpen && <GatewayBlock x={18} y={1} />}
+            {!allGoodFoodGone && <GatewayBlock x={32} y={5} />}
         </>
     );
 }
