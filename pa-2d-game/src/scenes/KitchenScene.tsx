@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useMemo } from 'react';
+import React, { Fragment, useState, useMemo, useRef } from 'react';
 import Bat from '../entities/Bat';
 import Collider from '../@core/Collider';
 import GameObject from '../@core/GameObject';
@@ -38,6 +38,17 @@ const mapData = mapDataString(`
 · · · # · · · · · · · · · · · · # · # · # · # · # · # · # · # · · · #
 # · · · · · · · · · · · · · · · # · # · # · # · # · # · # · # · · · #
 # · · · · · # · · · · · · · · · # · · · # · · · # · · · # · · · · · #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+`);
+
+const mapData2 = mapDataString(`
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # · # #
+# · · · e · · · f # · · · · C C # # # · · · # · · · # · · · # · · · #
+# · a · · B · · · · · · k · · · # # # · # · # · # · # · # · # # # # #
+# · · · · · · # · g · · · # · · · · # · # · # · # · # · # · # · · · #
+· · · # · · · · · · · · · · l · # · # · # · # · # · # · # · # · · · #
+# · b · · · c · · · · h · · · · # · # · # · # · # · # · # · # · · · #
+# · · · d · # · i · · · j · m · # · · · # · · · # · · · # · · · · · #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 `);
 
@@ -194,6 +205,7 @@ const foodConfigurations = [
 
 function getRandomFoodConfiguration(): Array<string> {
     const foodIdx = Math.floor(Math.random() * foodConfigurations.length);
+    console.log('AAAA');
     return foodConfigurations[foodIdx];
 }
 
@@ -201,17 +213,19 @@ function plotFood(x0: number, y0: number, foodArray: Array<string>) {
     return foodArray.map((food, inx: number) => resolveMapTile(food, x0 + inx, y0));
 }
 
+const currFoodConfig = [...getRandomFoodConfiguration()];
+
 export default function KitchenScene() {
     const { publish } = useGame();
+    const [curMap, setCurMap] = useState(mapData);
     const [displayIntroText, setDisplayIntroText] = useState(true);
-    const [showFood, setShowFood] = useState(false);
-    const [currConfig, setCurrConfig] = useState([...getRandomFoodConfiguration()]);
-    const selectedFoods = useMemo(() => plotFood(10, 6, currConfig), [currConfig]);
+    const [currConfig, setCurrConfig] = useState(() => currFoodConfig);
+    const selectedFoods = plotFood(4, 8, currConfig);
 
     useGameEvent(
         'TALKED_TO_FRIEND',
         () => {
-            setShowFood(true);
+            setCurMap(mapData2); // make more variations
         },
         []
     );
@@ -224,7 +238,8 @@ export default function KitchenScene() {
         const foodWasCorrect = currConfig.find(f => f === foodType);
         if (foodWasCorrect) {
             const goodFoodLeft = currConfig.filter(f => f !== foodType);
-            setCurrConfig(goodFoodLeft);
+            console.log('foodconfig', currConfig, goodFoodLeft);
+            setCurrConfig(() => goodFoodLeft);
             sendChangeScore(20);
             if (goodFoodLeft.length === 0) {
                 // console.log('room is finished');
@@ -246,7 +261,7 @@ export default function KitchenScene() {
         <>
             <GameObject name="map">
                 <ambientLight />
-                <TileMap data={mapData} resolver={resolveMapTile} definesMapSize />
+                <TileMap data={curMap} resolver={resolveMapTile} definesMapSize />
             </GameObject>
             <GameObject x={0} y={3}>
                 <Collider />
@@ -269,12 +284,6 @@ export default function KitchenScene() {
             )}
             <Player x={6} y={3} />
             <Friend x={4} y={3} />
-            {showFood && (
-                <>
-                    <Egg x={1} y={6} />
-                    <Apple x={3} y={5} />
-                </>
-            )}
             {selectedFoods}
         </>
     );
