@@ -26,15 +26,16 @@ import Tomato from '../entities/food/tomato';
 import Watermelon from '../entities/food/watermelon';
 import spriteData from '../spriteData';
 import IntoText from '../components/IntoText';
+import Friend from '../entities/Friend';
 
 const mapData = mapDataString(`
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # · # #
-# i · · · · · l · # · · · · C C # # # · · · # · · · # · · · # · · · #
-# · · a · B · · · e  f· · · · · # # # · # · # · # · # · # · # # # # #
+# · · · · · · · · # · · · · C C # # # · · · # · · · # · · · # · · · #
+# · · · · B · · · · · · · · · · # # # · # · # · # · # · # · # # # # #
 # · · · · · · # · · · · · # · · · · # · # · # · # · # · # · # · · · #
-· · · # · b · c · · · · · · · · # · # · # · # · # · # · # · # · · · #
-# · · · · · · d · · g · · · · m # · # · # · # · # · # · # · # · · · #
-# j · k · · # · · · · · h · · · # · · · # · · · # · · · # · · · · · #
+· · · # · · · · · · · · · · · · # · # · # · # · # · # · # · # · · · #
+# · · · · · · · · · · · · · · · # · # · # · # · # · # · # · # · · · #
+# · · · · · # · · · · · · · · · # · · · # · · · # · · · # · · · · · #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 `);
 
@@ -90,7 +91,7 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
             return (
                 <Fragment key={key}>
                     {floor}
-                    <Apple {...position} />
+                    {/* <Apple {...position} /> */}
                 </Fragment>
             );
         case 'b':
@@ -146,7 +147,7 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
             return (
                 <Fragment key={key}>
                     {floor}
-                    <Egg {...position} />
+                    {/* <Egg {...position} /> */}
                 </Fragment>
             );
         case 'j':
@@ -186,6 +187,7 @@ const startPos = { x: 6, y: 3 };
 
 export default function KitchenScene() {
     const [displayIntroText, setDisplayIntroText] = useState(true);
+    const [showFood, setShowFood] = useState(true);
     return (
         <>
             <GameObject name="map">
@@ -212,6 +214,13 @@ export default function KitchenScene() {
                 </IntoText>
             )}
             <Player x={6} y={3} />
+            <Friend x={4} y={3} />
+            {showFood && (
+                <>
+                    <Egg x={1} y={6} />
+                    <Apple x={3} y={5} />
+                </>
+            )}
         </>
     );
 }
