@@ -186,9 +186,20 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
 
 const startPos = { x: 6, y: 3 };
 
+const foodConfigurations = [
+    ['a', 'g', 'j'],
+    ['b', 'h', 'd'],
+];
+
+function getRandomFoodConfiguration() {
+    const foodIdx = Math.floor(Math.random() * foodConfigurations.length);
+    return foodConfigurations[foodIdx];
+}
+
 export default function KitchenScene() {
     const [displayIntroText, setDisplayIntroText] = useState(true);
     const [showFood, setShowFood] = useState(false);
+    const currConfig = getRandomFoodConfiguration();
 
     useGameEvent(
         'TALKED_TO_FRIEND',
