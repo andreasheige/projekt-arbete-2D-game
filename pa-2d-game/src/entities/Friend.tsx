@@ -6,13 +6,19 @@ import Sprite from '../@core/Sprite';
 import spriteData from '../spriteData';
 import useGameObject from '../@core/useGameObject';
 import useGameObjectEvent from '../@core/useGameObjectEvent';
+import useGame from '../@core/useGame';
 
 function DisableOnTriggerScript() {
-    const { getRef } = useGameObject();
+    // const { getRef } = useGameObject();
+    const { publish } = useGame();
+
+    async function sendTalkNotification() {
+        await publish('TALKED_TO_FRIEND');
+    }
 
     useGameObjectEvent<TriggerEvent>('trigger', other => {
         if (other.name === 'player') {
-            getRef().setDisabled(true);
+            sendTalkNotification();
         }
     });
 

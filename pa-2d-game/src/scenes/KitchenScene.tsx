@@ -27,6 +27,7 @@ import Watermelon from '../entities/food/watermelon';
 import spriteData from '../spriteData';
 import IntoText from '../components/IntoText';
 import Friend from '../entities/Friend';
+import useGameEvent from '../@core/useGameEvent';
 
 const mapData = mapDataString(`
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # · # #
@@ -187,7 +188,16 @@ const startPos = { x: 6, y: 3 };
 
 export default function KitchenScene() {
     const [displayIntroText, setDisplayIntroText] = useState(true);
-    const [showFood, setShowFood] = useState(true);
+    const [showFood, setShowFood] = useState(false);
+
+    useGameEvent(
+        'TALKED_TO_FRIEND',
+        () => {
+            setShowFood(true);
+        },
+        []
+    );
+
     return (
         <>
             <GameObject name="map">
