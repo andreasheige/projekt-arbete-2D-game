@@ -290,8 +290,8 @@ export default function KitchenScene() {
                     <div>
                         <p>Du entrar nu Köket...</p>
                         <p>Fånga in fladdermusen.</p>
-                        <p>Välj rätt mat.</p>
-                        <p>Så din kompis Grannen blir nöjd...</p>
+                        <p>Öppna lönndörren...</p>
+                        <p>Din kompis Grannen är hungrig...</p>
                     </div>
                 </IntoText>
             )}
@@ -300,6 +300,7 @@ export default function KitchenScene() {
             {selectedFoods}
             {!isGateOpen && <GatewayBlock x={18} y={1} />}
             {!allGoodFoodGone && <GatewayBlock x={32} y={5} />}
+            <ScenePortal name="exit" enterDirection={[0, -1]} target="garden/entrance" />
         </>
     );
 }
