@@ -106,8 +106,6 @@ export default function LivingroomSceen() {
                 <TileMap data={mapData} resolver={resolveMapTile} definesMapSize />
             </GameObject>
             <GameObject x={16} y={3}>
-                <Collider />
-                <Interactable />
                 <ScenePortal
                     name="start"
                     enterDirection={[-1, 0]}

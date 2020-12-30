@@ -277,8 +277,6 @@ export default function KitchenScene() {
                 <TileMap data={curMap} resolver={resolveMapTile} definesMapSize />
             </GameObject>
             <GameObject x={0} y={3}>
-                <Collider />
-                <Interactable />
                 <ScenePortal
                     name="entrance"
                     enterDirection={[0, -1]}
@@ -300,7 +298,15 @@ export default function KitchenScene() {
             {selectedFoods}
             {!isGateOpen && <GatewayBlock x={18} y={1} />}
             {!allGoodFoodGone && <GatewayBlock x={32} y={5} />}
-            <ScenePortal name="exit" enterDirection={[0, -1]} target="garden/entrance" />
+            <GameObject x={32} y={7}>
+                <Collider />
+                <Interactable />
+                <ScenePortal
+                    name="exit"
+                    enterDirection={[0, 1]}
+                    target="garden/entrance"
+                />
+            </GameObject>
         </>
     );
 }
