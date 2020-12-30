@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import Collider from '../@core/Collider';
 import GameObject from '../@core/GameObject';
 import Interactable from '../@core/Interactable';
@@ -14,7 +14,8 @@ import Workstation from '../entities/Workstation';
 import Ghost from '../entities/Ghost';
 import spriteData from '../spriteData';
 import Rat from '../entities/Rat';
-import MoveableRubbish from '../entities/MovableRubbish';
+import RatFollowing from '../entities/RatFollowing';
+import IntoText from '../components/IntoText';
 
 const mapData = mapDataString(`
 # # # # # # # # # # # # · # # # #
@@ -94,7 +95,10 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
     }
 };
 
+const startPos = { x: 15, y: 3 };
+
 export default function LivingroomSceen() {
+    const [displayIntroText, setDisplayIntroText] = useState(true);
     return (
         <>
             <GameObject name="map">
@@ -120,7 +124,17 @@ export default function LivingroomSceen() {
                 />
             </GameObject>
             <Player x={6} y={3} />
-            <MoveableRubbish x={12} y={3} />
+            <RatFollowing x={3} y={2} />
+            <RatFollowing x={4} y={5} />
+            {displayIntroText && (
+                <IntoText setDisplayIntroText={setDisplayIntroText} startPos={startPos}>
+                    <div>
+                        <p>Rummet går att skippa.</p>
+                        <p>Går att fånga en av råttorna.</p>
+                        <p>Går att leda 2 råttor till spöket.</p>
+                    </div>
+                </IntoText>
+            )}
         </>
     );
 }
