@@ -10,7 +10,6 @@ import { mapDataString } from '../@core/utils/mapUtils';
 import CoffeeMachine from '../entities/CoffeeMachine';
 import PizzaPickup from '../entities/PizzaPickup';
 import Player from '../entities/Player';
-// import Friend from '../entities/Friend';
 import Apple from '../entities/food/apple';
 import Bacon from '../entities/food/bacon';
 import Banana from '../entities/food/banana';
@@ -297,7 +296,7 @@ export default function KitchenScene() {
                 </IntoText>
             )}
             <Player x={6} y={3} />
-            {!allGoodFoodGone && <Friend x={33} y={4} />}
+            {!allGoodFoodGone && <Friend x={33} y={3} />}
             {selectedFoods}
             {!isGateOpen && <GatewayBlock x={18} y={1} />}
             {!allGoodFoodGone && <GatewayBlock x={32} y={5} />}
