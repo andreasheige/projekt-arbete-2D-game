@@ -41,7 +41,7 @@ export default function App() {
                 <ScoreProvider>
                     <Game cameraZoom={80}>
                         <AssetLoader urls={urls} placeholder="Loading assets ...">
-                            <SceneManager defaultScene="kitchen">
+                            <SceneManager defaultScene="hallway">
                                 <Scene id="hallway">
                                     <HallwayScene />
                                 </Scene>
