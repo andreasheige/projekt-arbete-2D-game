@@ -131,12 +131,8 @@ const spriteData: { [index: string]: SpriteProps } = {
         frameHeight: 20,
         sheet: {
             rat: [
-                // [0, 0],
-                // [1, 0],
                 [0, 1],
                 [1, 1],
-                [0, 2],
-                [1, 2],
             ],
         },
     },
@@ -159,6 +155,11 @@ const spriteData: { [index: string]: SpriteProps } = {
             candy: [[4, 7]],
             cucumber: [[6, 2]],
         },
+    },
+    friend: {
+        src: './assets/kompis.png',
+        frameWidth: 120,
+        frameHeight: 120,
     },
 };
 

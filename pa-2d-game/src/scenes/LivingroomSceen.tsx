@@ -15,6 +15,7 @@ import Ghost from '../entities/Ghost';
 import spriteData from '../spriteData';
 import Rat from '../entities/Rat';
 import RatFollowing from '../entities/RatFollowing';
+import MoveableRubbish from '../entities/MovableRubbish';
 
 const mapData = mapDataString(`
 # # # # # # # # # # # # · # # # #
