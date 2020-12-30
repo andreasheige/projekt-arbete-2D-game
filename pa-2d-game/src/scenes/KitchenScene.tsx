@@ -10,7 +10,6 @@ import { mapDataString } from '../@core/utils/mapUtils';
 import CoffeeMachine from '../entities/CoffeeMachine';
 import PizzaPickup from '../entities/PizzaPickup';
 import Player from '../entities/Player';
-// import Friend from '../entities/Friend';
 import Apple from '../entities/food/apple';
 import Bacon from '../entities/food/bacon';
 import Banana from '../entities/food/banana';
@@ -33,9 +32,9 @@ import GatewayBlock from '../entities/GatewayBlock';
 
 const mapData = mapDataString(`
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # · # #
-# · · · · · · · · # · · · · C C # # # · · · # · · · # · · · # · · · #
+# · · · · · · · · # · · · · · · # # # · · · # · · · # · · · # · · · #
 # · · · · B · · · · · · · · · · # # # · # · # · # · # · # · # # · # #
-# · · · · · · # · · · · · # · · · · # · # · # · # · # · # · # · · · #
+# · · · · · · # · · · · · # · · · · # · # · # · # · # · # · # C · · #
 · · · # · · · · · · · · · · · · # · # · # · # · # · # · # · # · · · #
 # · · · · · · · · · · · · · · · # · # · # · # · # · # · # · # · · · #
 # · · · · · # · · · · · · · · · # · · · # · · · # · · · # · · · · · #
@@ -44,9 +43,9 @@ const mapData = mapDataString(`
 
 const mapData2 = mapDataString(`
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # · # #
-# · · · e · · · f # · · · · C C # # # · · · # · · · # · · · # · · · #
+# · · · e · · · f # · · · · · · # # # · · · # · · · # · · · # · · · #
 # · a · · B · · · · · · k · · · # # # · # · # · # · # · # · # # · # #
-# · · · · · · # · g · · · # · · · · # · # · # · # · # · # · # · · · #
+# · · · · · · # · g · · · # · · · · # · # · # · # · # · # · # C · · #
 · · · # · · · · · · · · · · l · # · # · # · # · # · # · # · # · · · #
 # · b · · · c · · · · h · · · · # · # · # · # · # · # · # · # · · · #
 # · · · d · # · i · · · j · m · # · · · # · · · # · · · # · · · · · #
@@ -229,7 +228,7 @@ export default function KitchenScene() {
     const [curMap, setCurMap] = useState(mapData);
     const [displayIntroText, setDisplayIntroText] = useState(true);
     const [foodState, dispatch] = useReducer(kitchenReducer, currFoodConfig);
-    const selectedFoods = plotFood(4, 8, foodState); // move to 31,6 ?
+    const selectedFoods = plotFood(31, 6, foodState);
     const allGoodFoodGone = foodState.length === 0;
     const [isGateOpen, setIsGateOpen] = useState(false);
 
@@ -297,7 +296,7 @@ export default function KitchenScene() {
                 </IntoText>
             )}
             <Player x={6} y={3} />
-            {!allGoodFoodGone && <Friend x={4} y={3} />}
+            {!allGoodFoodGone && <Friend x={33} y={3} />}
             {selectedFoods}
             {!isGateOpen && <GatewayBlock x={18} y={1} />}
             {!allGoodFoodGone && <GatewayBlock x={32} y={5} />}

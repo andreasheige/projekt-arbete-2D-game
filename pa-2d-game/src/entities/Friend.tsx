@@ -31,7 +31,7 @@ export default function Friend(props: GameObjectProps) {
             <Collider />
             <Interactable />
             <CharacterScript>
-                <Sprite {...spriteData.objects} state="pizza" />
+                <Sprite {...spriteData.friend} offset={{ x: 0, y: 0.0 }} />
             </CharacterScript>
             <DisableOnTriggerScript />
         </GameObject>
