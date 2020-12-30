@@ -228,7 +228,7 @@ export default function KitchenScene() {
     const [curMap, setCurMap] = useState(mapData);
     const [displayIntroText, setDisplayIntroText] = useState(true);
     const [foodState, dispatch] = useReducer(kitchenReducer, currFoodConfig);
-    const selectedFoods = plotFood(31, 6, foodState); // move to 31,6 ?
+    const selectedFoods = plotFood(31, 6, foodState);
     const allGoodFoodGone = foodState.length === 0;
     const [isGateOpen, setIsGateOpen] = useState(false);
 
