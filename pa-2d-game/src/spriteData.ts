@@ -160,6 +160,11 @@ const spriteData: { [index: string]: SpriteProps } = {
             cucumber: [[6, 2]],
         },
     },
+    friend: {
+        src: './assets/kompis.png',
+        frameWidth: 120,
+        frameHeight: 120,
+    },
 };
 
 export default spriteData;
