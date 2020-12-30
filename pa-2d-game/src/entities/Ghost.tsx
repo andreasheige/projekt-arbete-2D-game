@@ -4,15 +4,13 @@ import GameObject, { GameObjectProps } from '../@core/GameObject';
 import Sprite from '../@core/Sprite';
 import spriteData from '../spriteData';
 import useGameObjectEvent from '../@core/useGameObjectEvent';
-import soundData from '../soundData';
-import { useSound } from '../@core/Sound';
 import ScoreScriptGhost from '../components/ScoreScriptGhost';
 
 function TriggerScript() {
-    const playSfx = useSound(soundData.eating);
+    // const playSfx = useSound(soundData.eating);
     useGameObjectEvent<TriggerEvent>('trigger', other => {
         if (other.name === 'followingRat') {
-            playSfx();
+            // playSfx();
             other.setDisabled(true); // will cause warning
         }
     });
