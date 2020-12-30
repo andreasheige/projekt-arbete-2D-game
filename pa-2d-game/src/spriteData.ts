@@ -131,12 +131,8 @@ const spriteData: { [index: string]: SpriteProps } = {
         frameHeight: 20,
         sheet: {
             rat: [
-                // [0, 0],
-                // [1, 0],
                 [0, 1],
                 [1, 1],
-                [0, 2],
-                [1, 2],
             ],
         },
     },
