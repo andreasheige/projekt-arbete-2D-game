@@ -26,21 +26,13 @@ import { LIGHT_ACTIVE_ROOM1 } from '../constants/gameStates';
 import { spritePosToFloor4x4 } from '../@core/utils/tileLoadingUtils';
 import Mal from '../entities/Mal';
 import IntoText from '../components/IntoText';
+import getRoomData from './sceen_data/hallwayData';
 
 const floorChar = '·';
 const rubbishChar = 'r';
 const chanceOrRubbish = 0.5;
 const mapData = insertRandomMarks(
-    mapDataString(`
-# # # # # # # # # # # # # # # # #
-# · * * * · · · · p · · · · · · #
-# · * · * * · · · * · · · · · · #
-* * * · · * · * * * * * * * * · #
-# · · · · * · * · · · · · · * · #
-# · · · · * * * · * * * * * * · #
-# · · · · · · · · * * · · · · · #
-# # # # # # # # # * # # # # # # #
-`),
+    mapDataString(getRoomData()),
     floorChar,
     chanceOrRubbish,
     rubbishChar
@@ -158,16 +150,16 @@ export default function HallwayScene() {
                 )}
             </GameObject>
             <Player {...startPos} spotlight={isSpotlightActive} />
-            <IntoText setDisplayIntroText={setDisplayIntroText} startPos={startPos}>
-                {displayIntroText && (
+            {displayIntroText && (
+                <IntoText setDisplayIntroText={setDisplayIntroText} startPos={startPos}>
                     <div>
                         <p>Ett mörkt stökigt rum...</p>
                         <p>Undvik att trampa på skräpet.</p>
                         <p>Tänd ljuset genom att gå på ljusknappen.</p>
                         <p>Att fånga malarna i rummet ger extra poäng.</p>
                     </div>
-                )}
-            </IntoText>
+                </IntoText>
+            )}
         </>
     );
 }

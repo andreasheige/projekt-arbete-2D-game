@@ -14,10 +14,11 @@ import soundData from '../soundData';
 function TriggerScript() {
     const { publish } = useGame();
     const { getRef } = useGameObject();
-    const playSfx = useSound(soundData.eating);
+    const playSfx = useSound(soundData.wingflapp);
 
     async function sendChangeScoreNotification() {
         await publish('CHANGE_SCORE', 15);
+        await publish('BAT_DIED');
     }
 
     useGameObjectEvent<TriggerEvent>('trigger', other => {
