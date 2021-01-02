@@ -138,6 +138,9 @@ export default function HallwayScene() {
                 <TileMap data={mapData} resolver={resolveMapTile} definesMapSize />
             </GameObject>
             {!isLightActiveAndDoorOpened && <GatewayBlock x={0} y={4} direction="left" />}
+            <GameObject x={9} y={0}>
+                <ScenePortal name="start" enterDirection={[1, 0]} target="garden/exit" />
+            </GameObject>
             <GameObject x={0} y={4}>
                 <Collider />
                 <Interactable />

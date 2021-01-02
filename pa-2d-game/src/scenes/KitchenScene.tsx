@@ -277,8 +277,6 @@ export default function KitchenScene() {
                 <TileMap data={curMap} resolver={resolveMapTile} definesMapSize />
             </GameObject>
             <GameObject x={0} y={3}>
-                <Collider />
-                <Interactable />
                 <ScenePortal
                     name="entrance"
                     enterDirection={[0, -1]}
@@ -290,8 +288,8 @@ export default function KitchenScene() {
                     <div>
                         <p>Du entrar nu Köket...</p>
                         <p>Fånga in fladdermusen.</p>
-                        <p>Välj rätt mat.</p>
-                        <p>Så din kompis Grannen blir nöjd...</p>
+                        <p>Öppna lönndörren...</p>
+                        <p>Din kompis Grannen är hungrig...</p>
                     </div>
                 </IntoText>
             )}
@@ -300,6 +298,15 @@ export default function KitchenScene() {
             {selectedFoods}
             {!isGateOpen && <GatewayBlock x={18} y={1} />}
             {!allGoodFoodGone && <GatewayBlock x={32} y={5} />}
+            <GameObject x={32} y={7}>
+                <Collider />
+                <Interactable />
+                <ScenePortal
+                    name="exit"
+                    enterDirection={[0, 1]}
+                    target="garden/entrance"
+                />
+            </GameObject>
         </>
     );
 }

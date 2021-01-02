@@ -9,6 +9,7 @@ import HallwayScene from './scenes/HallwayScene';
 import LivingroomSceen from './scenes/LivingroomSceen';
 import StudyScene from './scenes/StudyScene';
 import KitchenScene from './scenes/KitchenScene';
+import GardenSceen from './scenes/GardenScene';
 import soundData from './soundData';
 import spriteData from './spriteData';
 import globalStyles from './styles/global';
@@ -41,7 +42,7 @@ export default function App() {
                 <ScoreProvider>
                     <Game cameraZoom={80}>
                         <AssetLoader urls={urls} placeholder="Loading assets ...">
-                            <SceneManager defaultScene="study">
+                            <SceneManager defaultScene="garden">
                                 <Scene id="hallway">
                                     <HallwayScene />
                                 </Scene>
@@ -53,6 +54,9 @@ export default function App() {
                                 </Scene>
                                 <Scene id="kitchen">
                                     <KitchenScene />
+                                </Scene>
+                                <Scene id="garden">
+                                    <GardenSceen />
                                 </Scene>
                             </SceneManager>
                         </AssetLoader>

@@ -93,8 +93,6 @@ export default function StudySceen() {
                 <TileMap data={mapData} resolver={resolveMapTile} definesMapSize />
             </GameObject>
             <GameObject x={12} y={0}>
-                <Collider />
-                <Interactable />
                 <ScenePortal
                     name="entrance"
                     enterDirection={[0, -1]}
