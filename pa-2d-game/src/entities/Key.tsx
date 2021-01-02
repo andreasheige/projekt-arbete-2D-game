@@ -12,6 +12,7 @@ import { KEY_TO_STUDY_FOUND, TRIEGGED_CLUE_ORDER } from '../constants/gameStates
 import useGameLoop from '../@core/useGameLoop';
 import { OPEN_DOOR, CHANGE_SCORE } from '../constants/events';
 import { FINDING_KEY_IN_STUDY_SCENE } from '../constants/points';
+import useGameEvent from '../@core/useGameEvent';
 
 function DisableOnTriggerScript({ onStepOnkey }) {
     const { getRef, getComponent } = useGameObject();
@@ -45,6 +46,7 @@ export default function Key(props: GameObjectProps) {
     const scaleFirst = useRef<THREE.Vector3>();
     const time0 = useRef(0);
     const [hitKey, setHitKey] = useState(false);
+    const [cluesFound, setCluesFound] = useState(false);
     const rotate = useCallback(time => {
         childRef.current.rotation.set(0, 0, 0.005 * time);
     }, []);
@@ -64,6 +66,14 @@ export default function Key(props: GameObjectProps) {
         }, 1000);
     }
 
+    useGameEvent(
+        'ACTIVATE_CLUE',
+        activeClue => {
+            if (activeClue === 3) setCluesFound(true);
+        },
+        []
+    );
+
     useGameLoop(time => {
         if (childRef.current) rotate(time);
         if (hitKey && scaleRef.current) scaleUp(time);
@@ -75,7 +85,7 @@ export default function Key(props: GameObjectProps) {
                     <Sprite {...spriteData.objects} opacity={0} state="pizza" />
                 </group>
             </group>
-            <Collider isTrigger />
+            {cluesFound && <Collider isTrigger />}
             <DisableOnTriggerScript onStepOnkey={handleStepOnkey} />
         </GameObject>
     );

@@ -95,7 +95,6 @@ export default function ArrowClue(props: ArrowClueProps) {
 
     const isPastClue = currentClue !== props.order && isTigged;
     const isCurrentClue = currentClue === props.order;
-
     rotate();
     return (
         <GameObject layer="ground" {...props}>
@@ -114,7 +113,7 @@ export default function ArrowClue(props: ArrowClueProps) {
                 setTigged={setTigged}
                 clueOrder={props.order}
             />
-            {isCurrentClue && <ScoreScript scoreChange={ARROW_CLUE_REWARD} once />}
+            <ScoreScript scoreChange={ARROW_CLUE_REWARD} once />
         </GameObject>
     );
 }
