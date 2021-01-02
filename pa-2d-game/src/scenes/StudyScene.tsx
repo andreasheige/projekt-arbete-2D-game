@@ -20,7 +20,7 @@ import Cluess from '../components/Clues';
 
 const floorChar = '·';
 const rubbishChar = 'r';
-const chanceOrRubbish = 0.4;
+const chanceOrRubbish = 0.5;
 const mapData = insertRandomMarks(
     mapDataString(`
 # # # # # # # # # # # # # # # # #
