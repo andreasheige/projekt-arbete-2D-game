@@ -1,17 +1,12 @@
 import React, { Fragment, useState } from 'react';
 import Collider from '../@core/Collider';
-import GameObject, { Position } from '../@core/GameObject';
+import GameObject from '../@core/GameObject';
 import Interactable from '../@core/Interactable';
 import ScenePortal from '../@core/ScenePortal';
 import Sprite from '../@core/Sprite';
 import TileMap, { TileMapResolver } from '../@core/TileMap';
 import { mapDataString, insertRandomMarks } from '../@core/utils/mapUtils';
-import CoffeeMachine from '../entities/CoffeeMachine';
-import PizzaPickup from '../entities/PizzaPickup';
-import Plant from '../entities/Plant';
 import Player from '../entities/Player';
-import Key from '../entities/Key';
-import Workstation from '../entities/Workstation';
 import spriteData from '../spriteData';
 import MovableRubbish from '../entities/MovableRubbish';
 import GatewayBlock from '../entities/GatewayBlock';
@@ -19,13 +14,13 @@ import useGame from '../@core/useGame';
 import useGameEvent from '../@core/useGameEvent';
 import { OPEN_DOOR } from '../constants/events';
 import { KEY_TO_STUDY_FOUND } from '../constants/gameStates';
-import ArrowClue from '../entities/ArrowClue';
 import CleaningBucket from '../entities/CleaningBucket';
 import IntoText from '../components/IntoText';
+import Cluess from '../components/Clues';
 
 const floorChar = '·';
 const rubbishChar = 'r';
-const chanceOrRubbish = 0.5;
+const chanceOrRubbish = 0.4;
 const mapData = insertRandomMarks(
     mapDataString(`
 # # # # # # # # # # # # # # # # #
@@ -64,13 +59,6 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
                     <MovableRubbish {...position} />
                 </Fragment>
             );
-        case 'o':
-            return (
-                <Fragment key={key}>
-                    {floor}
-                    <PizzaPickup {...position} />
-                </Fragment>
-            );
         case '#':
             return (
                 <GameObject key={key} {...position} layer="wall">
@@ -78,39 +66,10 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
                     <Sprite {...spriteData.objects} state="wall4" />
                 </GameObject>
             );
-        case 'W':
-            return (
-                <Fragment key={key}>
-                    {floor}
-                    <Workstation {...position} />
-                </Fragment>
-            );
-        case 'C':
-            return (
-                <Fragment key={key}>
-                    {floor}
-                    <CoffeeMachine {...position} />
-                </Fragment>
-            );
-        case 'T':
-            return (
-                <Fragment key={key}>
-                    {floor}
-                    <Plant {...position} />
-                </Fragment>
-            );
         default:
             return null;
     }
 };
-
-// temp solution, should be generatde
-const clues: Array<Position> = [
-    { x: 12, y: 1 },
-    { x: 9, y: 2 },
-    { x: 12, y: 5 },
-    { x: 12, y: 3 },
-];
 
 const startPos = { x: 12, y: 0 };
 
@@ -154,13 +113,6 @@ export default function StudySceen() {
                     />
                 )}
             </GameObject>
-            <Key x={12} y={3} />
-            <MovableRubbish x={12} y={3} />
-            <ArrowClue {...clues[0]} dest={clues[1]} order={1} />
-            <MovableRubbish {...clues[1]} />
-            <ArrowClue {...clues[1]} dest={clues[2]} order={2} />
-            <MovableRubbish {...clues[2]} />
-            <ArrowClue {...clues[2]} dest={clues[3]} order={3} />
             <Player {...startPos} />
             <CleaningBucket x={13} y={1} />
             {displayIntroText && (
@@ -172,6 +124,7 @@ export default function StudySceen() {
                     </div>
                 </IntoText>
             )}
+            <Cluess width={17} height={8} x0={12} y0={1} />
         </Fragment>
     );
 }
