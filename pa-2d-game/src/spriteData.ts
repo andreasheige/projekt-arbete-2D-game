@@ -43,6 +43,7 @@ const spriteData: { [index: string]: SpriteProps } = {
             wall2: [[3, 0]],
             wall3: [[4, 0]],
             wall4: [[5, 0]],
+            grass: [[6, 0]],
             'workstation-1': [[0, 1]],
             'workstation-2': [[1, 1]],
             'coffee-machine': [[2, 1]],
