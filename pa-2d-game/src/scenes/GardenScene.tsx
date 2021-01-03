@@ -11,7 +11,8 @@ import {
     insertNRandomMarks,
 } from '../@core/utils/mapUtils';
 import Player from '../entities/Player';
-import Plant from '../entities/Plant';
+import Pine from '../entities/Pine';
+import Tree from '../entities/Tree';
 import Mush00 from '../entities/Mushrooms/Mush00';
 import Mush01 from '../entities/Mushrooms/Mush01';
 import Mush02 from '../entities/Mushrooms/Mush02';
@@ -77,16 +78,17 @@ import getRoomData from './sceen_data/gardenData';
 // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 // `);
 const floorChar = '·';
-const rubbishChar = 'r';
+const pine = 'p';
 const chanceOrRubbish = 0.5;
 const mapData = insertRandomMarks(
     mapDataString(getRoomData()),
     floorChar,
     chanceOrRubbish,
-    rubbishChar
+    pine
 );
 insertNRandomMarks(mapData, '·', 3, 'm');
 insertNRandomMarks(mapData, '·', 3, 'n');
+insertNRandomMarks(mapData, '·', 33, 't');
 
 const resolveMapTile: TileMapResolver = (type, x, y) => {
     const key = `${x}-${y}`;
@@ -106,6 +108,20 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
                 <GameObject key={key} {...position} layer="wall">
                     <Collider />
                     <Sprite {...spriteData.objects} state="wall2" />
+                </GameObject>
+            );
+        case '0':
+            return (
+                <GameObject key={key} {...position} layer="wall">
+                    <Collider />
+                    <Sprite {...spriteData.objects} state="roof" />
+                </GameObject>
+            );
+        case '1':
+            return (
+                <GameObject key={key} {...position} layer="wall">
+                    <Collider />
+                    <Sprite {...spriteData.objects} state="roof2" />
                 </GameObject>
             );
         case '*':
@@ -128,11 +144,18 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
                     <Mush01 {...position} />
                 </Fragment>
             );
-        case 'r':
+        case 'p':
             return (
                 <Fragment key={key}>
                     {floor}
-                    <Plant {...position} />
+                    <Pine {...position} />
+                </Fragment>
+            );
+        case 't':
+            return (
+                <Fragment key={key}>
+                    {floor}
+                    <Tree {...position} />
                 </Fragment>
             );
         default:
