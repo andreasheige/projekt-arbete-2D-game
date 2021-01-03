@@ -34,7 +34,7 @@ const mapData = mapDataString(`
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # · # #
 # · · · · · · · · # · · · · · · # # # · · · # · · · # · · · # · · · #
 # · · · · B · · · · · · · · · · # # # · # · # · # · # · # · # # · # #
-# · · · · · · # · · · · · # · · · · # · # · # · # · # · # · # C · · #
+# · · · · · · # · · · · · # · · · · # · # · # · # · # · # · # · · · #
 · · · # · · · · · · · · · · · · # · # · # · # · # · # · # · # · · · #
 # · · · · · · · · · · · · · · · # · # · # · # · # · # · # · # · · · #
 # · · · · · # · · · · · · · · · # · · · # · · · # · · · # · · · · · #
@@ -45,10 +45,21 @@ const mapData2 = mapDataString(`
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # · # #
 # · · · e · · · f # · · · · · · # # # · · · # · · · # · · · # · · · #
 # · a · · B · · · · · · k · · · # # # · # · # · # · # · # · # # · # #
-# · · · · · · # · g · · · # · · · · # · # · # · # · # · # · # C · · #
+# · · · · · · # · g · · · # · · · · # · # · # · # · # · # · # · · · #
 · · · # · · · · · · · · · · l · # · # · # · # · # · # · # · # · · · #
 # · b · · · c · · · · h · · · · # · # · # · # · # · # · # · # · · · #
 # · · · d · # · i · · · j · m · # · · · # · · · # · · · # · · · · · #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+`);
+
+const mapData3 = mapDataString(`
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # · # #
+# · · · · · · · · # · · · · · · # # # · · · # · · · # · · · # · · · #
+# · · · · · · · · · · · · · · · # # # · # · # · # · # · # · # # · # #
+# · · · · · · # · · · · · # · · · · # · # · # · # · # · # · # · · · #
+· · · # · · · · · · · · · · · · # · # · # · # · # · # · # · # · · · #
+# · · · · · · · · · · · · · · · # · # · # · # · # · # · # · # · · · #
+# · · · · · # · · · · · · · · · # · · · # · · · # · · · # · · · · · #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 `);
 
@@ -79,13 +90,13 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
                     <Sprite {...spriteData.objects} state="wall3" />
                 </GameObject>
             );
-        case 'C':
-            return (
-                <Fragment key={key}>
-                    {floor}
-                    <CoffeeMachine {...position} />
-                </Fragment>
-            );
+        // case 'C':
+        //     return (
+        //         <Fragment key={key}>
+        //             {floor}
+        //             <CoffeeMachine interact {...position} />
+        //         </Fragment>
+        //     );
         // case 'Q':
         //     return (
         //         <Fragment key={key}>
@@ -218,24 +229,51 @@ function kitchenReducer(state: Array<string>, action) {
     switch (action.type) {
         case 'eat_good_food':
             return state.filter(f => f !== action.foodType);
+        case 'generate_food_wish':
+            return getRandomFoodConfiguration();
         default:
             throw new Error();
     }
 }
 
 export default function KitchenScene() {
-    const { publish } = useGame();
+    const { publish, getGameState } = useGame();
     const [curMap, setCurMap] = useState(mapData);
     const [displayIntroText, setDisplayIntroText] = useState(true);
     const [foodState, dispatch] = useReducer(kitchenReducer, currFoodConfig);
-    const selectedFoods = plotFood(31, 6, foodState);
+    const [displayFood, setDisplayFood] = useState(false);
+    const selectedFoods = displayFood ? plotFood(31, 6, foodState) : null;
     const allGoodFoodGone = foodState.length === 0;
     const [isGateOpen, setIsGateOpen] = useState(false);
+    const [hasDrunkCoffe, setHasDrunkCoffe] = useState(false);
 
     useGameEvent(
         'TALKED_TO_FRIEND',
-        () => {
+        count => {
+            if (foodState.length === 0 && count === 0) {
+                dispatch({ type: 'generate_food_wish' });
+            }
             setCurMap(mapData2); // make more variations
+            setDisplayFood(true);
+            setTimeout(() => {
+                setDisplayFood(false);
+            }, 5000);
+        },
+        [foodState, getGameState]
+    );
+
+    useGameEvent(
+        'EATEN_ALL_GOOD_FOOD',
+        () => {
+            setCurMap(mapData3); // clear room
+        },
+        []
+    );
+
+    useGameEvent(
+        'DRINK_COFFEE',
+        () => {
+            setHasDrunkCoffe(true);
         },
         []
     );
@@ -244,11 +282,18 @@ export default function KitchenScene() {
         await publish('CHANGE_SCORE', points);
     }
 
+    async function sendSignalEatenAllGoodFood() {
+        await publish('EATEN_ALL_GOOD_FOOD');
+    }
+
     function handleEatFood(foodType: string) {
         const foodWasCorrect = foodState.find(f => f === foodType);
         if (foodWasCorrect) {
             dispatch({ type: 'eat_good_food', foodType });
             sendChangeScore(20);
+            if (foodState.length === 1) {
+                sendSignalEatenAllGoodFood();
+            }
         } else {
             sendChangeScore(-10);
         }
@@ -259,12 +304,13 @@ export default function KitchenScene() {
         params => {
             handleEatFood(params.foodType);
         },
-        []
+        [foodState]
     );
 
     useGameEvent(
         'BAT_DIED',
         () => {
+            // publish('TALKED_TO_FRIEND', 0); // remove
             setIsGateOpen(true);
         },
         []
@@ -294,10 +340,11 @@ export default function KitchenScene() {
                 </IntoText>
             )}
             <Player x={6} y={3} />
-            {!allGoodFoodGone && <Friend x={33} y={3} />}
+            <Friend x={33} y={3} />
+            <CoffeeMachine interact={allGoodFoodGone} x={31} y={4} />
             {selectedFoods}
             {!isGateOpen && <GatewayBlock x={18} y={1} />}
-            {!allGoodFoodGone && <GatewayBlock x={32} y={5} />}
+            {!hasDrunkCoffe && <GatewayBlock x={32} y={5} />}
             <GameObject x={32} y={7}>
                 <Collider />
                 <Interactable />
