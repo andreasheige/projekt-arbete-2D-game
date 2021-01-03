@@ -8,13 +8,13 @@ import Moveable from '../@core/Moveable';
 import useGameObjectEvent from '../@core/useGameObjectEvent';
 import useGame from '../@core/useGame';
 import useGameObject from '../@core/useGameObject';
-import { useSound } from '../@core/Sound';
-import soundData from '../soundData';
+// import { useSound } from '../@core/Sound';
+// import soundData from '../soundData';
 
 function TriggerScript() {
     const { publish } = useGame();
     const { getRef } = useGameObject();
-    const playSfx = useSound(soundData.wingflapp);
+    // const playSfx = useSound(soundData.wingflapp);
 
     async function sendChangeScoreNotification() {
         await publish('CHANGE_SCORE', 15);
@@ -26,7 +26,7 @@ function TriggerScript() {
             // TODO: signal score loss
             sendChangeScoreNotification();
             getRef().setDisabled(true);
-            playSfx();
+            // playSfx();
         }
     });
 
@@ -39,7 +39,7 @@ export default function Bat(props: GameObjectProps) {
             <Collider isTrigger />
             <Moveable />
             <Sprite {...spriteData.bat} offset={{ x: 0, y: 0 }} basic />
-            <RunningAwayScript reactionSpeed={500} isEaten={false} />
+            <RunningAwayScript reactionSpeed={1500} isEaten={false} />
             <TriggerScript />
         </GameObject>
     );

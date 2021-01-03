@@ -6,11 +6,9 @@ import ScenePortal from '../@core/ScenePortal';
 import Sprite from '../@core/Sprite';
 import TileMap, { TileMapResolver } from '../@core/TileMap';
 import { mapDataString } from '../@core/utils/mapUtils';
-import CoffeeMachine from '../entities/CoffeeMachine';
 import PizzaPickup from '../entities/PizzaPickup';
 import Plant from '../entities/Plant';
 import Player from '../entities/Player';
-import Workstation from '../entities/Workstation';
 import Ghost from '../entities/Ghost';
 import spriteData from '../spriteData';
 import Rat from '../entities/Rat';
@@ -54,20 +52,6 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
                     <Collider />
                     <Sprite {...spriteData.objects} state="wall2" />
                 </GameObject>
-            );
-        case 'W':
-            return (
-                <Fragment key={key}>
-                    {floor}
-                    <Workstation {...position} />
-                </Fragment>
-            );
-        case 'C':
-            return (
-                <Fragment key={key}>
-                    {floor}
-                    <CoffeeMachine {...position} />
-                </Fragment>
             );
         case 'T':
             return (

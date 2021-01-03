@@ -10,7 +10,6 @@ import {
     insertRandomMarks,
     insertNRandomMarks,
 } from '../@core/utils/mapUtils';
-import CoffeeMachine from '../entities/CoffeeMachine';
 import PizzaPickup from '../entities/PizzaPickup';
 import Plant from '../entities/Plant';
 import Rubbish from '../entities/Rubbish';
@@ -94,13 +93,6 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
                 <Fragment key={key}>
                     {floor}
                     <Workstation {...position} />
-                </Fragment>
-            );
-        case 'C':
-            return (
-                <Fragment key={key}>
-                    {floor}
-                    <CoffeeMachine {...position} />
                 </Fragment>
             );
         case 'T':
