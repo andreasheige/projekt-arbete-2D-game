@@ -29,6 +29,7 @@ import Friend from '../entities/Friend';
 import useGameEvent from '../@core/useGameEvent';
 import useGame from '../@core/useGame';
 import GatewayBlock from '../entities/GatewayBlock';
+import NextSceneScript from '../components/NextSceneScript';
 
 const mapData = mapDataString(`
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # · # #
@@ -310,7 +311,6 @@ export default function KitchenScene() {
     useGameEvent(
         'BAT_DIED',
         () => {
-            // publish('TALKED_TO_FRIEND', 0); // remove
             setIsGateOpen(true);
         },
         []
@@ -353,6 +353,7 @@ export default function KitchenScene() {
                     enterDirection={[0, 1]}
                     target="garden/entrance"
                 />
+                <NextSceneScript />
             </GameObject>
         </>
     );
