@@ -164,11 +164,6 @@ const spriteData: { [index: string]: SpriteProps } = {
         frameWidth: 120,
         frameHeight: 120,
     },
-    house: {
-        frameWidth: 143,
-        frameHeight: 192,
-        src: './assets/house.png',
-    },
     mushrooms: {
         src: './assets/mushrooms.png',
         frameWidth: 16,
