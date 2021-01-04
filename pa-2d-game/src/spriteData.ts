@@ -44,6 +44,7 @@ const spriteData: { [index: string]: SpriteProps } = {
             wall3: [[4, 0]],
             wall4: [[5, 0]],
             grass: [[6, 0]],
+            grass2: [[7, 0]],
             'workstation-1': [[0, 1]],
             'workstation-2': [[1, 1]],
             'coffee-machine': [[2, 1]],
@@ -55,6 +56,9 @@ const spriteData: { [index: string]: SpriteProps } = {
             pine: [[1, 2]],
             tree: [[2, 2]],
             ghost: [[3, 3]],
+            box: [[4, 3]],
+            blackhole: [[7, 1]],
+            flute: [[3, 2]],
         },
     },
     moreFloor: {
