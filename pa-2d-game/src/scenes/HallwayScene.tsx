@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useContext } from 'react';
 import Collider from '../@core/Collider';
 import GameObject from '../@core/GameObject';
-import Interactable from '../@core/Interactable';
+import Interactable, { InteractionEvent } from '../@core/Interactable';
 import ScenePortal from '../@core/ScenePortal';
 import Sprite from '../@core/Sprite';
 import TileMap, { TileMapResolver } from '../@core/TileMap';
@@ -26,6 +26,9 @@ import { spritePosToFloor4x4 } from '../@core/utils/tileLoadingUtils';
 import Mal from '../entities/Mal';
 import IntoText from '../components/IntoText';
 import getRoomData from './sceen_data/hallwayData';
+import NextSceneScript from '../components/NextSceneScript';
+import useGameObjectEvent from '../@core/useGameObjectEvent';
+import useGame from '../@core/useGame';
 
 const floorChar = '·';
 const rubbishChar = 'r';
@@ -107,6 +110,20 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
     }
 };
 
+function ResetScreenScript() {
+    const { setGameState } = useGame();
+
+    /* eslint-disable */
+    useGameObjectEvent<InteractionEvent>('interaction', other => {
+            if (other.name === 'player') {
+                setGameState(LIGHT_ACTIVE_ROOM1, false);
+            }
+    }, []);
+    /* eslint-enable */
+
+    return null;
+}
+
 const startPos = { x: 9, y: 0 };
 
 export default function HallwayScene() {
@@ -131,6 +148,8 @@ export default function HallwayScene() {
             </GameObject>
             {!isLightActiveAndDoorOpened && <GatewayBlock x={0} y={4} direction="left" />}
             <GameObject x={9} y={0}>
+                <Collider />
+                <Interactable />
                 <ScenePortal name="start" enterDirection={[1, 0]} target="garden/exit" />
             </GameObject>
             <GameObject x={0} y={4}>
@@ -143,6 +162,8 @@ export default function HallwayScene() {
                         target="livingroom/start"
                     />
                 )}
+                <NextSceneScript />
+                <ResetScreenScript />
             </GameObject>
             <Player {...startPos} spotlight={isSpotlightActive} />
             {displayIntroText && (

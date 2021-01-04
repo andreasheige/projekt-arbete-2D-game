@@ -14,6 +14,7 @@ import spriteData from '../spriteData';
 import Rat from '../entities/Rat';
 import RatFollowing from '../entities/RatFollowing';
 import IntoText from '../components/IntoText';
+import NextSceneScript from '../components/NextSceneScript';
 
 const mapData = mapDataString(`
 # # # # # # # # # # # # · # # # #
@@ -104,6 +105,7 @@ export default function LivingroomSceen() {
                     enterDirection={[0, 1]}
                     target="study/entrance"
                 />
+                <NextSceneScript />
             </GameObject>
             <Player x={6} y={3} />
             <RatFollowing x={3} y={2} />
