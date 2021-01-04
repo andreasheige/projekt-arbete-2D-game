@@ -170,14 +170,14 @@ export default function GardenSceen() {
                 <ambientLight />
                 <TileMap data={mapData} resolver={resolveMapTile} definesMapSize />
             </GameObject>
-            <GameObject x={17} y={9}>
+            <GameObject x={13} y={12}>
                 <ScenePortal
                     name="start"
                     enterDirection={[-1, 0]}
                     target="kitchen/exit"
                 />
             </GameObject>
-            <GameObject x={17} y={15}>
+            <GameObject x={19} y={11}>
                 <Collider />
                 <Interactable />
                 <ScenePortal
@@ -186,7 +186,7 @@ export default function GardenSceen() {
                     target="hallway/entrance"
                 />
             </GameObject>
-            <Player x={17} y={9} />
+            <Player x={13} y={12} />
         </>
     );
 }
