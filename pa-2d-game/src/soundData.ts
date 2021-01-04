@@ -33,6 +33,14 @@ const soundData: { [index: string]: SoundProps } = {
         src: './assets/sfx/wingflap.wav',
         volume: 0.75,
     },
+    flute: {
+        src: './assets/sfx/flute-note-tremolo.wav',
+        volume: 0.75,
+    },
+    moveBox: {
+        src: './assets/sfx/movebox.wav',
+        volume: 0.75,
+    },
 };
 
 export default soundData;
