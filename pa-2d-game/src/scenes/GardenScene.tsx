@@ -118,7 +118,7 @@ export default function GardenSceen() {
                     target="kitchen/exit"
                 />
             </GameObject>
-            <GameObject x={19} y={11}>
+            <GameObject x={20} y={11}>
                 <Collider />
                 <Interactable />
                 <ScenePortal
