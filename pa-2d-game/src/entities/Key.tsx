@@ -82,7 +82,7 @@ export default function Key(props: GameObjectProps) {
         <GameObject name={name} persisted {...props}>
             <group ref={childRef}>
                 <group ref={scaleRef}>
-                    <Sprite {...spriteData.objects} opacity={0} state="pizza" />
+                    <Sprite {...spriteData.key} opacity={0} />
                 </group>
             </group>
             {cluesFound && <Collider isTrigger />}
