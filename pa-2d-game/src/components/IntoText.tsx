@@ -37,9 +37,9 @@ export default function IntoText(props: IntoTextProps) {
         zIndex: 1000,
         position: 'fixed',
         bottom: 100,
-        left: props.startPos.x * 30, // guessing
-        fontSize: 50,
-        color: '#7FFFD4',
+        left: props.startPos.x * 20, // guessing
+        fontSize: 30,
+        color: '#eef4f2',
     };
     return (
         <HTML ref={node} eps={0.1} fullscreen>
