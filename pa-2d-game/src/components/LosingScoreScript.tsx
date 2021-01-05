@@ -17,9 +17,14 @@ export default function LosingScoreScript(props: Props) {
     }
 
     useGameLoop(time => {
+        // loosing score every 5 sec
+        if (time - lastTime.current < 5000) return;
         const playerPos = getGameState(PLAYER_POS);
+        const roomCounter = getGameState('ROOM_COUNTER')
+            ? getGameState('ROOM_COUNTER')
+            : 0;
         const { x, y } = props;
-        if (time - lastTime.current < 2000) return;
+        if (roomCounter < 1) return;
         if (!playerPos) return;
         if (x !== playerPos.x || y !== playerPos.y) {
             lastTime.current = time;

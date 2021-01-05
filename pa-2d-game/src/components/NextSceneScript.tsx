@@ -19,6 +19,8 @@ export default function NextSceneScript() {
     }, []);
     /* eslint-enable */
 
+    // Will translate this event to a black sceen
+    // Maybe not a perfet spot for this
     useGameEvent('STOP_GAME', () => {
         setScene('end');
     });

@@ -23,6 +23,7 @@ import IntoText from '../components/IntoText';
 import Cluess from '../components/Clues';
 import NextSceneScript from '../components/NextSceneScript';
 import useGameObjectEvent from '../@core/useGameObjectEvent';
+import LosingScoreScript from '../components/LosingScoreScript';
 
 const floorChar = '·';
 const rubbishChar = 'r';
@@ -115,6 +116,7 @@ export default function StudySceen() {
                 <ambientLight />
                 <TileMap data={mapData} resolver={resolveMapTile} definesMapSize />
             </GameObject>
+            <LosingScoreScript {...startPos} />
             <GameObject x={12} y={0}>
                 <ScenePortal
                     name="entrance"
