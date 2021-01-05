@@ -15,6 +15,7 @@ import Rat from '../entities/Rat';
 import RatFollowing from '../entities/RatFollowing';
 import IntoText from '../components/IntoText';
 import NextSceneScript from '../components/NextSceneScript';
+import { spritePosToFloor4x4 } from '../@core/utils/tileLoadingUtils';
 
 const mapData = mapDataString(`
 # # # # # # # # # # # # · # # # #
@@ -33,7 +34,7 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
 
     const floor = (
         <GameObject key={key} {...position} layer="ground">
-            <Sprite {...spriteData.objects} state="floor2" />
+            <Sprite {...spriteData.floorRatScene} state={spritePosToFloor4x4(x, y)} />
         </GameObject>
     );
 
