@@ -110,6 +110,11 @@ const spriteData: { [index: string]: SpriteProps } = {
         frameHeight: 120,
         src: './assets/key.png',
     },
+    bush: {
+        frameWidth: 340,
+        frameHeight: 340,
+        src: './assets/bush.png',
+    },
     footstep: {
         src: './assets/footstep.png',
         sheet: {
