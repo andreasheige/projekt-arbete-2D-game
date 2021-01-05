@@ -15,6 +15,7 @@ import Rat from '../entities/Rat';
 import RatFollowing from '../entities/RatFollowing';
 import IntoText from '../components/IntoText';
 import NextSceneScript from '../components/NextSceneScript';
+import LosingScoreScript from '../components/LosingScoreScript';
 import { spritePosToFloor4x4 } from '../@core/utils/tileLoadingUtils';
 
 const mapData = mapDataString(`
@@ -91,6 +92,7 @@ export default function LivingroomSceen() {
                 <ambientLight />
                 <TileMap data={mapData} resolver={resolveMapTile} definesMapSize />
             </GameObject>
+            <LosingScoreScript {...startPos} />
             <GameObject x={16} y={3}>
                 <ScenePortal
                     name="start"

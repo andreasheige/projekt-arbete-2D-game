@@ -31,6 +31,7 @@ import useGame from '../@core/useGame';
 import GatewayBlock from '../entities/GatewayBlock';
 import NextSceneScript from '../components/NextSceneScript';
 import { spritePosToFloor4x4 } from '../@core/utils/tileLoadingUtils';
+import LosingScoreScript from '../components/LosingScoreScript';
 
 const mapData = mapDataString(`
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # + # #
@@ -331,6 +332,7 @@ export default function KitchenScene() {
                 <ambientLight />
                 <TileMap data={curMap} resolver={resolveMapTile} definesMapSize />
             </GameObject>
+            <LosingScoreScript {...startPos} />
             <GameObject x={0} y={3}>
                 <ScenePortal
                     name="entrance"
