@@ -89,8 +89,16 @@ export default function Game({
     useEffect(() => {
         return pubSub.subscribe('CHANGE_SCORE', diff => {
             changeScore(diff);
+            // NOTE: score < 2 will display as score < 0. Some updating issue
+            if (score < 2 && score > -100) {
+                setPaused(true);
+                setTimeout(() => {
+                    pubSub.publish('STOP_GAME');
+                    changeScore(-1000);
+                }, 2000);
+            }
         });
-    }, [pubSub, score, changeScore]);
+    }, [pubSub, score, changeScore, setPaused]);
 
     const registryUtils = useMemo<GameObjectRegistryUtils>(
         () => ({

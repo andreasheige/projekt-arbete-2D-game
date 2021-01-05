@@ -29,6 +29,7 @@ import getRoomData from './sceen_data/hallwayData';
 import NextSceneScript from '../components/NextSceneScript';
 import useGameObjectEvent from '../@core/useGameObjectEvent';
 import useGame from '../@core/useGame';
+import LosingScoreScript from '../components/LosingScoreScript';
 
 const floorChar = '·';
 const rubbishChar = 'r';
@@ -145,6 +146,7 @@ export default function HallwayScene() {
             <GameObject name="map">
                 {isLightActiveAndDoorOpened && <ambientLight />}
                 <TileMap data={mapData} resolver={resolveMapTile} definesMapSize />
+                <LosingScoreScript {...startPos} />
             </GameObject>
             {!isLightActiveAndDoorOpened && <GatewayBlock x={0} y={4} direction="left" />}
             <GameObject x={9} y={0}>

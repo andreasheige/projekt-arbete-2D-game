@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const ScoreProvider = ({ children }: Props) => {
-    const [score, setScore] = useState(0);
+    const [score, setScore] = useState(5);
 
     function changeScore(scoreDiff: number) {
         const nextScore = score + scoreDiff;
@@ -24,6 +24,10 @@ export const ScoreProvider = ({ children }: Props) => {
         score,
         changeScore,
     };
+
+    const active = score < -100;
+
+    if (active) return <p>game over</p>;
 
     return (
         <ScoreContext.Provider value={contextValue}>{children} </ScoreContext.Provider>
