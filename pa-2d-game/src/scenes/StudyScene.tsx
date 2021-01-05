@@ -18,6 +18,7 @@ import {
     TRIEGGED_CLUE_ORDER,
     CLEANING_EQUIPPED,
 } from '../constants/gameStates';
+import { spritePosToFloor4x4 } from '../@core/utils/tileLoadingUtils';
 import CleaningBucket from '../entities/CleaningBucket';
 import IntoText from '../components/IntoText';
 import Cluess from '../components/Clues';
@@ -50,7 +51,7 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
 
     const floor = (
         <GameObject key={key} {...position} layer="ground">
-            <Sprite {...spriteData.objects} state="floor4" />
+            <Sprite {...spriteData.floorStudyScene} state={spritePosToFloor4x4(x, y)} />
         </GameObject>
     );
 

@@ -30,37 +30,39 @@ import useGameEvent from '../@core/useGameEvent';
 import useGame from '../@core/useGame';
 import GatewayBlock from '../entities/GatewayBlock';
 import NextSceneScript from '../components/NextSceneScript';
+import { spritePosToFloor4x4 } from '../@core/utils/tileLoadingUtils';
+import LosingScoreScript from '../components/LosingScoreScript';
 
 const mapData = mapDataString(`
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # · # #
-# · · · · · · · · # · · · · · · # # # · · · # · · · # · · · # · · · #
-# · · · · B · · · · · · · · · · # # # · # · # · # · # · # · # # · # #
-# · · · · · · # · · · · · # · · · · # · # · # · # · # · # · # · · · #
-· · · # · · · · · · · · · · · · # · # · # · # · # · # · # · # · · · #
-# · · · · · · · · · · · · · · · # · # · # · # · # · # · # · # · · · #
-# · · · · · # · · · · · · · · · # · · · # · · · # · · · # · · · · · #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # + # #
+# · · · · · · · · # · · · · · · # # # + + + # + + + # + + + # + + + #
+# · · · · B · · · · · · · · · · # # # + # + # + # + # + # + # # + # #
+# · · · · · · # · · · · · # · · · + # + # + + + # + # + # + # + + + #
+· · · # · · · · · · · · · · · · # + # + + + # + # + + + # + # + + + #
+# · · · · · · · · · · · · · · · # + # + # + # + # + # + # + # + + + #
+# · · · · · # · · · · · · · · · # + + + # + + + + + + + # + + + + + #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 `);
 
 const mapData2 = mapDataString(`
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # · # #
-# · · · e · · · f # · · · · · · # # # · · · # · · · # · · · # · · · #
-# · a · · B · · · · · · k · · · # # # · # · # · # · # · # · # # · # #
-# · · · · · · # · g · · · # · · · · # · # · # · # · # · # · # · · · #
-· · · # · · · · · · · · · · l · # · # · # · # · # · # · # · # · · · #
-# · b · · · c · · · · h · · · · # · # · # · # · # · # · # · # · · · #
-# · · · d · # · i · · · j · m · # · · · # · · · # · · · # · · · · · #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # + # #
+# · · · e · · · f # · · · · · · # # # + + + # + + + # + + + # + + + #
+# · a · · B · · · · · · k · · · # # # + # + # + # + # + # + # # + # #
+# · · · · · · # · g · · · # · · · + # + # + + + # + # + # + # + + + #
+· · · # · · · · · · · · · · l · # + # + + + # + # + + + # + # + + + #
+# · b · · · c · · · · h · · · · # + # + # + # + # + # + # + # + + + #
+# · · · d · # · i · · · j · m · # + + + # + + + + + + + # + + + + + #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 `);
 
 const mapData3 = mapDataString(`
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # · # #
-# · · · · · · · · # · · · · · · # # # · · · # · · · # · · · # · · · #
-# · · · · · · · · · · · · · · · # # # · # · # · # · # · # · # # · # #
-# · · · · · · # · · · · · # · · · · # · # · # · # · # · # · # · · · #
-· · · # · · · · · · · · · · · · # · # · # · # · # · # · # · # · · · #
-# · · · · · · · · · · · · · · · # · # · # · # · # · # · # · # · · · #
-# · · · · · # · · · · · · · · · # · · · # · · · # · · · # · · · · · #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # + # #
+# · · · · · · · · # · · · · · · # # # + + + # + + + # + + + # + + + #
+# · · · · · · · · · · · · · · · # # # + # + # + # + # + # + # # + # #
+# · · · · · · # · · · · · # · · · + # + # + + + # + # + # + # + + + #
+· · · # · · · · · · · · · · · · # + # + + + # + # + + + # + # + + + #
+# · · · · · · · · · · · · · · · # + # + # + # + # + # + # + # + + + #
+# · · · · · # · · · · · · · · · # + + + # + + + + + + + # + + + + + #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 `);
 
@@ -70,13 +72,21 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
 
     const floor = (
         <GameObject key={key} {...position} layer="ground">
-            <Sprite {...spriteData.objects} state="floor2" />
+            <Sprite {...spriteData.kitchenfloor02} state={spritePosToFloor4x4(x, y)} />
+        </GameObject>
+    );
+
+    const floor2 = (
+        <GameObject key={key} {...position} layer="ground">
+            <Sprite {...spriteData.kitchenfloor01} state={spritePosToFloor4x4(x, y)} />
         </GameObject>
     );
 
     switch (type) {
         case '·':
             return floor;
+        case '+':
+            return floor2;
         case 'o':
             return (
                 <Fragment key={key}>
@@ -322,6 +332,7 @@ export default function KitchenScene() {
                 <ambientLight />
                 <TileMap data={curMap} resolver={resolveMapTile} definesMapSize />
             </GameObject>
+            <LosingScoreScript {...startPos} />
             <GameObject x={0} y={3}>
                 <ScenePortal
                     name="entrance"
