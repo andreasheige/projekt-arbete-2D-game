@@ -95,6 +95,21 @@ const spriteData: { [index: string]: SpriteProps } = {
         frameHeight: 256,
         src: './assets/bucket256.png',
     },
+    garbageCan: {
+        frameWidth: 120,
+        frameHeight: 122,
+        src: './assets/garbagecan.png',
+    },
+    garbage: {
+        frameWidth: 120,
+        frameHeight: 121,
+        src: './assets/garbage.png',
+    },
+    key: {
+        frameWidth: 120,
+        frameHeight: 120,
+        src: './assets/key.png',
+    },
     footstep: {
         src: './assets/footstep.png',
         sheet: {
