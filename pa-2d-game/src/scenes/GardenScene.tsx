@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import Collider from '../@core/Collider';
 import GameObject from '../@core/GameObject';
 import Interactable from '../@core/Interactable';
@@ -17,6 +17,7 @@ import Mush00 from '../entities/Mushrooms/Mush00';
 import Mush01 from '../entities/Mushrooms/Mush01';
 import spriteData from '../spriteData';
 import getRoomData from './sceen_data/gardenData';
+import IntoText from '../components/IntoText';
 
 const floorChar = '·';
 const pine = 'p';
@@ -104,7 +105,10 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
     }
 };
 
+const startPos = { x: 13, y: 12 };
+
 export default function GardenSceen() {
+    const [displayIntroText, setDisplayIntroText] = useState(true);
     return (
         <>
             <GameObject name="map">
@@ -127,6 +131,15 @@ export default function GardenSceen() {
                     target="hallway/entrance"
                 />
             </GameObject>
+            {displayIntroText && (
+                <IntoText setDisplayIntroText={setDisplayIntroText} startPos={startPos}>
+                    <div>
+                        <p />
+                        <p>Rummets uppdrag:</p>
+                        <p>Text kommer...</p>
+                    </div>
+                </IntoText>
+            )}
             <Player x={13} y={12} />
         </>
     );
