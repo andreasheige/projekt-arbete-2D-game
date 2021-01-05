@@ -171,10 +171,20 @@ export default function HallwayScene() {
             {displayIntroText && (
                 <IntoText setDisplayIntroText={setDisplayIntroText} startPos={startPos}>
                     <div>
-                        <p>Ett mörkt stökigt rum...</p>
-                        <p>Undvik att trampa på skräpet.</p>
-                        <p>Tänd ljuset genom att gå på ljusknappen.</p>
-                        <p>Att fånga malarna i rummet ger extra poäng.</p>
+                        <p>Rummets uppdrag:</p>
+                        <p>
+                            Du skall navigera dig fram mellan växterna för att hitta en
+                            rödljus knapp.
+                        </p>
+                        <p>
+                            Undvik att gå på växterna de ger minus poäng. Försök fånga
+                            malarna de
+                        </p>
+                        <p>de ger dig extra poäng..</p>
+                        <p>
+                            Ljuset måste tändas innan du kan ta dig vidare till nästa
+                            rum...
+                        </p>
                     </div>
                 </IntoText>
             )}

@@ -343,10 +343,17 @@ export default function KitchenScene() {
             {displayIntroText && (
                 <IntoText setDisplayIntroText={setDisplayIntroText} startPos={startPos}>
                     <div>
-                        <p>Du entrar nu Köket...</p>
-                        <p>Fånga in fladdermusen.</p>
-                        <p>Öppna lönndörren...</p>
-                        <p>Din kompis Grannen är hungrig...</p>
+                        <p />
+                        <p>Rummets uppdrag:</p>
+                        <p>Fler uppdrag väntar i detta rum.</p>
+                        <p>Först måste du fånga fladdrmusen</p>
+                        <p>då öppnas lönndörren som leder till din</p>
+                        <p>kompis som är hungrig.</p>
+                        <p>Hen kommer visa dig 3 st ingredienser</p>
+                        <p>som hen vill ha. Kom i håg dem, de visas</p>
+                        <p>bara i 10 sekunder! Samla in rätt och</p>
+                        <p>Gå tillbaka och drick en kopp JAVA</p>
+                        <p>Då kan du gå vidare</p>
                     </div>
                 </IntoText>
             )}

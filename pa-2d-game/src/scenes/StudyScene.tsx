@@ -144,9 +144,19 @@ export default function StudySceen() {
             {displayIntroText && (
                 <IntoText setDisplayIntroText={setDisplayIntroText} startPos={startPos}>
                     <div>
-                        <p>Stökigt rum...</p>
-                        <p>Hitta 3 ledtrådar leder till nyckel.</p>
-                        <p>Säda om du behöver komma fram.</p>
+                        <p>Rummets uppdrag:</p>
+                        <p>För att komma vidare måste du hitta en nyckel som är gömd</p>
+                        <p> under någon av sopsäckarna.</p>
+                        <p>
+                            För att hitta den måste du först hitta de tre röda pilarna som
+                        </p>
+                        <p>leder dig fram till nyckeln.</p>
+                        <p>Sopsäckarna går att knuffa på, behöver du ta bort någon,</p>
+                        <p>använd skurhinken, gå till säcken du</p>
+                        <p>
+                            Vill tvätta bort, varje gång du använder hinken får du minus
+                        </p>
+                        <p>poäng.</p>
                     </div>
                 </IntoText>
             )}
