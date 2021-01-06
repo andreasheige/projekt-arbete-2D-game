@@ -53,7 +53,7 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
             return (
                 <GameObject key={key} {...position} layer="wall">
                     <Collider />
-                    <Sprite {...spriteData.objects} state="wall2" />
+                    <Sprite {...spriteData.wallpaper01} />
                 </GameObject>
             );
         case 'T':
