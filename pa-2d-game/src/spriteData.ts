@@ -324,7 +324,7 @@ const spriteData: { [index: string]: SpriteProps } = {
     },
     wallpaper01: {
         frameWidth: 512,
-        frameHeight: 507,
+        frameHeight: 512,
         src: './assets/wp01.jpg',
     },
     wallpaper02: {
