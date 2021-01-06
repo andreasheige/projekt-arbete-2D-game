@@ -322,6 +322,16 @@ const spriteData: { [index: string]: SpriteProps } = {
             mush35: [[3, 0]],
         },
     },
+    wallpaper01: {
+        frameWidth: 512,
+        frameHeight: 512,
+        src: './assets/wp01.jpg',
+    },
+    wallpaper02: {
+        frameWidth: 512,
+        frameHeight: 512,
+        src: './assets/wp02.jpg',
+    },
 };
 
 export default spriteData;
