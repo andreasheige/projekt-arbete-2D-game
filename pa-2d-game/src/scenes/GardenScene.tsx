@@ -161,7 +161,7 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
     }
 };
 
-const startPos = { x: 13, y: 12 };
+const startPos = { x: 31, y: 11 }; // { x: 13, y: 12 };
 
 export default function GardenSceen() {
     const [displayIntroText, setDisplayIntroText] = useState(true);
@@ -196,7 +196,7 @@ export default function GardenSceen() {
                     </div>
                 </IntoText>
             )}
-            <Player x={13} y={12} />
+            <Player {...startPos} />
         </>
     );
 }

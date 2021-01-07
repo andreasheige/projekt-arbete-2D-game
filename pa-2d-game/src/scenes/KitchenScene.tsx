@@ -366,11 +366,7 @@ export default function KitchenScene() {
             <GameObject x={32} y={7}>
                 <Collider />
                 <Interactable />
-                <ScenePortal
-                    name="exit"
-                    enterDirection={[0, 1]}
-                    target="garden/entrance"
-                />
+                <ScenePortal name="exit" enterDirection={[0, 1]} target="garden/start" />
                 <NextSceneScript />
             </GameObject>
         </>
