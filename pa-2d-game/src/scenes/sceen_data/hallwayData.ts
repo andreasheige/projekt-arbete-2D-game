@@ -74,6 +74,6 @@ const roomData = [
 ];
 
 export default function getRoomData(): string {
-    const roomIdx = 0; //  Math.floor(Math.random() * roomData.length);
+    const roomIdx = Math.floor(Math.random() * roomData.length);
     return roomData[roomIdx].data;
 }
