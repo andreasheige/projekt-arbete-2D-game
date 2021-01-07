@@ -11,6 +11,8 @@ import useGameObject from '../@core/useGameObject';
 import { useSound } from '../@core/Sound';
 import soundData from '../soundData';
 import ScoreScript from '../components/ScoreScript';
+import useGameEvent from '../@core/useGameEvent';
+import { POWERBUTTON_ACTIVATION_EVENT } from '../constants/events';
 
 function TriggerScript({ isEaten, setEaten }) {
     const { getRef } = useGameObject();
@@ -26,6 +28,14 @@ function TriggerScript({ isEaten, setEaten }) {
             playSfx();
         }
     });
+
+    useGameEvent(
+        POWERBUTTON_ACTIVATION_EVENT,
+        () => {
+            getRef().setDisabled(true);
+        },
+        []
+    );
 
     return null;
 }
