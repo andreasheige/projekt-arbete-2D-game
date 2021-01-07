@@ -7,6 +7,7 @@ import spriteData from '../spriteData';
 import useGameObjectEvent from '../@core/useGameObjectEvent';
 import useGame from '../@core/useGame';
 import Interactable, { InteractionEvent } from '../@core/Interactable';
+import ScoreScript from '../components/ScoreScript';
 
 function DisableOnTriggerScript() {
     const { publish } = useGame();
@@ -37,6 +38,7 @@ export default function Friend(props: GameObjectProps) {
                 <Sprite {...spriteData.friend} offset={{ x: 0, y: 0.0 }} />
             </CharacterScript>
             <DisableOnTriggerScript />
+            <ScoreScript once scoreChange={-10} />
         </GameObject>
     );
 }

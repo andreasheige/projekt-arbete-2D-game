@@ -4,6 +4,7 @@ import useGameObjectEvent from '../@core/useGameObjectEvent';
 import { TriggerEvent } from '../@core/Collider';
 import useGameLoop from '../@core/useGameLoop';
 import useGame from '../@core/useGame';
+import Interactable, { InteractionEvent } from '../@core/Interactable';
 
 interface IntoTextProps extends HTMLProps {
     scoreChange: number;
@@ -45,6 +46,22 @@ export default function ScoreScript(props: IntoTextProps) {
         },
         [props]
     );
+
+    /* eslint-disable */
+    useGameObjectEvent<InteractionEvent>('interaction', other => {
+        // will ignore interaction first time
+        if (props.once && !hasBeenTriggedBefore.current) {
+          hasBeenTriggedBefore.current = true;
+          return;
+        }
+        hasBeenTriggedBefore.current = true;
+        if (other.name === 'player') {
+            props.scoreChange < 0 ? setTextColor('red') : setTextColor('green');
+            setActive(true);
+            sendChangeScoreNotification();
+        }
+    }, []);
+  /* eslint-enable */
 
     useGameLoop(time => {
         if (!isActive) return;
