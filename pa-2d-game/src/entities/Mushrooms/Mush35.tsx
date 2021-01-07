@@ -29,7 +29,7 @@ export default function Mush35(props: GameObjectProps) {
         <GameObject name={name} persisted {...props}>
             <Sprite {...spriteData.mushrooms} state="mush35" />
             <Collider isTrigger />
-            <ScoreScript scoreChange={2} />
+            <ScoreScript scoreChange={-5} />
             <DisableOnTriggerScript />
         </GameObject>
     );
