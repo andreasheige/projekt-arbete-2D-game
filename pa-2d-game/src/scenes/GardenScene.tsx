@@ -12,25 +12,38 @@ import {
 } from '../@core/utils/mapUtils';
 import Player from '../entities/Player';
 import Pine from '../entities/Pine';
+import Plant from '../entities/Plant';
 import Tree from '../entities/Tree';
-import Mush00 from '../entities/Mushrooms/Mush00';
-import Mush01 from '../entities/Mushrooms/Mush01';
+import Mush35 from '../entities/Mushrooms/Mush35';
+import Mush33 from '../entities/Mushrooms/Mush33';
+import Mush19 from '../entities/Mushrooms/Mush19';
+import Mush18 from '../entities/Mushrooms/Mush18';
+import Mush16 from '../entities/Mushrooms/Mush16';
+import Mush13 from '../entities/Mushrooms/Mush13';
+import Mush06 from '../entities/Mushrooms/Mush06';
 import spriteData from '../spriteData';
 import getRoomData from './sceen_data/gardenData';
 import IntoText from '../components/IntoText';
 
 const floorChar = '·';
-const pine = 'p';
-const chanceOrRubbish = 0.5;
+const mushroom = 't';
+const chanceOrRubbish = 0;
 const mapData = insertRandomMarks(
     mapDataString(getRoomData()),
     floorChar,
     chanceOrRubbish,
-    pine
+    mushroom
 );
-insertNRandomMarks(mapData, '·', 3, 'm');
-insertNRandomMarks(mapData, '·', 3, 'n');
+insertNRandomMarks(mapData, '·', 2, 'a');
+insertNRandomMarks(mapData, '·', 2, 'b');
+insertNRandomMarks(mapData, '·', 2, 'c');
+insertNRandomMarks(mapData, '·', 2, 'd');
+insertNRandomMarks(mapData, '·', 2, 'e');
+insertNRandomMarks(mapData, '·', 2, 'f');
+insertNRandomMarks(mapData, '·', 2, 'g');
 insertNRandomMarks(mapData, '·', 33, 't');
+insertNRandomMarks(mapData, '·', 33, 'l');
+insertNRandomMarks(mapData, '·', 33, 'p');
 
 const resolveMapTile: TileMapResolver = (type, x, y) => {
     const key = `${x}-${y}`;
@@ -72,18 +85,54 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
                     <Sprite {...spriteData.objects} state="floor2" />
                 </GameObject>
             );
-        case 'm':
+
+        case 'a':
             return (
                 <Fragment key={key}>
                     {floor}
-                    <Mush00 {...position} />
+                    <Mush33 {...position} />
                 </Fragment>
             );
-        case 'n':
+        case 'b':
             return (
                 <Fragment key={key}>
                     {floor}
-                    <Mush01 {...position} />
+                    <Mush13 {...position} />
+                </Fragment>
+            );
+        case 'c':
+            return (
+                <Fragment key={key}>
+                    {floor}
+                    <Mush35 {...position} />
+                </Fragment>
+            );
+        case 'd':
+            return (
+                <Fragment key={key}>
+                    {floor}
+                    <Mush19 {...position} />
+                </Fragment>
+            );
+        case 'e':
+            return (
+                <Fragment key={key}>
+                    {floor}
+                    <Mush18 {...position} />
+                </Fragment>
+            );
+        case 'f':
+            return (
+                <Fragment key={key}>
+                    {floor}
+                    <Mush16 {...position} />
+                </Fragment>
+            );
+        case 'g':
+            return (
+                <Fragment key={key}>
+                    {floor}
+                    <Mush06 {...position} />
                 </Fragment>
             );
         case 'p':
@@ -98,6 +147,13 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
                 <Fragment key={key}>
                     {floor}
                     <Tree {...position} />
+                </Fragment>
+            );
+        case 'l':
+            return (
+                <Fragment key={key}>
+                    {floor}
+                    <Plant {...position} />
                 </Fragment>
             );
         default:
