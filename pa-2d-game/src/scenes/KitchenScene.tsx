@@ -357,8 +357,7 @@ export default function KitchenScene() {
                     </div>
                 </IntoText>
             )}
-            {/* <Player x={6} y={3} /> */}
-            <Player x={33} y={1} />
+            <Player x={6} y={3} />
             <Friend x={33} y={3} />
             <CoffeeMachine interact={allGoodFoodGone} x={31} y={4} />
             {selectedFoods}
