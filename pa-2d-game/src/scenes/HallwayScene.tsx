@@ -150,8 +150,6 @@ export default function HallwayScene() {
             </GameObject>
             {!isLightActiveAndDoorOpened && <GatewayBlock x={0} y={4} direction="left" />}
             <GameObject x={9} y={0}>
-                <Collider />
-                <Interactable />
                 <ScenePortal name="start" enterDirection={[1, 0]} target="garden/exit" />
             </GameObject>
             <GameObject x={0} y={4}>
