@@ -3,22 +3,12 @@ import React, { useState, useEffect } from 'react';
 interface Props {
     endingLevel: number;
 }
-
 interface StoredResult {
     endingLevel: number;
     date: string;
 }
 
-const results: Array<StoredResult> = [
-    {
-        endingLevel: 0,
-        date: '2020-01-03',
-    },
-    {
-        endingLevel: 1,
-        date: '2020-01-03',
-    },
-];
+const results: Array<StoredResult> = [];
 
 export default function HighScoreListPage({ endingLevel }: Props) {
     const [storedResults, setStoredResults] = useState([]);
@@ -32,6 +22,7 @@ export default function HighScoreListPage({ endingLevel }: Props) {
             // @ts-ignore
             added: true,
         });
+        localStorage.setItem('results', JSON.stringify(newResults));
         // TODO Limit 10, also sub-sort by date
         newResults.sort((a, b) => a.endingLevel - b.endingLevel);
         setStoredResults(newResults);
