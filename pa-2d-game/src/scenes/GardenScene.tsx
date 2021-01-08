@@ -191,8 +191,10 @@ export default function GardenSceen() {
                 <IntoText setDisplayIntroText={setDisplayIntroText} startPos={startPos}>
                     <div>
                         <p />
-                        <p>Rummets uppdrag:</p>
-                        <p>Text kommer...</p>
+                        <p>Trädgården:</p>
+                        <p>Plocka svampar och få extra poäng.</p>
+                        <p>Men akta dig, några är giftiga</p>
+                        <p>och ger minus poäng</p>
                     </div>
                 </IntoText>
             )}
