@@ -53,7 +53,7 @@ export default function Game({
     cameraZoom = 64,
     children,
 }: Props) {
-    const { changeScore, score } = useScore();
+    const { changeScore, endTheGame, score } = useScore();
     const [paused, setPaused] = useState(false);
     const [mapSize, setMapSize] = useState<[number, number]>(() => [1, 1]);
     const [registryById] = useState<GameObjectRegistry>(() => new Map());
@@ -88,9 +88,18 @@ export default function Game({
 
     useEffect(() => {
         return pubSub.subscribe('CHANGE_SCORE', diff => {
-            changeScore(diff);
+            const nextScore = changeScore(diff);
+            if (nextScore <= 0) {
+                setPaused(true);
+                // will pause screen for a while
+                setTimeout(() => {
+                    pubSub.publish('STOP_GAME');
+                    const endLevel = gameStore.get('ROOM_COUNTER');
+                    endTheGame(endLevel);
+                }, 2000);
+            }
         });
-    }, [pubSub, score, changeScore]);
+    }, [pubSub, score, changeScore, setPaused, endTheGame, gameStore]);
 
     const registryUtils = useMemo<GameObjectRegistryUtils>(
         () => ({

@@ -89,11 +89,7 @@ export default function MovableRubbish(props: GameObjectProps) {
             <Interactable />
             <Collider />
             <BumpScriptScript>
-                <Sprite
-                    {...spriteData.objects}
-                    state="plant"
-                    offset={{ x: 0, y: 0.25 }}
-                />
+                <Sprite {...spriteData.garbage} offset={{ x: 0, y: 0 }} />
             </BumpScriptScript>
             <TriggerScript />
         </GameObject>

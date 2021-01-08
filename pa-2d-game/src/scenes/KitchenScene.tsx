@@ -29,37 +29,40 @@ import Friend from '../entities/Friend';
 import useGameEvent from '../@core/useGameEvent';
 import useGame from '../@core/useGame';
 import GatewayBlock from '../entities/GatewayBlock';
+import NextSceneScript from '../components/NextSceneScript';
+import { spritePosToFloor4x4 } from '../@core/utils/tileLoadingUtils';
+import LosingScoreScript from '../components/LosingScoreScript';
 
 const mapData = mapDataString(`
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # · # #
-# · · · · · · · · # · · · · · · # # # · · · # · · · # · · · # · · · #
-# · · · · B · · · · · · · · · · # # # · # · # · # · # · # · # # · # #
-# · · · · · · # · · · · · # · · · · # · # · # · # · # · # · # · · · #
-· · · # · · · · · · · · · · · · # · # · # · # · # · # · # · # · · · #
-# · · · · · · · · · · · · · · · # · # · # · # · # · # · # · # · · · #
-# · · · · · # · · · · · · · · · # · · · # · · · # · · · # · · · · · #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # + # #
+# · · · · · · · · # · · · · · · # + + + + + # + + + # + + + # + + + #
+# · · · · B · · · · · · · · · · # # # + # + # + # + # + # + # # + # #
+# · · · · · · # · · · · · # · · · + # + # + + + # + # + # + # + + + #
+· · · # · · · · · · · · · · · · # + # + + + # + # + + + # + # + + + #
+# · · · · · · · · · · · · · · · # + # + # + # + # + # + + + # + + + #
+# · · · · · # · · · · · · · · · # + + + # + + + + + + + # + + + + + #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 `);
 
 const mapData2 = mapDataString(`
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # · # #
-# · · · e · · · f # · · · · · · # # # · · · # · · · # · · · # · · · #
-# · a · · B · · · · · · k · · · # # # · # · # · # · # · # · # # · # #
-# · · · · · · # · g · · · # · · · · # · # · # · # · # · # · # · · · #
-· · · # · · · · · · · · · · l · # · # · # · # · # · # · # · # · · · #
-# · b · · · c · · · · h · · · · # · # · # · # · # · # · # · # · · · #
-# · · · d · # · i · · · j · m · # · · · # · · · # · · · # · · · · · #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # + # #
+# · · · e · · · f # · · · · · · # + + + + + # + + + # + + + # + + + #
+# · a · · B · · · · · · k · · · # # # + # + # + # + # + # + # # + # #
+# · · · · · · # · g · · · # · · · + # + # + + + # + # + # + # + + + #
+· · · # · · · · · · · · · · l · # + # + + + # + # + + + # + # + + + #
+# · b · · · c · · · · h · · · · # + # + # + # + # + # + + + # + + + #
+# · · · d · # · i · · · j · m · # + + + # + + + + + + + # + + + + + #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 `);
 
 const mapData3 = mapDataString(`
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # · # #
-# · · · · · · · · # · · · · · · # # # · · · # · · · # · · · # · · · #
-# · · · · · · · · · · · · · · · # # # · # · # · # · # · # · # # · # #
-# · · · · · · # · · · · · # · · · · # · # · # · # · # · # · # · · · #
-· · · # · · · · · · · · · · · · # · # · # · # · # · # · # · # · · · #
-# · · · · · · · · · · · · · · · # · # · # · # · # · # · # · # · · · #
-# · · · · · # · · · · · · · · · # · · · # · · · # · · · # · · · · · #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # + # #
+# · · · · · · · · # · · · · · · # + + + + + # + + + # + + + # + + + #
+# · · · · · · · · · · · · · · · # # # + # + # + # + # + # + # # + # #
+# · · · · · · # · · · · · # · · · + # + # + + + # + # + # + # + + + #
+· · · # · · · · · · · · · · · · # + # + + + # + # + + + # + # + + + #
+# · · · · · · · · · · · · · · · # + # + # + # + # + # + + + # + + + #
+# · · · · · # · · · · · · · · · # + + + # + + + + + + + # + + + + + #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 `);
 
@@ -69,13 +72,21 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
 
     const floor = (
         <GameObject key={key} {...position} layer="ground">
-            <Sprite {...spriteData.objects} state="floor2" />
+            <Sprite {...spriteData.kitchenfloor02} state={spritePosToFloor4x4(x, y)} />
+        </GameObject>
+    );
+
+    const floor2 = (
+        <GameObject key={key} {...position} layer="ground">
+            <Sprite {...spriteData.kitchenfloor01} state={spritePosToFloor4x4(x, y)} />
         </GameObject>
     );
 
     switch (type) {
         case '·':
             return floor;
+        case '+':
+            return floor2;
         case 'o':
             return (
                 <Fragment key={key}>
@@ -87,7 +98,7 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
             return (
                 <GameObject key={key} {...position} layer="wall">
                     <Collider />
-                    <Sprite {...spriteData.objects} state="wall3" />
+                    <Sprite {...spriteData.wallpaper02} />
                 </GameObject>
             );
         // case 'C':
@@ -310,7 +321,6 @@ export default function KitchenScene() {
     useGameEvent(
         'BAT_DIED',
         () => {
-            // publish('TALKED_TO_FRIEND', 0); // remove
             setIsGateOpen(true);
         },
         []
@@ -322,6 +332,7 @@ export default function KitchenScene() {
                 <ambientLight />
                 <TileMap data={curMap} resolver={resolveMapTile} definesMapSize />
             </GameObject>
+            <LosingScoreScript {...startPos} />
             <GameObject x={0} y={3}>
                 <ScenePortal
                     name="entrance"
@@ -332,10 +343,17 @@ export default function KitchenScene() {
             {displayIntroText && (
                 <IntoText setDisplayIntroText={setDisplayIntroText} startPos={startPos}>
                     <div>
-                        <p>Du entrar nu Köket...</p>
-                        <p>Fånga in fladdermusen.</p>
-                        <p>Öppna lönndörren...</p>
-                        <p>Din kompis Grannen är hungrig...</p>
+                        <p />
+                        <p>Rummets uppdrag:</p>
+                        <p>Fler uppdrag väntar i detta rum.</p>
+                        <p>Först måste du fånga fladdrmusen</p>
+                        <p>då öppnas lönndörren som leder till din</p>
+                        <p>kompis som är hungrig.</p>
+                        <p>Hen kommer visa dig 3 st ingredienser</p>
+                        <p>som hen vill ha. Kom i håg dem, de visas</p>
+                        <p>bara i 10 sekunder! Samla in rätt och</p>
+                        <p>Gå tillbaka och drick en kopp JAVA</p>
+                        <p>Då kan du gå vidare</p>
                     </div>
                 </IntoText>
             )}
@@ -348,11 +366,8 @@ export default function KitchenScene() {
             <GameObject x={32} y={7}>
                 <Collider />
                 <Interactable />
-                <ScenePortal
-                    name="exit"
-                    enterDirection={[0, 1]}
-                    target="garden/entrance"
-                />
+                <ScenePortal name="exit" enterDirection={[0, 1]} target="garden/start" />
+                <NextSceneScript />
             </GameObject>
         </>
     );

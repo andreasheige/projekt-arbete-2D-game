@@ -1,17 +1,36 @@
 import React from 'react';
-import Collider from '../../@core/Collider';
+import Collider, { TriggerEvent } from '../../@core/Collider';
 import GameObject, { GameObjectProps } from '../../@core/GameObject';
-import Sprite from '../../@core/Sprite';
 import spriteData from '../../spriteData';
-import EatFoodScript from '../../components/EatFoodScript';
+import { useSound } from '../../@core/Sound';
+import Sprite from '../../@core/Sprite';
+import useGameObject from '../../@core/useGameObject';
+import useGameObjectEvent from '../../@core/useGameObjectEvent';
+import soundData from '../../soundData';
+import ScoreScript from '../../components/ScoreScript';
 
-export default function Mush19(props: GameObjectProps) {
-    const name = `mush19-${props.x}-${props.y}`; // fallback name required for persisted flag
+function DisableOnTriggerScript() {
+    const { getRef } = useGameObject();
+    const playSfx = useSound(soundData.eating);
+
+    useGameObjectEvent<TriggerEvent>('trigger', other => {
+        if (other.name === 'player') {
+            getRef().setDisabled(true);
+            playSfx();
+        }
+    });
+
+    return null;
+}
+
+export default function Mush18(props: GameObjectProps) {
+    const name = `mush18-${props.x}-${props.y}`; // fallback name required for persisted flag
     return (
         <GameObject name={name} persisted {...props}>
-            <Sprite {...spriteData.mushrooms} state="mush19" />
+            <Sprite {...spriteData.mushrooms} state="mush18" />
             <Collider isTrigger />
-            <EatFoodScript foodType="a" />
+            <ScoreScript scoreChange={1} />
+            <DisableOnTriggerScript />
         </GameObject>
     );
 }

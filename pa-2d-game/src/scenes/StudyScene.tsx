@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import Collider from '../@core/Collider';
 import GameObject from '../@core/GameObject';
-import Interactable from '../@core/Interactable';
+import Interactable, { InteractionEvent } from '../@core/Interactable';
 import ScenePortal from '../@core/ScenePortal';
 import Sprite from '../@core/Sprite';
 import TileMap, { TileMapResolver } from '../@core/TileMap';
@@ -13,10 +13,18 @@ import GatewayBlock from '../entities/GatewayBlock';
 import useGame from '../@core/useGame';
 import useGameEvent from '../@core/useGameEvent';
 import { OPEN_DOOR } from '../constants/events';
-import { KEY_TO_STUDY_FOUND } from '../constants/gameStates';
+import {
+    KEY_TO_STUDY_FOUND,
+    TRIEGGED_CLUE_ORDER,
+    CLEANING_EQUIPPED,
+} from '../constants/gameStates';
+import { spritePosToFloor4x4 } from '../@core/utils/tileLoadingUtils';
 import CleaningBucket from '../entities/CleaningBucket';
 import IntoText from '../components/IntoText';
 import Cluess from '../components/Clues';
+import NextSceneScript from '../components/NextSceneScript';
+import useGameObjectEvent from '../@core/useGameObjectEvent';
+import LosingScoreScript from '../components/LosingScoreScript';
 
 const floorChar = '·';
 const rubbishChar = 'r';
@@ -43,7 +51,7 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
 
     const floor = (
         <GameObject key={key} {...position} layer="ground">
-            <Sprite {...spriteData.objects} state="floor4" />
+            <Sprite {...spriteData.floorStudyScene} state={spritePosToFloor4x4(x, y)} />
         </GameObject>
     );
 
@@ -71,6 +79,23 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
     }
 };
 
+function ResetScreenScript() {
+    const { setGameState } = useGame();
+
+    /* eslint-disable */
+    useGameObjectEvent<InteractionEvent>('interaction', other => {
+            if (other.name === 'player') {
+                setGameState(KEY_TO_STUDY_FOUND, false);
+                setGameState(TRIEGGED_CLUE_ORDER, 0);
+                setGameState(CLEANING_EQUIPPED, false);
+                console.log('reset scene 3');
+            }
+    }, []);
+    /* eslint-enable */
+
+    return null;
+}
+
 const startPos = { x: 12, y: 0 };
 
 export default function StudySceen() {
@@ -92,6 +117,7 @@ export default function StudySceen() {
                 <ambientLight />
                 <TileMap data={mapData} resolver={resolveMapTile} definesMapSize />
             </GameObject>
+            <LosingScoreScript {...startPos} />
             <GameObject x={12} y={0}>
                 <ScenePortal
                     name="entrance"
@@ -110,15 +136,27 @@ export default function StudySceen() {
                         target="kitchen/entrance"
                     />
                 )}
+                <ResetScreenScript />
+                <NextSceneScript />
             </GameObject>
             <Player {...startPos} />
             <CleaningBucket x={13} y={1} />
             {displayIntroText && (
                 <IntoText setDisplayIntroText={setDisplayIntroText} startPos={startPos}>
                     <div>
-                        <p>Stökigt rum...</p>
-                        <p>Hitta 3 ledtrådar leder till nyckel.</p>
-                        <p>Säda om du behöver komma fram.</p>
+                        <p>Rummets uppdrag:</p>
+                        <p>För att komma vidare måste du hitta en nyckel som är gömd</p>
+                        <p> under någon av sopsäckarna.</p>
+                        <p>
+                            För att hitta den måste du först hitta de tre röda pilarna som
+                        </p>
+                        <p>leder dig fram till nyckeln.</p>
+                        <p>Sopsäckarna går att knuffa på, behöver du ta bort någon,</p>
+                        <p>använd skurhinken, gå till säcken du</p>
+                        <p>
+                            Vill tvätta bort, varje gång du använder hinken får du minus
+                        </p>
+                        <p>poäng.</p>
                     </div>
                 </IntoText>
             )}

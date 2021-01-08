@@ -15,7 +15,7 @@ import { TURNING_ON_LIGHT } from '../constants/points';
 function TriggerScript() {
     const { publish } = useGame();
     const { setGameState } = useContext(GameContext);
-    const playSfx = useSound(soundData.eating);
+    const playSfx = useSound(soundData.blipp);
     async function sendPowerbuttonNotification() {
         await publish(POWERBUTTON_ACTIVATION_EVENT, {});
         await publish(CHANGE_SCORE, TURNING_ON_LIGHT);
@@ -25,7 +25,7 @@ function TriggerScript() {
         if (other.name === 'player') {
             setGameState(LIGHT_ACTIVE_ROOM1, true);
             sendPowerbuttonNotification();
-            playSfx();
+            (async () => playSfx())();
         }
     });
 

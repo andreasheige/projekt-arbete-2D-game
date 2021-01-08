@@ -15,6 +15,9 @@ import Rat from '../entities/Rat';
 import RatFollowing from '../entities/RatFollowing';
 import IntoText from '../components/IntoText';
 import MovingWall from '../entities/MovingWall';
+import NextSceneScript from '../components/NextSceneScript';
+import LosingScoreScript from '../components/LosingScoreScript';
+import { spritePosToFloor4x4 } from '../@core/utils/tileLoadingUtils';
 
 const mapData = mapDataString(`
 # # # # # # # # # # # # · # # # #
@@ -33,7 +36,7 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
 
     const floor = (
         <GameObject key={key} {...position} layer="ground">
-            <Sprite {...spriteData.objects} state="floor2" />
+            <Sprite {...spriteData.floorRatScene} state={spritePosToFloor4x4(x, y)} />
         </GameObject>
     );
 
@@ -51,7 +54,7 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
             return (
                 <GameObject key={key} {...position} layer="wall">
                     <Collider />
-                    <Sprite {...spriteData.objects} state="wall2" />
+                    <Sprite {...spriteData.wallpaper01} />
                 </GameObject>
             );
         case 'T':
@@ -90,6 +93,7 @@ export default function LivingroomSceen() {
                 <ambientLight />
                 <TileMap data={mapData} resolver={resolveMapTile} definesMapSize />
             </GameObject>
+            <LosingScoreScript {...startPos} />
             <GameObject x={16} y={3}>
                 <ScenePortal
                     name="start"
@@ -105,6 +109,7 @@ export default function LivingroomSceen() {
                     enterDirection={[0, 1]}
                     target="study/entrance"
                 />
+                <NextSceneScript />
             </GameObject>
             <Player x={6} y={3} />
             <RatFollowing x={3} y={2} />
