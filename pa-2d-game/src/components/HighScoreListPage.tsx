@@ -8,13 +8,16 @@ interface StoredResult {
     date: string;
 }
 
-const results: Array<StoredResult> = [];
-
 export default function HighScoreListPage({ endingLevel }: Props) {
     const [storedResults, setStoredResults] = useState([]);
 
     useEffect(() => {
-        const newResults = [...results];
+        const localStoreResults: Array<StoredResult> = JSON.parse(
+            localStorage.getItem('results')
+        );
+        const newResults: Array<StoredResult> = !localStoreResults
+            ? []
+            : localStoreResults;
         const now = new Date();
         newResults.push({
             endingLevel,
