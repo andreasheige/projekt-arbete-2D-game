@@ -6,6 +6,8 @@ import spriteData from '../spriteData';
 import useGameObjectEvent from '../@core/useGameObjectEvent';
 import ScoreScriptGhost from '../components/ScoreScriptGhost';
 
+export const name = 'blackhole';
+
 function TriggerScript() {
     // const playSfx = useSound(soundData.eating);
     useGameObjectEvent<TriggerEvent>('trigger', other => {
@@ -28,6 +30,7 @@ export default function BlackHole(props: GameObjectProps) {
                 offset={{ x: 0, y: 0.25 }}
             />
             <TriggerScript />
+            <ScoreScriptGhost />
         </GameObject>
     );
 }

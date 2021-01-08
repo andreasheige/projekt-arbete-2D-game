@@ -7,6 +7,7 @@ import useGame from '../@core/useGame';
 import tileUtils from '../@core/utils/tileUtils';
 import { MoveableRef } from '../@core/Moveable';
 import { PLAYER_POS } from '../constants/gameStates';
+import { name } from '../entities/BlackHole';
 
 export default function FollowScript({ reactionSpeed, isEaten }) {
     const { getComponent, transform } = useGameObject();
@@ -18,7 +19,7 @@ export default function FollowScript({ reactionSpeed, isEaten }) {
         const destPosObject = findGameObjectsByXY(pos.x, pos.y);
         // console.log('name', destPosObject[1] ? destPosObject[1].name : '--');
 
-        if (destPosObject[1] && destPosObject[1].name === 'ghost') return true;
+        if (destPosObject[1] && destPosObject[1].name === name) return true;
         // assuming the tile only contains ground object
         return destPosObject.length === 1 && destPosObject[0].layer === 'ground';
     }
