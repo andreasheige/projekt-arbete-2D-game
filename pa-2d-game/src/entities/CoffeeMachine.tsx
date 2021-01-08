@@ -14,7 +14,7 @@ function CoffeeScript() {
     const { getComponent } = useGameObject();
     const { publish } = useGame();
     const fillState = useRef(true);
-    const playSfx = useSound(soundData.drinking);
+    const playSfx = useSound(soundData.levelfinished);
 
     async function sendNotification() {
         await publish('DRINK_COFFEE');
