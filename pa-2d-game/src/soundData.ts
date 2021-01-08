@@ -11,7 +11,7 @@ const soundData: { [index: string]: SoundProps } = {
     },
     footstep: {
         src: './assets/sfx/footstep.wav',
-        volume: 0.75,
+        volume: 0.25,
     },
     splash: {
         src: './assets/sfx/splash.mp3',
@@ -29,16 +29,8 @@ const soundData: { [index: string]: SoundProps } = {
         src: './assets/sfx/blipp.mp3',
         volume: 0.35,
     },
-    wingflapp: {
-        src: './assets/sfx/wingflap.wav',
-        volume: 0.75,
-    },
-    flute: {
-        src: './assets/sfx/flute-note-tremolo.wav',
-        volume: 0.75,
-    },
-    moveBox: {
-        src: './assets/sfx/movebox.wav',
+    levelfinished: {
+        src: './assets/sfx/levelfinished.wav',
         volume: 0.75,
     },
 };
