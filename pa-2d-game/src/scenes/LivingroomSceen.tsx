@@ -131,9 +131,10 @@ export default function LivingroomSceen() {
             {displayIntroText && (
                 <IntoText setDisplayIntroText={setDisplayIntroText} startPos={startPos}>
                     <div>
-                        <p>Rummet går att skippa.</p>
-                        <p>Går att fånga en av råttorna.</p>
-                        <p>Går att leda 2 råttor till spöket.</p>
+                        <p>Rummets uppdrag:</p>
+                        <p>En av råttorna går att fånga.</p>
+                        <p>led de andra 2 råttor till svarta hålet.</p>
+                        <p>Akta dig för spöken de ger minuspoäng</p>
                     </div>
                 </IntoText>
             )}
