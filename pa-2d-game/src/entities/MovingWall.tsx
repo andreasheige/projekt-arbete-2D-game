@@ -65,7 +65,7 @@ export default function MovingWall(props) {
         <GameObject layer="wall" {...props}>
             <Collider />
             <Moveable />
-            <Sprite {...spriteData.objects} state="wall1" />
+            <Sprite {...spriteData.objects} state="ghost" />
             <Interactable />
             <MovingWallScript {...props} />
         </GameObject>
