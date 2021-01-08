@@ -14,6 +14,7 @@ import spriteData from '../spriteData';
 import Rat from '../entities/Rat';
 import RatFollowing from '../entities/RatFollowing';
 import IntoText from '../components/IntoText';
+import MovingWall from '../entities/MovingWall';
 import NextSceneScript from '../components/NextSceneScript';
 import LosingScoreScript from '../components/LosingScoreScript';
 import { spritePosToFloor4x4 } from '../@core/utils/tileLoadingUtils';
@@ -113,6 +114,14 @@ export default function LivingroomSceen() {
             <Player x={6} y={3} />
             <RatFollowing x={3} y={2} />
             <RatFollowing x={4} y={5} />
+            <MovingWall x={3} y={5} wallDirection={-1} speed={400} />
+            <MovingWall x={5} y={1} wallDirection={1} speed={100} />
+            <MovingWall x={7} y={4} wallDirection={-1} speed={200} />
+            <MovingWall x={9} y={2} wallDirection={1} speed={300} />
+            <MovingWall x={11} y={4} wallDirection={-1} speed={300} />
+            <MovingWall x={14} y={4} wallDirection={1} speed={400} />
+            <MovingWall x={12} y={3} wallDirection={0} speed={400} />
+            <MovingWall x={12} y={5} wallDirection={0} speed={400} />
             {displayIntroText && (
                 <IntoText setDisplayIntroText={setDisplayIntroText} startPos={startPos}>
                     <div>
