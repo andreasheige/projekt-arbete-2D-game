@@ -12,6 +12,7 @@ import Player from '../entities/Player';
 import Ghost from '../entities/Ghost';
 import spriteData from '../spriteData';
 import Rat from '../entities/Rat';
+import BlackHole from '../entities/BlackHole';
 import RatFollowing from '../entities/RatFollowing';
 import IntoText from '../components/IntoText';
 import MovingWall from '../entities/MovingWall';
@@ -22,10 +23,10 @@ import { spritePosToFloor4x4 } from '../@core/utils/tileLoadingUtils';
 const mapData = mapDataString(`
 # # # # # # # # # # # # · # # # #
 # · · · · · · · · · · · · · · · #
-# · · · · · · · R · · · · · · · #
-# · · · G · · · · · · · · · · · #
+# · · · · · · · R · · · # · · · #
+# · · · B · · · · · · · · · · · #
 # · · · · · · · · · · · · · · · ·
-# · · · · · · · · · · · · · · · #
+# · · · · · · · · · · · # · · · #
 # · · · · · · · · · · · · · · · #
 # # # # # # # # # # # # # # # # #
 `);
@@ -78,6 +79,13 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
                     <Rat {...position} />
                 </Fragment>
             );
+        case 'B':
+            return (
+                <Fragment key={key}>
+                    {floor}
+                    <BlackHole {...position} />
+                </Fragment>
+            );
         default:
             return null;
     }
@@ -120,8 +128,6 @@ export default function LivingroomSceen() {
             <MovingWall x={9} y={2} wallDirection={1} speed={300} />
             <MovingWall x={11} y={4} wallDirection={-1} speed={300} />
             <MovingWall x={14} y={4} wallDirection={1} speed={400} />
-            <MovingWall x={12} y={3} wallDirection={0} speed={400} />
-            <MovingWall x={12} y={5} wallDirection={0} speed={400} />
             {displayIntroText && (
                 <IntoText setDisplayIntroText={setDisplayIntroText} startPos={startPos}>
                     <div>
