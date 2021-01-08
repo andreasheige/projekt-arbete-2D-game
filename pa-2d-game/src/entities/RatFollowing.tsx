@@ -10,14 +10,14 @@ import useGameObjectEvent from '../@core/useGameObjectEvent';
 
 function FollowingRatScript() {
     useGameObjectEvent('eaten', () => {
-        console.log('eaten!');
+        // console.log('eaten!');
     });
 
     return null;
 }
 
 export default function FollowingRat(props: GameObjectProps) {
-    const [isEaten, setEaten] = useState(false);
+    const [isEaten] = useState(false);
 
     // useGameObjectEvent('eaten', other => {
     //     console.log('eaten!');
