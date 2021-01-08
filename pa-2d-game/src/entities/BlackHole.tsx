@@ -22,7 +22,11 @@ export default function BlackHole(props: GameObjectProps) {
     return (
         <GameObject name="blackhole" layer="character" {...props}>
             <Collider isTrigger />
-            <Sprite {...spriteData.objects} state="blackhole" offset={{ x: 0, y: 0.25 }} />
+            <Sprite
+                {...spriteData.objects}
+                state="blackhole"
+                offset={{ x: 0, y: 0.25 }}
+            />
             <TriggerScript />
         </GameObject>
     );
