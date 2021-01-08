@@ -19,9 +19,10 @@ import MovingWall from '../entities/MovingWall';
 import NextSceneScript from '../components/NextSceneScript';
 import LosingScoreScript from '../components/LosingScoreScript';
 import { spritePosToFloor4x4 } from '../@core/utils/tileLoadingUtils';
+import Doorway from '../entities/Doorway';
 
 const mapData = mapDataString(`
-# # # # # # # # # # # # · # # # #
+# # # # # # # # # # # # D # # # #
 # · · · · · · · · · · · · · · · #
 # · · · · · · · R · · · # · · · #
 # · · · B · · · · · · · · · · · #
@@ -84,6 +85,13 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
                 <Fragment key={key}>
                     {floor}
                     <BlackHole {...position} />
+                </Fragment>
+            );
+        case 'D':
+            return (
+                <Fragment key={key}>
+                    {floor}
+                    <Doorway {...position} />
                 </Fragment>
             );
         default:

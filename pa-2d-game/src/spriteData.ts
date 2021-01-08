@@ -300,6 +300,11 @@ const spriteData: { [index: string]: SpriteProps } = {
         frameHeight: 512,
         src: './assets/wp02.jpg',
     },
+    doorway01: {
+        frameWidth: 60,
+        frameHeight: 55,
+        src: './assets/doorway.png',
+    },
 };
 
 export default spriteData;
