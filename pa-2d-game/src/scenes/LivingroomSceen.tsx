@@ -1,13 +1,11 @@
 import React, { Fragment, useState } from 'react';
 import Collider from '../@core/Collider';
 import GameObject from '../@core/GameObject';
-import Interactable from '../@core/Interactable';
 import ScenePortal from '../@core/ScenePortal';
 import Sprite from '../@core/Sprite';
 import TileMap, { TileMapResolver } from '../@core/TileMap';
 import { mapDataString } from '../@core/utils/mapUtils';
 import PizzaPickup from '../entities/PizzaPickup';
-import Plant from '../entities/Plant';
 import Player from '../entities/Player';
 import Ghost from '../entities/Ghost';
 import spriteData from '../spriteData';
@@ -19,6 +17,7 @@ import MovingWall from '../entities/MovingWall';
 import NextSceneScript from '../components/NextSceneScript';
 import LosingScoreScript from '../components/LosingScoreScript';
 import { spritePosToFloor4x4 } from '../@core/utils/tileLoadingUtils';
+import Doorway from '../entities/Doorway';
 
 const mapData = mapDataString(`
 # # # # # # # # # # # # · # # # #
@@ -57,13 +56,6 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
                     <Collider />
                     <Sprite {...spriteData.wallpaper01} />
                 </GameObject>
-            );
-        case 'T':
-            return (
-                <Fragment key={key}>
-                    {floor}
-                    <Plant {...position} />
-                </Fragment>
             );
         case 'G':
             return (
@@ -109,16 +101,14 @@ export default function LivingroomSceen() {
                     target="hallway/exit"
                 />
             </GameObject>
-            <GameObject x={12} y={7}>
-                <Collider />
-                <Interactable />
+            <Doorway x={12} y={7}>
                 <ScenePortal
                     name="exit"
                     enterDirection={[0, 1]}
                     target="study/entrance"
                 />
                 <NextSceneScript />
-            </GameObject>
+            </Doorway>
             <Player x={6} y={3} />
             <RatFollowing x={3} y={2} />
             <RatFollowing x={4} y={5} />
