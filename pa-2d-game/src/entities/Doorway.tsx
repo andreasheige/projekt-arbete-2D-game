@@ -10,10 +10,11 @@ import Interactable from '../@core/Interactable';
 interface Props {
     x: number;
     y: number;
-    children: React.ReactNode;
+    children?: React.ReactNode;
+    collider?: string;
 }
 
-function Door(props: Props) {
+export default function Doorway(props: Props) {
     const [isOpen, setOpen] = useState(false);
     const offSet = { x: 0.065, y: 0 };
     const offsetOpen = { x: -0.07, y: 0.0 };
@@ -26,31 +27,21 @@ function Door(props: Props) {
         [setOpen]
     );
 
-    if (isOpen)
-        return (
-            <>
-                <Collider />
-                <Interactable />
-                {/* <Sprite {...spriteData.wallpaper01} /> */}
-                <Sprite {...spriteData.doorway01} state="open" offset={offsetOpen} />
-                {props.children}
-            </>
-        );
+    const collider =
+        (props.collider === 'whenClosed' && !isOpen) || props.collider === 'always';
 
-    return (
-        <>
-            <Collider />
-            {/* <Sprite {...spriteData.wallpaper01} /> */}
-            <Sprite {...spriteData.doorway01} state="closed" offset={offSet} />
-        </>
-    );
-}
-
-export default function Doorway(props: Props) {
     return (
         <GameObject layer="obstacle" {...props}>
+            {collider && <Collider />}
             <Sprite {...spriteData.wallpaper01} />
-            <Door {...props} />
+            {isOpen && <Interactable />}
+            {isOpen && (
+                <Sprite {...spriteData.doorway01} state="open" offset={offsetOpen} />
+            )}
+            {!isOpen && (
+                <Sprite {...spriteData.doorway01} state="closed" offset={offSet} />
+            )}
+            {props.children}
         </GameObject>
     );
 }

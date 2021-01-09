@@ -101,7 +101,7 @@ export default function LivingroomSceen() {
                     target="hallway/exit"
                 />
             </GameObject>
-            <Doorway x={12} y={7}>
+            <Doorway x={12} y={7} collider="always">
                 <ScenePortal
                     name="exit"
                     enterDirection={[0, 1]}
