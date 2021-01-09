@@ -304,6 +304,10 @@ const spriteData: { [index: string]: SpriteProps } = {
         frameWidth: 60,
         frameHeight: 55,
         src: './assets/doorway.png',
+        sheet: {
+            closed: [[0, 0]],
+            open: [[1, 0]],
+        },
     },
 };
 
