@@ -14,7 +14,6 @@ export default function NextSceneScript() {
             if (other.name === 'player') {
                 const roomCounter = getGameState(ROOM_COUNTER) ? getGameState(ROOM_COUNTER) + 1 : 1;
                 setGameState(ROOM_COUNTER, roomCounter);
-                console.log('roomCounter', roomCounter);
             }
     }, []);
     /* eslint-enable */

@@ -28,7 +28,7 @@ import LosingScoreScript from '../components/LosingScoreScript';
 
 const floorChar = '·';
 const rubbishChar = 'r';
-const chanceOrRubbish = 0.5;
+const chanceOrRubbish = 0.4;
 const mapData = insertRandomMarks(
     mapDataString(`
 # # # # # # # # # # # # # # # # #
@@ -88,7 +88,6 @@ function ResetScreenScript() {
                 setGameState(KEY_TO_STUDY_FOUND, false);
                 setGameState(TRIEGGED_CLUE_ORDER, 0);
                 setGameState(CLEANING_EQUIPPED, false);
-                console.log('reset scene 3');
             }
     }, []);
     /* eslint-enable */

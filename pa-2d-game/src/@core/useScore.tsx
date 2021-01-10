@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const ScoreProvider = ({ children }: Props) => {
-    const [score, setScore] = useState(5);
+    const [score, setScore] = useState(0);
     const [endLevel, setEndLevel] = useState(-1);
 
     function changeScore(scoreDiff: number) {

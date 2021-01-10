@@ -1,4 +1,5 @@
 import React, { useRef, useCallback, useState } from 'react';
+import * as THREE from 'three';
 import Collider, { TriggerEvent } from '../@core/Collider';
 import GameObject, { GameObjectProps, Position } from '../@core/GameObject';
 import Sprite from '../@core/Sprite';
@@ -81,6 +82,7 @@ export default function ArrowClue(props: ArrowClueProps) {
     const [angle, setAngle] = useState(0);
     const [isTigged, setTigged] = useState(false);
     const [currentClue, setCurrentClue] = useState(0);
+    const lightTarget = new THREE.Mesh();
     const rotate = useCallback(() => {
         if (childRef && childRef.current) childRef.current.rotation.set(0, 0, angle);
     }, [angle]);
@@ -113,6 +115,16 @@ export default function ArrowClue(props: ArrowClueProps) {
                 setTigged={setTigged}
                 clueOrder={props.order}
             />
+            <primitive object={lightTarget} position={[0, 0, 1.5]} />
+            {isCurrentClue && (
+                <spotLight
+                    position={[0, 0, 4.5]}
+                    angle={0.25}
+                    penumbra={1}
+                    target={lightTarget}
+                    intensity={0.5}
+                />
+            )}
             <ScoreScript scoreChange={ARROW_CLUE_REWARD} once />
         </GameObject>
     );
