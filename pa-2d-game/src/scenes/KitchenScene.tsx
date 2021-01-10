@@ -32,6 +32,8 @@ import GatewayBlock from '../entities/GatewayBlock';
 import NextSceneScript from '../components/NextSceneScript';
 import { spritePosToFloor4x4 } from '../@core/utils/tileLoadingUtils';
 import LosingScoreScript from '../components/LosingScoreScript';
+import Doorway from '../entities/Doorway';
+import { OPEN_DOOR } from '../constants/events';
 
 const mapData = mapDataString(`
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # + # #
@@ -256,7 +258,10 @@ export default function KitchenScene() {
     const selectedFoods = displayFood ? plotFood(31, 6, foodState) : null;
     const allGoodFoodGone = foodState.length === 0;
     const [isGateOpen, setIsGateOpen] = useState(false);
-    const [hasDrunkCoffe, setHasDrunkCoffe] = useState(false);
+
+    async function sendOpenDoorNotification() {
+        await publish(OPEN_DOOR);
+    }
 
     useGameEvent(
         'TALKED_TO_FRIEND',
@@ -284,7 +289,7 @@ export default function KitchenScene() {
     useGameEvent(
         'DRINK_COFFEE',
         () => {
-            setHasDrunkCoffe(true);
+            sendOpenDoorNotification();
         },
         []
     );
@@ -362,7 +367,7 @@ export default function KitchenScene() {
             <CoffeeMachine interact={allGoodFoodGone} x={31} y={4} />
             {selectedFoods}
             {!isGateOpen && <GatewayBlock x={18} y={1} />}
-            {!hasDrunkCoffe && <GatewayBlock x={32} y={5} />}
+            <Doorway x={32} y={5} collider="whenClosed" />
             <GameObject x={32} y={7}>
                 <Collider />
                 <Interactable />
