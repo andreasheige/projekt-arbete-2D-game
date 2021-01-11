@@ -57,7 +57,7 @@ const spriteData: { [index: string]: SpriteProps } = {
             tree: [[2, 2]],
             ghost: [[3, 3]],
             box: [[4, 3]],
-            blackHole: [[7, 1]],
+            unusedBlackHole: [[7, 1]],
             flute: [[3, 2]],
         },
     },
