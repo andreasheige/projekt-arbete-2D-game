@@ -123,7 +123,8 @@ export default function LivingroomSceen() {
                     <div>
                         <p>Rummets uppdrag:</p>
                         <p>En av råttorna går att fånga.</p>
-                        <p>led de andra 2 råttor till svarta hålet.</p>
+                        <p>led de andra 2 råttor till svarta hålet,</p>
+                        <p>men trilla inte ned själv...</p>
                         <p>Akta dig för spöken de ger minuspoäng</p>
                     </div>
                 </IntoText>
