@@ -57,7 +57,7 @@ const spriteData: { [index: string]: SpriteProps } = {
             tree: [[2, 2]],
             ghost: [[3, 3]],
             box: [[4, 3]],
-            blackhole: [[7, 1]],
+            blackHole: [[7, 1]],
             flute: [[3, 2]],
         },
     },
@@ -181,6 +181,11 @@ const spriteData: { [index: string]: SpriteProps } = {
         frameWidth: 338,
         frameHeight: 256,
         src: './assets/arrow.png',
+    },
+    blackhole: {
+        frameWidth: 840,
+        frameHeight: 859,
+        src: './assets/blackhole.png',
     },
     cleaningBucket: {
         frameWidth: 256,
