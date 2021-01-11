@@ -8,13 +8,10 @@ import Moveable from '../@core/Moveable';
 import useGameObjectEvent from '../@core/useGameObjectEvent';
 import useGame from '../@core/useGame';
 import useGameObject from '../@core/useGameObject';
-// import { useSound } from '../@core/Sound';
-// import soundData from '../soundData';
 
 function TriggerScript() {
     const { publish } = useGame();
     const { getRef } = useGameObject();
-    // const playSfx = useSound(soundData.wingflapp);
 
     async function sendChangeScoreNotification() {
         await publish('CHANGE_SCORE', 15);
@@ -26,7 +23,6 @@ function TriggerScript() {
             // TODO: signal score loss
             sendChangeScoreNotification();
             getRef().setDisabled(true);
-            // playSfx();
         }
     });
 
