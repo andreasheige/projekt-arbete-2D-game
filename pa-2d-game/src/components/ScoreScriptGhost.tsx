@@ -45,8 +45,8 @@ export default function ScoreScript(props: IntoTextProps) {
             } else if (other.name === 'player') {
                 setTextColor('red');
                 setActive(true);
-                setText('-5');
-                sendChangeScoreNotification(-5);
+                setText('-15');
+                sendChangeScoreNotification(-15);
             }
         },
         [props]
