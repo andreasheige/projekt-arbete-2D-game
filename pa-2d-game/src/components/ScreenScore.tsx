@@ -8,7 +8,8 @@ export default function ScreenScore() {
         position: 'fixed',
         top: 100,
         left: 100,
-        fontSize: 50,
+        fontSize: 30,
+        pointerEvents: 'none',
     };
     return <div style={myStyles}>Score: {score} </div>;
 }
