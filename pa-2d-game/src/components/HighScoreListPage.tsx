@@ -109,7 +109,7 @@ export default function HighScoreListPage({ endingLevel }: Props) {
                         backgroundColor: '#F4F1EA',
                         borderRadius: '90px',
                     }}
-                    href="https://krokslottet-test.s3.eu-north-1.amazonaws.com/index.html"
+                    href="https://andreasheige.me/spel/index.html"
                 >
                     spela igen
                 </a>
@@ -123,7 +123,7 @@ export default function HighScoreListPage({ endingLevel }: Props) {
                         backgroundColor: '#F4F1EA',
                         borderRadius: '90px',
                     }}
-                    href="https://andreasheige.me/krakslottet/index.html"
+                    href="https://andreasheige.me/ks/index.html"
                 >
                     startsida
                 </a>
