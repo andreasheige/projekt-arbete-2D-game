@@ -18,6 +18,7 @@ Good luck!
 ## Get started and play or play online
 
 You can start the game by `yarn && yarn start`, then [open your Browser](http://localhost:3000/).
+
 [Play live demo here](https://andreasheige.me/ks/index.html)
 
 ## Tech. Stack
