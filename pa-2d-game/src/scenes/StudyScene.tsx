@@ -1,37 +1,43 @@
 import React, { Fragment, useState } from 'react';
 import Collider from '../@core/Collider';
 import GameObject from '../@core/GameObject';
-import Interactable from '../@core/Interactable';
+import Interactable, { InteractionEvent } from '../@core/Interactable';
 import ScenePortal from '../@core/ScenePortal';
 import Sprite from '../@core/Sprite';
 import TileMap, { TileMapResolver } from '../@core/TileMap';
 import { mapDataString, insertRandomMarks } from '../@core/utils/mapUtils';
-import CoffeeMachine from '../entities/CoffeeMachine';
-import PizzaPickup from '../entities/PizzaPickup';
-import Plant from '../entities/Plant';
 import Player from '../entities/Player';
-import Key from '../entities/Key';
-import Workstation from '../entities/Workstation';
 import spriteData from '../spriteData';
 import MovableRubbish from '../entities/MovableRubbish';
 import GatewayBlock from '../entities/GatewayBlock';
 import useGame from '../@core/useGame';
 import useGameEvent from '../@core/useGameEvent';
 import { OPEN_DOOR } from '../constants/events';
-import { KEY_TO_STUDY_FOUND } from '../constants/gameStates';
+import {
+    KEY_TO_STUDY_FOUND,
+    TRIEGGED_CLUE_ORDER,
+    CLEANING_EQUIPPED,
+} from '../constants/gameStates';
+import { spritePosToFloor4x4 } from '../@core/utils/tileLoadingUtils';
+import CleaningBucket from '../entities/CleaningBucket';
+import IntoText from '../components/IntoText';
+import Cluess from '../components/Clues';
+import NextSceneScript from '../components/NextSceneScript';
+import useGameObjectEvent from '../@core/useGameObjectEvent';
+import LosingScoreScript from '../components/LosingScoreScript';
 
 const floorChar = '·';
 const rubbishChar = 'r';
-const chanceOrRubbish = 0.5;
+const chanceOrRubbish = 0.4;
 const mapData = insertRandomMarks(
     mapDataString(`
 # # # # # # # # # # # # # # # # #
 # · · · · · · · · · · · · · · · #
-# · · · · · · · · · · · · · · · #
+# · · · · · · · · · · · * · · · #
 # · · · · · · · · · · · * · · · #
 # · · · · · · · · · · * * * · * *
-# · · · · · · · · · · · * · · · #
-# · · · · · · · · · · · * · · · #
+# · · · · · · · · * · · * · · · #
+# · · · · · · · · · · * * * · · #
 # # # # # # # # # # # # * # # # #
 `),
     floorChar,
@@ -45,7 +51,7 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
 
     const floor = (
         <GameObject key={key} {...position} layer="ground">
-            <Sprite {...spriteData.objects} state="floor4" />
+            <Sprite {...spriteData.floorStudyScene} state={spritePosToFloor4x4(x, y)} />
         </GameObject>
     );
 
@@ -61,13 +67,6 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
                     <MovableRubbish {...position} />
                 </Fragment>
             );
-        case 'o':
-            return (
-                <Fragment key={key}>
-                    {floor}
-                    <PizzaPickup {...position} />
-                </Fragment>
-            );
         case '#':
             return (
                 <GameObject key={key} {...position} layer="wall">
@@ -75,36 +74,34 @@ const resolveMapTile: TileMapResolver = (type, x, y) => {
                     <Sprite {...spriteData.objects} state="wall4" />
                 </GameObject>
             );
-        case 'W':
-            return (
-                <Fragment key={key}>
-                    {floor}
-                    <Workstation {...position} />
-                </Fragment>
-            );
-        case 'C':
-            return (
-                <Fragment key={key}>
-                    {floor}
-                    <CoffeeMachine {...position} />
-                </Fragment>
-            );
-        case 'T':
-            return (
-                <Fragment key={key}>
-                    {floor}
-                    <Plant {...position} />
-                </Fragment>
-            );
         default:
             return null;
     }
 };
 
+function ResetScreenScript() {
+    const { setGameState } = useGame();
+
+    /* eslint-disable */
+    useGameObjectEvent<InteractionEvent>('interaction', other => {
+            if (other.name === 'player') {
+                setGameState(KEY_TO_STUDY_FOUND, false);
+                setGameState(TRIEGGED_CLUE_ORDER, 0);
+                setGameState(CLEANING_EQUIPPED, false);
+            }
+    }, []);
+    /* eslint-enable */
+
+    return null;
+}
+
+const startPos = { x: 12, y: 0 };
+
 export default function StudySceen() {
     const { getGameState } = useGame();
     const isKeyFound = getGameState(KEY_TO_STUDY_FOUND);
     const [isKeyDoorOpen, setKeyDoorOpen] = useState(isKeyFound);
+    const [displayIntroText, setDisplayIntroText] = useState(true);
     useGameEvent(
         OPEN_DOOR,
         () => {
@@ -119,9 +116,8 @@ export default function StudySceen() {
                 <ambientLight />
                 <TileMap data={mapData} resolver={resolveMapTile} definesMapSize />
             </GameObject>
+            <LosingScoreScript {...startPos} />
             <GameObject x={12} y={0}>
-                <Collider />
-                <Interactable />
                 <ScenePortal
                     name="entrance"
                     enterDirection={[0, -1]}
@@ -139,10 +135,31 @@ export default function StudySceen() {
                         target="kitchen/entrance"
                     />
                 )}
+                <ResetScreenScript />
+                <NextSceneScript />
             </GameObject>
-            <Key x={12} y={3} />
-            <MovableRubbish x={12} y={3} />
-            <Player x={12} y={0} />
+            <Player {...startPos} />
+            <CleaningBucket x={13} y={1} />
+            {displayIntroText && (
+                <IntoText setDisplayIntroText={setDisplayIntroText} startPos={startPos}>
+                    <div>
+                        <p>Rummets uppdrag:</p>
+                        <p>För att komma vidare måste du hitta en nyckel som är gömd</p>
+                        <p> under någon av sopsäckarna.</p>
+                        <p>
+                            För att hitta den måste du först hitta de tre röda pilarna som
+                        </p>
+                        <p>leder dig fram till nyckeln.</p>
+                        <p>Sopsäckarna går att knuffa på, behöver du ta bort någon,</p>
+                        <p>använd skurhinken, gå till säcken du</p>
+                        <p>
+                            Vill tvätta bort, varje gång du använder hinken får du minus
+                        </p>
+                        <p>poäng.</p>
+                    </div>
+                </IntoText>
+            )}
+            <Cluess width={17} height={8} x0={12} y0={1} />
         </Fragment>
     );
 }

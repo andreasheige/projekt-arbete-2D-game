@@ -11,6 +11,26 @@ const soundData: { [index: string]: SoundProps } = {
     },
     footstep: {
         src: './assets/sfx/footstep.wav',
+        volume: 0.25,
+    },
+    splash: {
+        src: './assets/sfx/splash.mp3',
+        volume: 0.75,
+    },
+    push: {
+        src: './assets/sfx/Box Push.mp3',
+        volume: 0.75,
+    },
+    keys: {
+        src: './assets/sfx/Keys Jingle.mp3',
+        volume: 0.75,
+    },
+    blipp: {
+        src: './assets/sfx/blipp.mp3',
+        volume: 0.35,
+    },
+    levelfinished: {
+        src: './assets/sfx/levelfinished.wav',
         volume: 0.75,
     },
 };

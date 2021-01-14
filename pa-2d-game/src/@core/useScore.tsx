@@ -1,8 +1,10 @@
 import React, { useState, useContext } from 'react';
+import HighScoreListPage from '../components/HighScoreListPage';
 
 interface ScoreContextValue {
     score: number;
-    changeScore: (level: number) => number;
+    changeScore: (scoreDiff: number) => number;
+    endTheGame: (endingLevel: number) => void;
 }
 
 export const ScoreContext = React.createContext<ScoreContextValue>(null);
@@ -13,6 +15,7 @@ interface Props {
 
 export const ScoreProvider = ({ children }: Props) => {
     const [score, setScore] = useState(0);
+    const [endLevel, setEndLevel] = useState(-1);
 
     function changeScore(scoreDiff: number) {
         const nextScore = score + scoreDiff;
@@ -20,10 +23,19 @@ export const ScoreProvider = ({ children }: Props) => {
         return nextScore;
     }
 
+    function endTheGame(endingLevel = 0) {
+        setEndLevel(endingLevel);
+    }
+
     const contextValue: ScoreContextValue = {
         score,
         changeScore,
+        endTheGame,
     };
+
+    const gameOver = endLevel >= 0;
+
+    if (gameOver) return <HighScoreListPage endingLevel={endLevel} />;
 
     return (
         <ScoreContext.Provider value={contextValue}>{children} </ScoreContext.Provider>

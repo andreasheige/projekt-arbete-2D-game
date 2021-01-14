@@ -8,24 +8,28 @@ import useGameObjectEvent from '../@core/useGameObjectEvent';
 import soundData from '../soundData';
 import spriteData from '../spriteData';
 import useGame from '../@core/useGame';
-import { KEY_TO_STUDY_FOUND } from '../constants/gameStates';
+import { KEY_TO_STUDY_FOUND, TRIEGGED_CLUE_ORDER } from '../constants/gameStates';
 import useGameLoop from '../@core/useGameLoop';
 import { OPEN_DOOR, CHANGE_SCORE } from '../constants/events';
 import { FINDING_KEY_IN_STUDY_SCENE } from '../constants/points';
+import useGameEvent from '../@core/useGameEvent';
 
 function DisableOnTriggerScript({ onStepOnkey }) {
     const { getRef, getComponent } = useGameObject();
-    const { publish } = useGame();
-    const playSfx = useSound(soundData.eating);
+    const { publish, getGameState } = useGame();
+    const playSfx = useSound(soundData.keys);
     const { setGameState } = useGame();
     async function sendOpenDoorNotification() {
         await publish(OPEN_DOOR, {});
         await publish(CHANGE_SCORE, FINDING_KEY_IN_STUDY_SCENE);
+        await publish('ACTIVATE_CLUE', 10); // 10 to make sure no clue has this
     }
     useGameObjectEvent<TriggerEvent>('trigger', other => {
-        if (other.name === 'player') {
+        const triggedClueOrder = getGameState('TRIEGGED_CLUE_ORDER');
+        if (other.name === 'player' && triggedClueOrder === 3) {
             playSfx();
             setGameState(KEY_TO_STUDY_FOUND, true);
+            setGameState(TRIEGGED_CLUE_ORDER, 10);
             sendOpenDoorNotification();
             getComponent<SpriteRef>('Sprite').setOpacity(1.0);
             onStepOnkey(getRef());
@@ -42,6 +46,7 @@ export default function Key(props: GameObjectProps) {
     const scaleFirst = useRef<THREE.Vector3>();
     const time0 = useRef(0);
     const [hitKey, setHitKey] = useState(false);
+    const [cluesFound, setCluesFound] = useState(false);
     const rotate = useCallback(time => {
         childRef.current.rotation.set(0, 0, 0.005 * time);
     }, []);
@@ -61,6 +66,14 @@ export default function Key(props: GameObjectProps) {
         }, 1000);
     }
 
+    useGameEvent(
+        'ACTIVATE_CLUE',
+        activeClue => {
+            if (activeClue === 3) setCluesFound(true);
+        },
+        []
+    );
+
     useGameLoop(time => {
         if (childRef.current) rotate(time);
         if (hitKey && scaleRef.current) scaleUp(time);
@@ -69,10 +82,10 @@ export default function Key(props: GameObjectProps) {
         <GameObject name={name} persisted {...props}>
             <group ref={childRef}>
                 <group ref={scaleRef}>
-                    <Sprite {...spriteData.objects} opacity={0} state="pizza" />
+                    <Sprite {...spriteData.key} opacity={0} />
                 </group>
             </group>
-            <Collider isTrigger />
+            {cluesFound && <Collider isTrigger />}
             <DisableOnTriggerScript onStepOnkey={handleStepOnkey} />
         </GameObject>
     );

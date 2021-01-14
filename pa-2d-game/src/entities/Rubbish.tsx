@@ -5,21 +5,14 @@ import Sprite from '../@core/Sprite';
 import useGameObjectEvent from '../@core/useGameObjectEvent';
 import spriteData from '../spriteData';
 import useGameLoop from '../@core/useGameLoop';
-import useGame from '../@core/useGame';
 import { HITTING_RUBBLE } from '../constants/points';
+import ScoreScript from '../components/ScoreScript';
 
 function TriggerScript({ onHit }) {
-    const { publish } = useGame();
-
-    async function sendChangeScoreNotification() {
-        await publish('CHANGE_SCORE', HITTING_RUBBLE);
-    }
-
     useGameObjectEvent<TriggerEvent>('trigger', other => {
         if (other.name === 'player') {
             // TODO: signal score loss
             onHit();
-            sendChangeScoreNotification();
         }
     });
 
@@ -75,6 +68,7 @@ export default function Rubbish(props: GameObjectProps) {
             </group>
             <Collider isTrigger />
             <TriggerScript onHit={handleHit} />
+            <ScoreScript scoreChange={HITTING_RUBBLE} />
         </GameObject>
     );
 }
